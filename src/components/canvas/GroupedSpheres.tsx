@@ -22,6 +22,7 @@ const GroupedSpheres = () => {
 
   return (
     <>
+      {/* @ts-ignore */}
       <group ref={groupRef} position={[0, 3.5, 0]}>
         <SimpleSphere color={colors.primary} scale1D={3.3} position={[0, -1, 2.1]} />
         <SimpleSphere color={colors.accent2} scale1D={2.8} position={[0, 2.8, -2.8]} />
@@ -45,6 +46,7 @@ const GroupedSpheres = () => {
         <SimpleSphere color={colors.accent1} position={[4.8, 0, 4]} scale1D={1.9} />
         <SimpleSphere color={colors.dark1} position={[-5.6, -3, 0]} scale1D={3} />
         {/* <SimpleSphere glossy color={colors.light} position={[1.8, -7.5, 0]} scale1D={2.1} /> */}
+        {/* @ts-ignore */}
       </group>
     </>
   )

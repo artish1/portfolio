@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { MeshWobbleMaterial, Sphere } from '@react-three/drei'
 import { Vector3 } from '@react-three/fiber'
 

@@ -6,10 +6,15 @@ import { r3f } from '@/helpers/global'
 import * as THREE from 'three'
 
 export default function Scene({ ...props }) {
-  // Everything defined in here will persist between route changes, only children are swapped
   return (
-    <Canvas {...props}
-      onCreated={(state) => (state.gl.toneMapping = THREE.AgXToneMapping)}
+    <Canvas
+      {...props}
+      shadows
+      dpr={[0.8, 1.2]}
+      onCreated={(state) => {
+        state.gl.outputColorSpace = THREE.SRGBColorSpace
+        state.gl.toneMapping = THREE.LinearToneMapping
+      }}
     >
       {/* @ts-ignore */}
       <r3f.Out />

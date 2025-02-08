@@ -1,6 +1,6 @@
 {
-  "name": "R3F Next Starter",
-  "short_name": "R3F Next Starter",
+  "name": "Mark Artishuk Portfolio",
+  "short_name": "Mark Artishuk Portfolio",
   "icons": [
     {
       "src": "/icons/apple-touch-icon.png",
@@ -25,5 +25,5 @@
   "scope": "/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#17171b"
 }

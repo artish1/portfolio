@@ -4,7 +4,7 @@
 
 import dynamic from 'next/dynamic'
 import { Suspense, useEffect, useState } from 'react'
-import { Environment, PerspectiveCamera, Stats } from '@react-three/drei'
+import { Environment, PerspectiveCamera } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import GroupedSpheres from '@/components/canvas/GroupedSpheres'
 import Diamond from '@/components/decorative/Diamond'
@@ -29,7 +29,6 @@ const Background = () => {
 
       <View>
         <Suspense fallback={null}>
-          <Stats />
           <FogComponent color='#17171b' near={toggled ? 78 : 60} far={toggled ? 100 : 70} />
           <Environment files='/assets/brown-environment.hdr' />
 

@@ -31,7 +31,7 @@ export const SimpleSphere: React.FC<SimpleSphereProps> = ({
     <Sphere
       castShadow
       position={p}
-      args={[1, 20, 20]}
+      args={[1, 32, 32]}
       scale={scale1D ? [scale1D, scale1D, scale1D] : scale}
       receiveShadow
     >

@@ -10,8 +10,12 @@
     "node": ">=14"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@react-three/drei": "^9.92.7",
     "@react-three/fiber": "^8.15.12",
+    "classnames": "^2.5.1",
     "framer-motion": "^12.4.1",
     "glsl-random": "^0.0.5",
     "motion": "^12.4.1",

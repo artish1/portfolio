@@ -6,11 +6,12 @@ interface SlideUpProps {
   children?: any
   height?: number
   onComplete?: () => void
+  className?: string
 }
 
-const SlideUp: React.FC<SlideUpProps> = ({ children, delay, duration, height, onComplete }) => {
+const SlideUp: React.FC<SlideUpProps> = ({ children, delay, duration, height, onComplete, className }) => {
   return (
-    <div className='overflow-hidden'>
+    <div className={`overflow-hidden ${className}`}>
       <motion.div
         onAnimationComplete={onComplete}
         initial={{ y: height || 50, opacity: 0 }}

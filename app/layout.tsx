@@ -7,8 +7,8 @@ const font1 = Noto_Sans({
   subsets: ['latin'],
 })
 export const metadata = {
-  title: 'Next.js + Three.js',
-  description: 'A minimal starter for Nextjs + React-three-fiber and Threejs.',
+  title: 'Mark Artishuk - Portfolio',
+  description: 'Handcrafted portfolio by @artish1',
 }
 
 export default function RootLayout({ children }) {

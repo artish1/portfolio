@@ -22,11 +22,14 @@ export const SimpleSphere: React.FC<SimpleSphereProps> = ({
   clear,
   wobble,
 }) => {
-  const sphereColor = color || '#353540'
+  const sphereColor = '#ffffff'
+  // const sphereColor = color || '#353540'
   const p = position || [0, 0, 0]
 
-  const roughness = glossy ? 0.05 : 1
-  const metalness = glossy ? 0.95 : 0.6
+  const metalness =  0.6
+  // const metalness = glossy ? 0.95 : 0.6
+  const roughness = 1
+  // const roughness = glossy ? 0.4 : 1
   return (
     <Sphere
       castShadow
@@ -35,10 +38,8 @@ export const SimpleSphere: React.FC<SimpleSphereProps> = ({
       scale={scale1D ? [scale1D, scale1D, scale1D] : scale}
       receiveShadow
     >
-      {!clear && !wobble && (
         <meshStandardMaterial roughness={roughness} metalness={metalness} color={sphereColor} reflectivity={1} />
-      )}
-      {wobble && <MeshWobbleMaterial color={sphereColor} factor={100} speed={3} />}
+      {/* {wobble && <MeshWobbleMaterial color={sphereColor} factor={100} speed={3} />}
       {clear && (
         <meshPhysicalMaterial
           transparent
@@ -55,7 +56,7 @@ export const SimpleSphere: React.FC<SimpleSphereProps> = ({
           iridescenceThicknessRange={[100, 400]} // Adjusts rainbow effect
           color={'white'} // Neutral base
         />
-      )}
+      )} */}
 
       {/* <meshLambertMaterial color={sphereColor} /> */}
       {/* <meshToonMaterial color={sphereColor} /> */}

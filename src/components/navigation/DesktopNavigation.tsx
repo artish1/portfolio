@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import Diamond from '../decorative/Diamond'
 import SlideUp from '../decorative/SlideUp'
-import { useTheme } from '@/theme/ThemeContext'
 import useTailwindThemes from '@/hooks/useTailwindThemes'
 
 const headerAnimationOffset = 0.6
@@ -18,14 +17,18 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ onAnimationComple
       <div className='flex items-center justify-center mt-8 w-full '>
         <nav className={classNames('hidden sm:grid sm:gap-0 gap-2 grid-cols-1 sm:grid-cols-[auto,auto,auto,auto,auto,auto,auto] justify-items-center items-center text-xs  font-bold w-full md:mx-12 sm:mx-8 mx-4', text)}>
           <SlideUp delay={staggerDelay * 3 + headerAnimationOffset} onComplete={onAnimationComplete}>
-            <p className='font-bold'>ABOUT</p>
+            <a href="#about">
+              <p className='font-bold'>ABOUT</p>
+            </a>
           </SlideUp>
           <SlideUp delay={staggerDelay * 2 + headerAnimationOffset}>
             <Diamond />
           </SlideUp>
 
           <SlideUp delay={staggerDelay + headerAnimationOffset}>
-            <p className='font-bold'>SKILLS</p>
+            <a href="#skills">
+              <p className='font-bold'>SKILLS</p>
+            </a>
           </SlideUp>
 
           <SlideUp className='sm:col-start-4 col-start-1 sm:row-start-auto row-start-1' delay={headerAnimationOffset}>
@@ -33,7 +36,9 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ onAnimationComple
           </SlideUp>
 
           <SlideUp delay={staggerDelay + headerAnimationOffset}>
-            <p className='font-bold'>PROJECTS</p>
+            <a href="#projects">
+              <p className='font-bold'>PROJECTS</p>
+            </a>
           </SlideUp>
 
           <SlideUp delay={staggerDelay * 2 + headerAnimationOffset}>
@@ -41,7 +46,9 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ onAnimationComple
           </SlideUp>
 
           <SlideUp delay={staggerDelay * 3 + headerAnimationOffset}>
-            <p className='font-bold'>RESUME</p>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+              <p className='font-bold'>RESUME</p>
+            </a>
           </SlideUp>
         </nav>
       </div>

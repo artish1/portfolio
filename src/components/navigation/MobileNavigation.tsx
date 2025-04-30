@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react'
 import Diamond from '../decorative/Diamond'
 import SlideUp from '../decorative/SlideUp'
 import cx from 'classnames'
+import useTailwindThemes from '@/hooks/useTailwindThemes'
+import classNames from 'classnames'
 
 const MobileNavigation = ({ scrolled }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const { background, text } = useTailwindThemes();
 
   // Disable scrolling when the mobile navigation is open
   useEffect(() => {
@@ -24,11 +27,11 @@ const MobileNavigation = ({ scrolled }) => {
 
   if (isOpen)
     return (
-      <nav className='sm:hidden flex items-center justify-center h-full fixed top-0 left-0 w-full bg-decorative-dark1 z-50'>
+      <nav className={classNames('sm:hidden flex items-center justify-center h-full fixed top-0 left-0 w-full z-50', background)}>
         <FontAwesomeIcon
           size='lg'
           icon={faXmark}
-          className='absolute top-7 right-6 text-white'
+          className={`absolute top-7 right-6 ${text}`}
           onClick={() => {
             setIsOpen(false)
           }}
@@ -40,7 +43,9 @@ const MobileNavigation = ({ scrolled }) => {
           <Diamond />
           <NavItem>Projects</NavItem>
           <Diamond />
-          <NavItem>Resume</NavItem>
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <NavItem>Resume</NavItem>
+          </a>
         </ul>
       </nav>
     )
@@ -48,20 +53,20 @@ const MobileNavigation = ({ scrolled }) => {
   const className = cx(
     'sm:hidden transition-colors duration-200 fixed top-0 left-0 z-50 py-6 px-6 flex items-center justify-between w-full',
     {
-      'bg-decorative-dark1': scrolled,
+      [background]: scrolled,
     },
   )
 
   return (
     <div className={className}>
       <SlideUp className='' delay={0.6}>
-        <h1 className='text-white font-bold text-2xl text-center'>MARK ARTISHUK</h1>
+        <h1 className={classNames(' font-bold text-2xl text-center', text)}>MARK ARTISHUK</h1>
       </SlideUp>
       <SlideUp className='' delay={1}>
         <FontAwesomeIcon
           size='lg'
           icon={faBars}
-          className='text-white cursor-pointer'
+          className={classNames('cursor-pointer', text)}
           onClick={() => setIsOpen(true)}
         />
       </SlideUp>
@@ -70,7 +75,8 @@ const MobileNavigation = ({ scrolled }) => {
 }
 
 const NavItem = ({ children }) => {
-  return <li className='font-bold uppercase text-main-1'>{children}</li>
+  const { text } = useTailwindThemes();
+  return <li className={classNames('font-bold uppercase ', text)}>{children}</li>
 }
 
 export default MobileNavigation

@@ -13,4 +13,13 @@
     background-color: #000000;
   
   } */
+
+  /* This ensures all the background colors, text colors, etc., transition smoothly */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+  
 }

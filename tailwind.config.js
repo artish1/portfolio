@@ -23,6 +23,16 @@ module.exports = {
           accent3: '#6B8F71',
         },
       },
+      keyframes: {
+        scroll: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
+      animation: {
+        scroll: 'scroll 30s linear infinite',
+        'scroll-reverse': 'scroll 30s linear infinite reverse',
+      },
     },
   },
   variants: {

@@ -1,4 +1,5 @@
 //@ts-nocheck
+import { useTheme } from '@/theme/ThemeContext'
 import { MeshWobbleMaterial, Sphere } from '@react-three/drei'
 import { Vector3 } from '@react-three/fiber'
 
@@ -22,11 +23,14 @@ export const SimpleSphere: React.FC<SimpleSphereProps> = ({
   clear,
   wobble,
 }) => {
-  const sphereColor = '#ffffff'
+  const { theme } = useTheme();
+
+
+  const sphereColor = theme === 'dark' ? '#ffffff' : '#000000'
   // const sphereColor = color || '#353540'
   const p = position || [0, 0, 0]
 
-  const metalness =  0.6
+  const metalness = 0.6
   // const metalness = glossy ? 0.95 : 0.6
   const roughness = 1
   // const roughness = glossy ? 0.4 : 1
@@ -38,7 +42,7 @@ export const SimpleSphere: React.FC<SimpleSphereProps> = ({
       scale={scale1D ? [scale1D, scale1D, scale1D] : scale}
       receiveShadow
     >
-        <meshStandardMaterial roughness={roughness} metalness={metalness} color={sphereColor} reflectivity={1} />
+      <meshStandardMaterial roughness={roughness} metalness={metalness} color={sphereColor} reflectivity={1} />
       {/* {wobble && <MeshWobbleMaterial color={sphereColor} factor={100} speed={3} />}
       {clear && (
         <meshPhysicalMaterial

@@ -12,6 +12,12 @@ import SlideUp from '@/components/decorative/SlideUp'
 import { useMotionValue, useSpring } from 'framer-motion'
 import * as THREE from 'three'
 import Navigation from '@/components/navigation/Navigation'
+import { useTheme } from '@/theme/ThemeContext'
+import { useToggled } from './contexts/ToggledContext'
+import Accents from './components/Accents'
+import Title from './components/Title'
+import Content from './components/Content';
+import FogComponent from './components/FogComponent'
 
 const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: false })
 
@@ -21,7 +27,8 @@ const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.
 })
 
 const Background = () => {
-  const [toggled, setToggled] = useState(false)
+  const { theme } = useTheme();
+  const { toggled, setToggled } = useToggled();
   const [scrolled, setScrolled] = useState(false)
   const observerRef = useRef<HTMLDivElement | null>(null)
 
@@ -44,13 +51,14 @@ const Background = () => {
     }
   }, [observerRef.current])
 
+
   return (
     <div className='flex items-center justify-center flex-col h-[2600px]'>
       <Scene />
 
       <View>
         <Suspense fallback={null}>
-          <FogComponent color='#000000' near={toggled ? 78 : 60} far={toggled ? 100 : 70} />
+          <FogComponent color={theme === 'dark' ? '#000000' : '#ffffff'} near={toggled ? 78 : 60} far={toggled ? 100 : 70} />
           <Environment files='/assets/brown-environment.hdr' />
 
           <PerspectiveCamera makeDefault fov={52} position={[58, 10, 70]} />
@@ -58,21 +66,7 @@ const Background = () => {
           <GroupedSpheres />
 
           {/* Ambient Light for soft illumination */}
-          <ambientLight intensity={0.45} />
-
-          <directionalLight
-            castShadow
-            position={[0, 20, 40]}
-            color='#ffffff'
-            intensity={5.9}
-            shadow-camera-left={-10}
-            shadow-camera-right={10}
-            shadow-camera-bottom={-10}
-            shadow-camera-top={10}
-            shadow-mapSize-width={512}
-            shadow-mapSize-height={512}
-            shadow-bias={0.05}
-          />
+          <ambientLight intensity={0.7} />
 
           <directionalLight castShadow position={[13, 6, 8]} intensity={1.2} />
         </Suspense>
@@ -92,48 +86,5 @@ const Background = () => {
   )
 }
 
-const Title = () => {
-  return <div className="absolute right-[50%] bottom-[60%] translate-y-[50%] translate-x-[50%] mix-blend-difference ">
-    <h3 className=" leading-[100%] text-center text-[9rem] filter invert font-extrabold uppercase">Creative <b/> Developer</h3>
-  </div>
-}
-
-const Accents = () => {
-  return (
-    <div className='absolute bottom-0 translate-y-[-50%] left-10  '>
-      <VerticalText text='2025.02.07' className='text-xs font-bold opacity-50' />
-    </div>
-  )
-}
-
-const Content = ({ divRef }) => {
-  return (
-    <div
-      ref={divRef}
-      className='absolute top-[100vh] z-7 left-[50%] translate-x-[-50%] max-w-5xl w-full h-[2500px] flex items-start justify-center '
-    >
-      <div className='w-[600px] h-[400px] bg-decorative-primary rounded-lg'></div>
-    </div>
-  )
-}
-
-const FogComponent = ({ color = '#17171b', near = 5, far = 15 }) => {
-  const { scene } = useThree() // Get access to the scene
-  const nearMotion = useMotionValue(near)
-  const farMotion = useMotionValue(far)
-  const animatedNear = useSpring(nearMotion, { stiffness: 100, damping: 37 })
-  const animatedFar = useSpring(farMotion, { stiffness: 100, damping: 37 })
-
-  useEffect(() => {
-    nearMotion.set(near)
-    farMotion.set(far)
-  }, [near, far])
-
-  useFrame(() => {
-    scene.fog = new THREE.Fog(color, animatedNear.get(), animatedFar.get())
-  })
-
-  return null
-}
 
 export default Background

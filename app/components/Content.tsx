@@ -4,9 +4,10 @@ import { useTheme } from '@/theme/ThemeContext'
 import classNames from 'classnames'
 import { motion } from 'motion/react'
 
-const SectionHeader = ({ children }: { children: React.ReactNode }) => {
+const SectionHeader = ({ children, id }: { children: React.ReactNode; id?: string }) => {
   return (
     <motion.div
+      id={id}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
@@ -18,6 +19,93 @@ const SectionHeader = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
+// ─── About Section ────────────────────────────────────────
+
+const techAreas: { label: string; items: string[] }[] = [
+  { label: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Three.js', 'Tailwind CSS'] },
+  { label: 'Backend', items: ['Node.js', 'GraphQL', 'PostgreSQL', 'Redis'] },
+  { label: 'Infrastructure', items: ['AWS', 'Docker', 'CI/CD', 'Vercel'] },
+]
+
+const About = () => {
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.6 }}
+      className='mb-24'
+    >
+      <div className='grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16'>
+        {/* Left -- prose */}
+        <div className='lg:col-span-3'>
+          <p
+            className={classNames(
+              'text-lg md:text-xl leading-relaxed mb-6',
+              isDark ? 'text-white/80' : 'text-black/80',
+            )}
+          >
+            I architect and ship products end-to-end -- from system design through to the pixels a user touches. I care
+            about the full stack, not just one layer of it.
+          </p>
+          <p
+            className={classNames(
+              'text-sm md:text-base leading-relaxed mb-6',
+              isDark ? 'text-white/50' : 'text-black/50',
+            )}
+          >
+            Over the past several years I&apos;ve led frontend and full-stack efforts across fintech, e-commerce, and
+            SaaS -- owning technical decisions, mentoring engineers, and driving projects from ambiguous requirements to
+            production. I&apos;ve scaled real-time platforms to tens of thousands of users, built design systems from
+            scratch, and consistently shipped work where performance, accessibility, and craft aren&apos;t
+            afterthoughts.
+          </p>
+          <p className={classNames('text-sm md:text-base leading-relaxed', isDark ? 'text-white/50' : 'text-black/50')}>
+            I&apos;m looking for a senior or staff-level role on a team that values ownership, moves fast, and builds
+            things worth building.
+          </p>
+        </div>
+
+        {/* Right -- tech areas */}
+        <div className='lg:col-span-2 space-y-5'>
+          {techAreas.map((area) => (
+            <div key={area.label}>
+              <p
+                className={classNames(
+                  'text-xs font-medium uppercase tracking-[0.15em] mb-2.5',
+                  isDark ? 'text-white/30' : 'text-black/30',
+                )}
+              >
+                {area.label}
+              </p>
+              <div className='flex flex-wrap gap-1.5'>
+                {area.items.map((tech) => (
+                  <span
+                    key={tech}
+                    className={classNames(
+                      'inline-block px-3 py-1.5 text-[0.75rem] font-medium rounded-full transition-colors duration-200',
+                      isDark
+                        ? 'bg-white/[0.05] text-white/50 hover:bg-accent/10 hover:text-accent'
+                        : 'bg-black/[0.05] text-black/50 hover:bg-black/[0.1] hover:text-black/70',
+                    )}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.section>
+  )
+}
+
+// ─── Footer ───────────────────────────────────────────────
+
 const Footer = () => {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
@@ -28,39 +116,40 @@ const Footer = () => {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.6 }}
-      className='mt-32 pt-16 pb-12 border-t border-white/[0.06]'
+      className={classNames('mt-32 pt-16 pb-12 border-t', isDark ? 'border-white/[0.06]' : 'border-black/[0.06]')}
     >
       {/* CTA Section */}
-      <div className='text-center mb-16'>
-        <p className='text-sm font-medium uppercase tracking-[0.2em] text-accent/60 mb-4'>Get in Touch</p>
+      <div id='contact' className='text-center mb-16'>
+        <p className='text-sm font-medium uppercase tracking-[0.2em] text-accent/60 mb-4'>What&apos;s Next?</p>
         <h3
           className={classNames(
             'text-3xl md:text-4xl lg:text-5xl font-bold mb-6',
             isDark ? 'text-white' : 'text-black',
           )}
         >
-          Let&apos;s work together
+          Let&apos;s build something
         </h3>
         <p
           className={classNames(
-            'text-sm md:text-base max-w-md mx-auto mb-8',
+            'text-sm md:text-base max-w-lg mx-auto mb-8 leading-relaxed',
             isDark ? 'text-white/45' : 'text-black/45',
           )}
         >
-          Have a project in mind? I&apos;m always open to discussing new opportunities and ideas.
+          I&apos;m currently open to new opportunities -- whether it&apos;s a full-time role, a contract, or an
+          interesting collaboration. If you think we&apos;d be a good fit, I&apos;d love to hear from you.
         </p>
         <a
           href='mailto:hello@markartishuk.com'
-          className='inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-full bg-accent/10 text-accent hover:bg-accent/20 border border-accent/20 hover:border-accent/30 transition-all duration-200'
+          className='inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold rounded-full bg-accent text-surface-bg hover:bg-accent-light transition-all duration-200'
         >
-          Say Hello
+          hello@markartishuk.com
           <svg
             width='14'
             height='14'
             viewBox='0 0 24 24'
             fill='none'
             stroke='currentColor'
-            strokeWidth='2'
+            strokeWidth='2.5'
             strokeLinecap='round'
             strokeLinejoin='round'
           >
@@ -83,7 +172,7 @@ const Footer = () => {
             href='https://github.com/artish1'
             target='_blank'
             rel='noopener noreferrer'
-            className={classNames('hover:text-accent transition-colors duration-200')}
+            className='hover:text-accent transition-colors duration-200'
           >
             GitHub
           </a>
@@ -91,15 +180,20 @@ const Footer = () => {
             href='https://linkedin.com/in/mark-artishuk'
             target='_blank'
             rel='noopener noreferrer'
-            className={classNames('hover:text-accent transition-colors duration-200')}
+            className='hover:text-accent transition-colors duration-200'
           >
             LinkedIn
+          </a>
+          <a href='mailto:hello@markartishuk.com' className='hover:text-accent transition-colors duration-200'>
+            Email
           </a>
         </div>
       </div>
     </motion.footer>
   )
 }
+
+// ─── Content ──────────────────────────────────────────────
 
 const Content = ({ divRef }: { divRef: React.RefObject<HTMLDivElement> }) => {
   const { text } = useTailwindThemes()
@@ -112,10 +206,18 @@ const Content = ({ divRef }: { divRef: React.RefObject<HTMLDivElement> }) => {
       )}
     >
       <div className='w-full px-6 md:px-12 lg:px-16'>
-        <div id='projects' className='pt-20'>
+        {/* About */}
+        <div id='about' className='pt-20'>
+          <SectionHeader>About</SectionHeader>
+          <About />
+        </div>
+
+        {/* Projects */}
+        <div id='projects'>
           <SectionHeader>Selected Work</SectionHeader>
           <ProjectsSection />
         </div>
+
         <Footer />
       </div>
     </div>

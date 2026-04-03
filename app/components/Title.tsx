@@ -14,11 +14,11 @@ const Title = () => {
       >
         <h1
           className='text-black filter invert text-center font-extrabold uppercase leading-[0.92]
-            text-[clamp(3rem,9vw,8rem)]'
+            text-[clamp(2.4rem,9vw,8rem)] whitespace-nowrap'
         >
-          Creative
+          I Build
           <br />
-          Developer
+          What&apos;s Next
         </h1>
       </motion.div>
 
@@ -27,10 +27,10 @@ const Title = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: toggled ? 1 : 0 }}
         transition={{ duration: 0.6, delay: 0.8 }}
-        className='absolute right-[50%] bottom-[60%] translate-x-[50%] translate-y-[calc(50%+clamp(5rem,12vw,11rem))] pointer-events-none select-none'
+        className='absolute right-[50%] bottom-[60%] translate-x-[50%] translate-y-[calc(50%+clamp(4rem,12vw,11rem))] pointer-events-none select-none'
       >
-        <p className='px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-surface-bg/60 backdrop-blur-md border border-white/[0.06] text-accent-light text-center uppercase font-semibold text-[0.65rem] sm:text-[clamp(0.7rem,1vw,0.875rem)] tracking-[0.15em] sm:tracking-[0.25em]'>
-          Senior Software Engineer
+        <p className='px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-surface-bg/60 backdrop-blur-md border border-white/[0.06] text-accent-light text-center uppercase font-semibold text-[0.6rem] sm:text-[clamp(0.65rem,0.9vw,0.8rem)] tracking-[0.15em] sm:tracking-[0.25em]'>
+          Where Architecture Meets Experience
         </p>
       </motion.div>
     </>

@@ -1,23 +1,41 @@
 import classNames from 'classnames'
 import SlideUp from '../decorative/SlideUp'
 import useTailwindThemes from '@/hooks/useTailwindThemes'
+import { useTheme } from '@/theme/ThemeContext'
 
 const headerAnimationOffset = 0.6
-const staggerDelay = 0.2
+const staggerDelay = 0.15
 
 interface DesktopNavigationProps {
   onAnimationComplete: () => void
 }
 
-const StatusIndicator = () => (
-  <span className='inline-flex items-center gap-1.5 text-[0.65rem] font-medium uppercase tracking-wider text-white/35'>
-    <span className='relative flex h-1.5 w-1.5'>
-      <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
-      <span className='relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400' />
+const StatusIndicator = () => {
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+
+  return (
+    <span
+      className={classNames(
+        'inline-flex items-center gap-1.5 text-[0.65rem] font-medium uppercase tracking-wider',
+        isDark ? 'text-white/35' : 'text-black/35',
+      )}
+    >
+      <span className='relative flex h-1.5 w-1.5'>
+        <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
+        <span className='relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400' />
+      </span>
+      Available
     </span>
-    Available
-  </span>
-)
+  )
+}
+
+const navLinks = [
+  { label: 'ABOUT', href: '#about' },
+  { label: 'PROJECTS', href: '#projects' },
+  { label: 'CONTACT', href: '#contact' },
+  { label: 'RESUME', href: '/resume.pdf', external: true },
+]
 
 const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ onAnimationComplete }) => {
   const { text } = useTailwindThemes()
@@ -35,22 +53,18 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ onAnimationComple
           </div>
 
           <div className='flex items-center gap-8'>
-            <SlideUp delay={staggerDelay + headerAnimationOffset}>
-              <a href='#projects' className='font-bold hover:text-accent transition-colors duration-200'>
-                PROJECTS
-              </a>
-            </SlideUp>
-
-            <SlideUp delay={staggerDelay * 2 + headerAnimationOffset}>
-              <a
-                href='/resume.pdf'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='font-bold hover:text-accent transition-colors duration-200'
-              >
-                RESUME
-              </a>
-            </SlideUp>
+            {navLinks.map((link, i) => (
+              <SlideUp key={link.label} delay={staggerDelay * (i + 1) + headerAnimationOffset}>
+                <a
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                  className='font-bold hover:text-accent transition-colors duration-200'
+                >
+                  {link.label}
+                </a>
+              </SlideUp>
+            ))}
           </div>
         </nav>
       </div>

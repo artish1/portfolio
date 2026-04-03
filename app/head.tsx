@@ -1,7 +1,7 @@
-const title = 'Mark Artishuk - Creative Developer'
+const title = 'Mark Artishuk - Senior Software Engineer'
 const url = 'https://markartishuk.com'
 const description =
-  'Senior Software Engineer crafting polished digital experiences with React, Three.js, and modern web technologies.'
+  'Senior Software Engineer building polished products with React, Three.js, and Node.js. Open to new opportunities.'
 const author = 'Mark Artishuk'
 
 export default function Head() {

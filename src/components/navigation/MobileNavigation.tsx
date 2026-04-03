@@ -6,6 +6,34 @@ import cx from 'classnames'
 import useTailwindThemes from '@/hooks/useTailwindThemes'
 import classNames from 'classnames'
 import { motion, AnimatePresence } from 'motion/react'
+import { useTheme } from '@/theme/ThemeContext'
+
+const navLinks = [
+  { label: 'About', href: '#about' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
+  { label: 'Resume', href: '/resume.pdf', external: true },
+]
+
+const StatusIndicator = () => {
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+
+  return (
+    <span
+      className={classNames(
+        'inline-flex items-center gap-1.5 text-[0.6rem] font-medium uppercase tracking-wider',
+        isDark ? 'text-white/35' : 'text-black/35',
+      )}
+    >
+      <span className='relative flex h-1.5 w-1.5'>
+        <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
+        <span className='relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400' />
+      </span>
+      Available for work
+    </span>
+  )
+}
 
 const MobileNavigation = ({ scrolled }: { scrolled: boolean }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -72,31 +100,37 @@ const MobileNavigation = ({ scrolled }: { scrolled: boolean }) => {
               />
             </motion.div>
 
-            <ul className='grid grid-cols-1 gap-8 justify-items-center items-center w-full text-xl'>
-              {['Projects', 'Resume'].map((label, i) => (
-                <motion.li
-                  key={label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 + i * 0.08 }}
-                  className={classNames('font-bold uppercase', text)}
-                >
-                  <a
-                    href={label === 'Projects' ? '#projects' : '/resume.pdf'}
-                    target={label === 'Resume' ? '_blank' : undefined}
-                    rel={label === 'Resume' ? 'noopener noreferrer' : undefined}
-                    onClick={() => setIsOpen(false)}
+            <div className='flex flex-col items-center gap-10'>
+              <ul className='grid grid-cols-1 gap-8 justify-items-center items-center w-full text-xl'>
+                {navLinks.map((link, i) => (
+                  <motion.li
+                    key={link.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
+                    className={classNames('font-bold uppercase', text)}
                   >
-                    {label}
-                  </a>
-                </motion.li>
-              ))}
-            </ul>
+                    <a
+                      href={link.href}
+                      target={link.external ? '_blank' : undefined}
+                      rel={link.external ? 'noopener noreferrer' : undefined}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.label}
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.35 }}>
+                <StatusIndicator />
+              </motion.div>
+            </div>
 
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
               className='absolute bottom-10 left-0 right-0 flex justify-center items-center gap-6'
             >
               <a

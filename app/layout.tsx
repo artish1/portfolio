@@ -29,23 +29,23 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en' className={classNames('antialiased', background)}>
       <head>
-        <title>Mark Artishuk - Creative Developer</title>
+        <title>Mark Artishuk - Senior Software Engineer</title>
         <meta
           name='description'
-          content='Senior Software Engineer crafting polished digital experiences with React, Three.js, and modern web technologies.'
+          content='Senior Software Engineer building polished products with React, Three.js, and Node.js. Open to new opportunities.'
         />
-        <meta property='og:title' content='Mark Artishuk - Creative Developer' />
+        <meta property='og:title' content='Mark Artishuk - Senior Software Engineer' />
         <meta
           property='og:description'
-          content='Senior Software Engineer crafting polished digital experiences with React, Three.js, and modern web technologies.'
+          content='Senior Software Engineer building polished products with React, Three.js, and Node.js. Open to new opportunities.'
         />
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://markartishuk.com' />
         <meta name='twitter:card' content='summary' />
-        <meta name='twitter:title' content='Mark Artishuk - Creative Developer' />
+        <meta name='twitter:title' content='Mark Artishuk - Senior Software Engineer' />
         <meta
           name='twitter:description'
-          content='Senior Software Engineer crafting polished digital experiences with React, Three.js, and modern web technologies.'
+          content='Senior Software Engineer building polished products with React, Three.js, and Node.js. Open to new opportunities.'
         />
       </head>
       <body>

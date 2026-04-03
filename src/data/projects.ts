@@ -22,7 +22,7 @@ export const projects: Project[] = [
     slug: 'synth-dashboard',
     title: 'Synth Dashboard',
     description:
-      'A real-time analytics dashboard for monitoring synthesizer patch usage across a music production platform. Features live WebSocket data streams, interactive charts, and a custom theme engine.',
+      'Real-time analytics platform for a music production SaaS. Built the entire data pipeline from WebSocket ingestion to interactive D3 visualizations -- handling 12k+ monthly active users with sub-200ms update latency.',
     tech: ['Next.js', 'TypeScript', 'D3.js', 'WebSockets', 'PostgreSQL'],
     images: [
       {
@@ -44,16 +44,16 @@ export const projects: Project[] = [
     role: 'Full Stack',
     year: '2025',
     highlights: [
-      'Real-time data visualization with sub-200ms latency',
-      'Custom charting library built on D3 with animated transitions',
-      'Served 12k+ monthly active users',
+      'Sub-200ms data latency across live WebSocket streams',
+      'Custom D3 charting library with spring-based transitions',
+      '12k+ MAU with zero downtime since launch',
     ],
   },
   {
     slug: 'arcadia-ecommerce',
     title: 'Arcadia',
     description:
-      'A premium e-commerce storefront with 3D product previews, AI-powered recommendations, and a headless CMS for content management.',
+      'Led frontend development for a premium e-commerce platform featuring 3D product configurators and AI-driven recommendations. Drove a 40% lift in conversion rate and achieved a Lighthouse score of 96.',
     tech: ['React', 'Three.js', 'Node.js', 'Stripe', 'Sanity CMS'],
     images: [
       {
@@ -75,8 +75,8 @@ export const projects: Project[] = [
     role: 'Frontend Lead',
     year: '2024',
     highlights: [
-      '3D product configurator with real-time material swapping',
-      '40% increase in conversion rate vs. previous storefront',
+      'Interactive 3D product configurator with real-time material swapping',
+      '40% conversion lift vs. previous storefront',
       'Lighthouse performance score of 96',
     ],
   },
@@ -84,7 +84,7 @@ export const projects: Project[] = [
     slug: 'noter',
     title: 'Noter',
     description:
-      'A collaborative markdown note-taking app with real-time sync, offline support, and a distraction-free writing mode.',
+      'Collaborative markdown editor with real-time sync, offline-first architecture, and a distraction-free writing mode. Built on Supabase for auth and storage with TipTap for rich text.',
     tech: ['Next.js', 'TypeScript', 'Supabase', 'TipTap', 'Tailwind CSS'],
     images: [
       {
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     slug: 'pulse-api',
     title: 'Pulse API',
     description:
-      'A high-performance REST & GraphQL API gateway for aggregating health and fitness data from multiple wearable devices.',
+      'High-throughput API gateway aggregating health data from multiple wearable platforms. Unified REST and GraphQL interfaces with Redis caching and containerized deployment on AWS.',
     tech: ['Node.js', 'GraphQL', 'Redis', 'Docker', 'AWS'],
     images: [
       {
@@ -127,7 +127,7 @@ export const projects: Project[] = [
     slug: 'chromaflow',
     title: 'ChromaFlow',
     description:
-      'A generative art tool that creates procedural color palettes and gradient compositions, exportable as CSS, SVG, or PNG.',
+      'Generative art tool for creating procedural color palettes and gradient compositions. Export to CSS, SVG, or PNG -- used by designers for rapid prototyping.',
     tech: ['React', 'Canvas API', 'WebGL', 'Framer Motion'],
     images: [
       {
@@ -148,7 +148,7 @@ export const projects: Project[] = [
     slug: 'devfolio-cli',
     title: 'Devfolio CLI',
     description:
-      'A command-line tool that scaffolds developer portfolio sites from templates with built-in deployment to Vercel and Netlify.',
+      'Open-source CLI that scaffolds production-ready portfolio sites from curated templates with one-command deployment to Vercel or Netlify.',
     tech: ['TypeScript', 'Node.js', 'Ink', 'Commander.js'],
     images: [
       {

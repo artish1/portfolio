@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import { motion } from 'motion/react'
 
 const SectionHeader = ({ children }: { children: React.ReactNode }) => {
-  const { text } = useTailwindThemes()
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -13,7 +12,7 @@ const SectionHeader = ({ children }: { children: React.ReactNode }) => {
       transition={{ duration: 0.5 }}
       className='mb-10'
     >
-      <h2 className={classNames('text-sm font-medium uppercase tracking-[0.2em]', text, 'opacity-40')}>{children}</h2>
+      <h2 className='text-sm font-medium uppercase tracking-[0.2em] text-accent/60'>{children}</h2>
     </motion.div>
   )
 }

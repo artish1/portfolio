@@ -21,7 +21,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ onAnimationComple
 
           <div className='flex items-center gap-8'>
             <SlideUp delay={staggerDelay + headerAnimationOffset}>
-              <a href='#projects' className='font-bold hover:opacity-70 transition-opacity'>
+              <a href='#projects' className='font-bold hover:text-accent transition-colors duration-200'>
                 PROJECTS
               </a>
             </SlideUp>
@@ -31,7 +31,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ onAnimationComple
                 href='/resume.pdf'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='font-bold hover:opacity-70 transition-opacity'
+                className='font-bold hover:text-accent transition-colors duration-200'
               >
                 RESUME
               </a>

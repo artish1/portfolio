@@ -1,11 +1,11 @@
-import { Theme, useTheme } from "@/theme/ThemeContext";
+import { Theme, useTheme } from '@/theme/ThemeContext'
 
 type ThemeTailwindVariants = {
-  background: string;
-  text: string;
-  backgroundLight?: string;
-  backgroundAccent?: string;
-  textAccent?: string;
+  background: string
+  text: string
+  backgroundLight?: string
+  backgroundAccent?: string
+  textAccent?: string
 }
 
 const themes: Record<Theme, ThemeTailwindVariants> = {
@@ -17,20 +17,20 @@ const themes: Record<Theme, ThemeTailwindVariants> = {
     textAccent: 'text-white',
   },
   dark: {
-    background: 'bg-black',
-    backgroundAccent: 'bg-white',
-    backgroundLight: 'bg-[#111111]',
-    text: 'text-white',
-    textAccent: 'text-black',
+    background: 'bg-surface-bg',
+    backgroundAccent: 'bg-accent',
+    backgroundLight: 'bg-surface-card',
+    text: 'text-[#EEEEEE]',
+    textAccent: 'text-surface-bg',
   },
-};
-
-const useTailwindThemes = () => {
-  const { theme } = useTheme();
-
-  const currentTheme = themes[theme];
-
-  return currentTheme;
 }
 
-export default useTailwindThemes;
+const useTailwindThemes = () => {
+  const { theme } = useTheme()
+
+  const currentTheme = themes[theme]
+
+  return currentTheme
+}
+
+export default useTailwindThemes

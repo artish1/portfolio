@@ -95,10 +95,10 @@ const ScrollIndicator = ({ visible }: { visible: boolean }) => (
         height='28'
         viewBox='0 0 20 28'
         fill='none'
-        stroke='white'
+        stroke='#C8A47E'
         strokeWidth='1.5'
         strokeLinecap='round'
-        opacity='0.35'
+        opacity='0.4'
       >
         <rect x='1' y='1' width='18' height='26' rx='9' />
         <line x1='10' y1='7' x2='10' y2='12' />

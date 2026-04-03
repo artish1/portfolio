@@ -1,26 +1,20 @@
 module.exports = {
   mode: 'jit',
-  content: ['./app/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'], // remove unused styles in production
-  darkMode: 'media', // or 'media' or 'class'
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'media',
   theme: {
     extend: {
       colors: {
-        main: {
-          1: '#fefae0',
-          2: '#faedcd',
-          3: '#d4a373',
-          4: '#e9edc9',
-          5: '#ccd5ae',
+        surface: {
+          bg: '#0A0A0A',
+          card: '#141414',
+          'card-hover': '#1A1A1A',
         },
-        decorative: {
-          primary: '#f5d7b1',
-          secondary: '#ceab8e',
-          light: '#d2d3cb',
-
-          dark1: '#252525',
-          accent1: '#4d6071',
-          accent2: '#442f24',
-          accent3: '#6B8F71',
+        accent: {
+          DEFAULT: '#C8A47E',
+          light: '#D4B896',
+          dark: '#A8845E',
+          muted: 'rgba(200, 164, 126, 0.08)',
         },
       },
       keyframes: {

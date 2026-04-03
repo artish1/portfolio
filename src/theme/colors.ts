@@ -1,10 +1,15 @@
-export const colors = {
-  primary: '#f5d7b1',
-  secondary: '#ceab8e',
-  light: '#d2d3cb',
+import { decorative, accent } from './palette'
 
-  dark1: '#252525',
-  accent1: '#4d6071',
-  accent2: '#442f24',
-  accent3: '#6B8F71',
+/**
+ * Colors used by the 3D sphere materials in GroupedSpheres.
+ * Re-exported from the centralized palette.
+ */
+export const colors = {
+  primary: accent.primary,
+  secondary: decorative.clay,
+  light: decorative.fog,
+  dark1: decorative.shadow,
+  accent1: decorative.stone,
+  accent2: decorative.shadow,
+  accent3: decorative.sand,
 }

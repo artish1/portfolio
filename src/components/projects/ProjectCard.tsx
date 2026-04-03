@@ -43,7 +43,7 @@ const Root: React.FC<RootProps> = ({ children, index = 0, className, ...rest }) 
           transition={{ duration: 0.25 }}
           className={classNames(
             'group relative rounded-2xl overflow-hidden',
-            themed('bg-[#111111] ring-1 ring-white/[0.08]', 'bg-[#F5F5F5] ring-1 ring-black/[0.08]', theme),
+            themed('bg-surface-card ring-1 ring-white/[0.08]', 'bg-[#F5F5F5] ring-1 ring-black/[0.08]', theme),
             className,
           )}
         >
@@ -146,7 +146,7 @@ const Gallery: React.FC<GalleryProps> = ({ images, aspect = 'aspect-[16/10]', cl
               className={classNames(
                 'relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 cursor-pointer',
                 i === active
-                  ? themed('bg-white/[0.1] text-white/90', 'bg-black/[0.1] text-black/90', theme)
+                  ? themed('bg-accent-muted text-accent-light', 'bg-black/[0.1] text-black/90', theme)
                   : themed(
                       'text-white/40 hover:text-white/60 hover:bg-white/[0.05]',
                       'text-black/40 hover:text-black/60 hover:bg-black/[0.05]',
@@ -156,7 +156,7 @@ const Gallery: React.FC<GalleryProps> = ({ images, aspect = 'aspect-[16/10]', cl
             >
               {/* Active indicator dot */}
               {i === active && (
-                <span className={classNames('w-1 h-1 rounded-full', themed('bg-white/70', 'bg-black/70', theme))} />
+                <span className={classNames('w-1 h-1 rounded-full', themed('bg-accent', 'bg-black/70', theme))} />
               )}
               {img.label || `${i + 1}`}
             </button>
@@ -304,7 +304,7 @@ const Tech: React.FC<TechProps> = ({ items, className }) => {
           className={classNames(
             'inline-block px-2.5 py-1 text-[0.7rem] font-medium rounded-full transition-colors duration-200',
             themed(
-              'bg-white/[0.06] text-white/50 hover:bg-white/[0.1] hover:text-white/70',
+              'bg-white/[0.06] text-white/50 hover:bg-accent-muted hover:text-accent',
               'bg-black/[0.06] text-black/50 hover:bg-black/[0.1] hover:text-black/70',
               theme,
             ),
@@ -352,7 +352,7 @@ const Links: React.FC<LinksProps> = ({ liveUrl, githubUrl }) => {
 
   const linkClass = classNames(
     'group/link inline-flex items-center text-sm font-medium transition-colors duration-200',
-    themed('text-white/60 hover:text-white', 'text-black/60 hover:text-black', theme),
+    themed('text-accent hover:text-accent-light', 'text-black/60 hover:text-black', theme),
   )
 
   return (

@@ -71,8 +71,21 @@ export const projects: Project[] = [
         src: '/images/projects/rafa/booking.png',
         alt: 'Bookings management view with reservations and check-in status',
       },
+      {
+        src: '/images/projects/rafa/capacity.png',
+        alt: 'Party size selector with per-person pricing in the booking flow',
+      },
+      {
+        src: '/images/projects/rafa/calendar.png',
+        alt: 'Date picker with real-time availability and limited-capacity indicators',
+      },
       { src: '/images/projects/rafa/timeslots.png', alt: 'Customer booking flow with real-time availability slots' },
       { src: '/images/projects/rafa/tiers.png', alt: 'Membership tier pricing and subscription plans' },
+      {
+        src: '/images/projects/rafa/settings.png',
+        alt: 'Admin settings with operating hours, slot intervals, and weekly schedule overrides',
+      },
+      { src: '/images/projects/rafa/user.png', alt: 'Customer portal with bookings overview and membership status' },
     ],
     liveUrl: 'https://app.rafasauna.com/booking',
     privateRepo: true,

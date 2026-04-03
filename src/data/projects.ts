@@ -77,7 +77,7 @@ export const projects: Project[] = [
     liveUrl: 'https://app.rafasauna.com/booking',
     privateRepo: true,
     featured: true,
-    role: 'Solo Developer',
+    role: 'Solo Contract Developer',
     year: '2025',
     highlights: [
       'NFC wristband pipeline: JWT generation, React Native writer, kiosk reader for contactless tab orders',

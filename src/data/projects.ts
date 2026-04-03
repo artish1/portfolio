@@ -1,7 +1,6 @@
 export interface ProjectImage {
   src: string
   alt: string
-  label?: string
 }
 
 export interface Project {
@@ -26,9 +25,18 @@ export const projects: Project[] = [
       'A real-time analytics dashboard for monitoring synthesizer patch usage across a music production platform. Features live WebSocket data streams, interactive charts, and a custom theme engine.',
     tech: ['Next.js', 'TypeScript', 'D3.js', 'WebSockets', 'PostgreSQL'],
     images: [
-      { src: '/images/projects/synth-dashboard.svg', alt: 'Synth Dashboard overview', label: 'Overview' },
-      { src: '/images/projects/synth-dashboard-charts.svg', alt: 'Live chart detail view', label: 'Charts' },
-      { src: '/images/projects/synth-dashboard-mobile.svg', alt: 'Mobile responsive view', label: 'Mobile' },
+      {
+        src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&h=800&fit=crop',
+        alt: 'Dashboard analytics overview',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1280&h=800&fit=crop',
+        alt: 'Data visualization charts',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1280&h=800&fit=crop',
+        alt: 'Code and development view',
+      },
     ],
     liveUrl: 'https://example.com',
     githubUrl: 'https://github.com',
@@ -48,9 +56,18 @@ export const projects: Project[] = [
       'A premium e-commerce storefront with 3D product previews, AI-powered recommendations, and a headless CMS for content management.',
     tech: ['React', 'Three.js', 'Node.js', 'Stripe', 'Sanity CMS'],
     images: [
-      { src: '/images/projects/arcadia.svg', alt: 'Arcadia storefront', label: 'Storefront' },
-      { src: '/images/projects/arcadia-product.svg', alt: '3D product configurator', label: 'Product' },
-      { src: '/images/projects/arcadia-mobile.svg', alt: 'Mobile shopping experience', label: 'Mobile' },
+      {
+        src: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1280&h=800&fit=crop',
+        alt: 'E-commerce storefront',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1280&h=800&fit=crop',
+        alt: 'Product detail page',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1280&h=800&fit=crop',
+        alt: 'Shopping cart and checkout',
+      },
     ],
     liveUrl: 'https://example.com',
     githubUrl: 'https://github.com',
@@ -70,8 +87,14 @@ export const projects: Project[] = [
       'A collaborative markdown note-taking app with real-time sync, offline support, and a distraction-free writing mode.',
     tech: ['Next.js', 'TypeScript', 'Supabase', 'TipTap', 'Tailwind CSS'],
     images: [
-      { src: '/images/projects/noter.svg', alt: 'Noter editor', label: 'Editor' },
-      { src: '/images/projects/noter-collab.svg', alt: 'Real-time collaboration', label: 'Collaboration' },
+      {
+        src: 'https://images.unsplash.com/photo-1517842645767-c639042777db?w=1280&h=800&fit=crop',
+        alt: 'Note-taking interface',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1280&h=800&fit=crop',
+        alt: 'Organized notes and lists',
+      },
     ],
     liveUrl: 'https://example.com',
     githubUrl: 'https://github.com',
@@ -86,8 +109,14 @@ export const projects: Project[] = [
       'A high-performance REST & GraphQL API gateway for aggregating health and fitness data from multiple wearable devices.',
     tech: ['Node.js', 'GraphQL', 'Redis', 'Docker', 'AWS'],
     images: [
-      { src: '/images/projects/pulse-api.svg', alt: 'API documentation', label: 'Docs' },
-      { src: '/images/projects/pulse-api-schema.svg', alt: 'GraphQL schema explorer', label: 'Schema' },
+      {
+        src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1280&h=800&fit=crop',
+        alt: 'Server infrastructure',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1280&h=800&fit=crop',
+        alt: 'API monitoring dashboard',
+      },
     ],
     githubUrl: 'https://github.com',
     featured: false,
@@ -101,8 +130,14 @@ export const projects: Project[] = [
       'A generative art tool that creates procedural color palettes and gradient compositions, exportable as CSS, SVG, or PNG.',
     tech: ['React', 'Canvas API', 'WebGL', 'Framer Motion'],
     images: [
-      { src: '/images/projects/chromaflow.svg', alt: 'ChromaFlow generator', label: 'Generator' },
-      { src: '/images/projects/chromaflow-export.svg', alt: 'Export options', label: 'Export' },
+      {
+        src: 'https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?w=1280&h=800&fit=crop',
+        alt: 'Generative color art',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1280&h=800&fit=crop',
+        alt: 'Gradient compositions',
+      },
     ],
     liveUrl: 'https://example.com',
     featured: false,
@@ -116,8 +151,14 @@ export const projects: Project[] = [
       'A command-line tool that scaffolds developer portfolio sites from templates with built-in deployment to Vercel and Netlify.',
     tech: ['TypeScript', 'Node.js', 'Ink', 'Commander.js'],
     images: [
-      { src: '/images/projects/devfolio-cli.svg', alt: 'CLI interface', label: 'CLI' },
-      { src: '/images/projects/devfolio-cli-output.svg', alt: 'Generated site output', label: 'Output' },
+      {
+        src: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1280&h=800&fit=crop',
+        alt: 'Terminal and CLI interface',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1280&h=800&fit=crop',
+        alt: 'Code editor view',
+      },
     ],
     githubUrl: 'https://github.com',
     featured: false,

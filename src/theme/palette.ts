@@ -14,14 +14,14 @@
 // ─── Base surfaces ────────────────────────────────────────
 
 export const surface = {
-  /** Page background (dark mode) */
-  bg: '#0A0A0A',
+  /** Page background (dark mode) -- warm near-black */
+  bg: '#28231F',
   /** Elevated cards, panels */
-  card: '#141414',
+  card: '#312B27',
   /** Subtle card borders, dividers */
   border: 'rgba(255, 255, 255, 0.08)',
   /** Hover-state card background */
-  cardHover: '#1A1A1A',
+  cardHover: '#3A3430',
 } as const
 
 // ─── Text ─────────────────────────────────────────────────

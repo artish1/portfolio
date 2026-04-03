@@ -12,7 +12,7 @@ const FeaturedProject = ({
 }) => (
   <ProjectCard.Root index={index}>
     <ProjectCard.Layout direction={reversed ? 'row-reverse' : 'row'}>
-      <ProjectCard.Gallery images={project.images} fill className='lg:w-[55%]' />
+      <ProjectCard.Gallery images={project.images} className='lg:w-[55%]' />
       <ProjectCard.Content className='lg:w-[45%] lg:p-10'>
         <ProjectCard.Meta role={project.role} year={project.year} />
         <ProjectCard.Title>{project.title}</ProjectCard.Title>

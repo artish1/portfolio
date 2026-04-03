@@ -80,88 +80,136 @@ interface GalleryProps {
   images: ProjectImage[]
   aspect?: string
   className?: string
-  fill?: boolean
 }
 
-const Gallery: React.FC<GalleryProps> = ({ images, aspect = 'aspect-[16/10]', className, fill = false }) => {
+const ChevronLeft = () => (
+  <svg
+    width='16'
+    height='16'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <polyline points='15 18 9 12 15 6' />
+  </svg>
+)
+
+const ChevronRight = () => (
+  <svg
+    width='16'
+    height='16'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <polyline points='9 6 15 12 9 18' />
+  </svg>
+)
+
+const Gallery: React.FC<GalleryProps> = ({ images, aspect = 'aspect-[16/10]', className }) => {
   const { theme } = useCard()
   const [active, setActive] = useState(0)
+  const hasMultiple = images.length > 1
 
-  const goTo = useCallback(
-    (idx: number) => {
-      if (idx >= 0 && idx < images.length) {
-        setActive(idx)
-      }
-    },
-    [images.length],
-  )
+  const prev = useCallback(() => {
+    setActive((c) => (c === 0 ? images.length - 1 : c - 1))
+  }, [images.length])
+
+  const next = useCallback(() => {
+    setActive((c) => (c === images.length - 1 ? 0 : c + 1))
+  }, [images.length])
 
   if (images.length === 0) {
     return null
   }
 
   return (
-    <div className={classNames('relative overflow-hidden', fill ? 'lg:h-full' : '', className)}>
-      {/* Main image area */}
-      <div
-        className={classNames(
-          'relative',
-          fill ? [aspect, 'lg:aspect-auto lg:h-full'] : aspect,
-          themed('bg-[#0A0A0A]', 'bg-[#E8E8E8]', theme),
-        )}
-      >
+    <div className={classNames('relative overflow-hidden', className)}>
+      {/* Image area -- aspect ratio provides min height, h-full stretches in row layouts */}
+      <div className={classNames('relative h-full min-h-0', aspect, themed('bg-surface-bg', 'bg-[#E8E8E8]', theme))}>
         <AnimatePresence mode='wait'>
           <motion.div
             key={images[active].src}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             className='absolute inset-0'
           >
             <Image
               src={images[active].src}
               alt={images[active].alt}
               fill
-              className='object-cover object-top'
+              className='object-cover object-center'
               sizes='(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 55vw'
             />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Thumbnail strip -- only show when more than 1 image */}
-      {images.length > 1 && (
-        <div
-          className={classNames(
-            'flex items-center gap-2 px-3 py-2.5',
-            themed('bg-[#0A0A0A]/80', 'bg-[#E8E8E8]/80', theme),
-            'backdrop-blur-sm',
-          )}
-        >
-          {images.map((img, i) => (
-            <button
-              key={img.src}
-              onClick={() => goTo(i)}
-              className={classNames(
-                'relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 cursor-pointer',
-                i === active
-                  ? themed('bg-accent-muted text-accent-light', 'bg-black/[0.1] text-black/90', theme)
-                  : themed(
-                      'text-white/40 hover:text-white/60 hover:bg-white/[0.05]',
-                      'text-black/40 hover:text-black/60 hover:bg-black/[0.05]',
-                      theme,
-                    ),
-              )}
-            >
-              {/* Active indicator dot */}
-              {i === active && (
-                <span className={classNames('w-1 h-1 rounded-full', themed('bg-accent', 'bg-black/70', theme))} />
-              )}
-              {img.label || `${i + 1}`}
-            </button>
-          ))}
-        </div>
+      {/* Overlay controls -- positioned on the outer container so they respect its bounds */}
+      {hasMultiple && (
+        <>
+          <button
+            onClick={prev}
+            className={classNames(
+              'absolute left-3 top-1/2 -translate-y-1/2 z-20 p-1.5 sm:p-2 rounded-full opacity-60 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-200 cursor-pointer',
+              themed(
+                'bg-surface-bg/60 text-white/80 hover:bg-surface-bg/80',
+                'bg-white/60 text-black/80 hover:bg-white/80',
+                theme,
+              ),
+              'backdrop-blur-sm',
+            )}
+            aria-label='Previous image'
+          >
+            <ChevronLeft />
+          </button>
+          <button
+            onClick={next}
+            className={classNames(
+              'absolute right-3 top-1/2 -translate-y-1/2 z-20 p-1.5 sm:p-2 rounded-full opacity-60 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-200 cursor-pointer',
+              themed(
+                'bg-surface-bg/60 text-white/80 hover:bg-surface-bg/80',
+                'bg-white/60 text-black/80 hover:bg-white/80',
+                theme,
+              ),
+              'backdrop-blur-sm',
+            )}
+            aria-label='Next image'
+          >
+            <ChevronRight />
+          </button>
+
+          {/* Bottom gradient for dot visibility */}
+          <div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-[5]' />
+
+          {/* Dot indicators */}
+          <div className='absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5'>
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className={classNames(
+                  'rounded-full transition-all duration-200 cursor-pointer',
+                  i === active
+                    ? 'w-5 h-1.5 bg-accent'
+                    : classNames(
+                        'w-1.5 h-1.5',
+                        themed('bg-white/40 hover:bg-white/60', 'bg-black/40 hover:bg-black/60', theme),
+                      ),
+                )}
+                aria-label={`Go to image ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   )

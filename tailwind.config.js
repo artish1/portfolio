@@ -6,9 +6,9 @@ module.exports = {
     extend: {
       colors: {
         surface: {
-          bg: '#0A0A0A',
-          card: '#141414',
-          'card-hover': '#1A1A1A',
+          bg: '#28231F',
+          card: '#312B27',
+          'card-hover': '#3A3430',
         },
         accent: {
           DEFAULT: '#C8A47E',

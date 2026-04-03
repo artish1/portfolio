@@ -86,6 +86,37 @@ export const projects: Project[] = [
     ],
   },
   {
+    title: 'United Revival Donations',
+    slug: 'ur-donations',
+    description:
+      'Built and maintained the donation platform for United Revival, a U.S. nonprofit running multi-city evangelistic events. Handles one-time and recurring payments across 20+ city-specific fundraising campaigns, with a real-time live donation feed displayed at events. Emphasis on frictionless UX and fast payment flows -- Apple Pay/Google Pay support, animated multi-step forms, and video-gated landing pages -- resulting in measurably higher donation completion rates.',
+    role: 'Solo Developer',
+    year: '2022-2026',
+    tech: ['Next.js', 'Stripe', 'MongoDB', 'Ably', 'TypeScript', 'Framer Motion'],
+    highlights: [
+      'Processing donations across 20+ city campaigns with individual goals totaling $250k+',
+      'Real-time live donation dashboard using Ably pub/sub, displayed on-screen during events with spring-physics animated counters',
+      'Reduced payment friction with Apple Pay/Google Pay, multi-step animated forms, and multiple A/B-tested landing page variants',
+    ],
+    liveUrl: 'https://give.unitedrevival.org/',
+    githubUrl: 'https://github.com/UnitedRevival/ur-donations',
+    featured: false,
+    images: [
+      {
+        src: '/images/projects/ur-give/ur-1.png',
+        alt: 'One-time donation page with campaign hero, progress bar, and preset amount selection',
+      },
+      {
+        src: '/images/projects/ur-give/ur-2.png',
+        alt: 'Monthly recurring donation form with selected amount and Give To Jesus March CTA',
+      },
+      {
+        src: '/images/projects/ur-give/ur-3.png',
+        alt: 'Live donation progress counter displayed on-screen during events',
+      },
+    ],
+  },
+  {
     slug: 'construction-automation',
     title: 'Construction Automation Platform',
     description:

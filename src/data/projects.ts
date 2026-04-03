@@ -90,7 +90,7 @@ export const projects: Project[] = [
     slug: 'ur-donations',
     description:
       'Built and maintained the donation platform for United Revival, a U.S. nonprofit running multi-city evangelistic events. Handles one-time and recurring payments across 20+ city-specific fundraising campaigns, with a real-time live donation feed displayed at events. Emphasis on frictionless UX and fast payment flows -- Apple Pay/Google Pay support, animated multi-step forms, and video-gated landing pages -- resulting in measurably higher donation completion rates.',
-    role: 'Solo Developer',
+    role: 'Lead Developer',
     year: '2022-2026',
     tech: ['Next.js', 'Stripe', 'MongoDB', 'Ably', 'TypeScript', 'Framer Motion'],
     highlights: [

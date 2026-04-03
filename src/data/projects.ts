@@ -74,7 +74,7 @@ export const projects: Project[] = [
       { src: '/images/projects/rafa/timeslots.png', alt: 'Customer booking flow with real-time availability slots' },
       { src: '/images/projects/rafa/tiers.png', alt: 'Membership tier pricing and subscription plans' },
     ],
-    liveUrl: 'https://app.rafasauna.com',
+    liveUrl: 'https://app.rafasauna.com/booking',
     privateRepo: true,
     featured: true,
     role: 'Solo Developer',

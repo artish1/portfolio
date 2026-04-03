@@ -23,9 +23,11 @@ const SectionHeader = ({ children, id }: { children: React.ReactNode; id?: strin
 // ─── About Section ────────────────────────────────────────
 
 const techAreas: { label: string; items: string[] }[] = [
-  { label: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Three.js', 'Tailwind CSS'] },
-  { label: 'Backend', items: ['Node.js', 'GraphQL', 'PostgreSQL', 'Redis'] },
-  { label: 'Infrastructure', items: ['AWS', 'Docker', 'CI/CD', 'Vercel'] },
+  { label: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'React Native', 'Tailwind CSS', 'Apollo'] },
+  {
+    label: 'Backend', items: ['Node.js', 'Rust', 'GraphQL', 'SQL', 'Redis', 'tRPC', 'Prisma', 'Drizzle']
+  },
+  { label: 'Infrastructure', items: ['AWS', 'Docker', 'CI/CD', 'Cloudflare'] },
 ]
 
 const About = () => {

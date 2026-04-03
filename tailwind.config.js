@@ -17,20 +17,7 @@ module.exports = {
           muted: 'rgba(200, 164, 126, 0.08)',
         },
       },
-      keyframes: {
-        scroll: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
-      },
-      animation: {
-        scroll: 'scroll 30s linear infinite',
-        'scroll-reverse': 'scroll 30s linear infinite reverse',
-      },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 }

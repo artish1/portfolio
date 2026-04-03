@@ -10,9 +10,10 @@ import useTailwindThemes from '@/hooks/useTailwindThemes'
 const font1 = Noto_Sans({
   weight: ['400', '500', '700'],
   subsets: ['latin'],
+  display: 'swap',
 })
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
       <ToggledProvider>
@@ -22,17 +23,33 @@ export default function RootLayout({ children }) {
   )
 }
 
-const LayoutContent = ({ children }) => {
-  const { background } = useTailwindThemes();
+const LayoutContent = ({ children }: { children: React.ReactNode }) => {
+  const { background } = useTailwindThemes()
 
   return (
     <html lang='en' className={classNames('antialiased', background)}>
       <head>
-        <title>Mark Artishuk - Portfolio</title>
-        <meta name="description" content="Handcrafted portfolio created by @artish1" />
+        <title>Mark Artishuk - Creative Developer</title>
+        <meta
+          name='description'
+          content='Senior Software Engineer crafting polished digital experiences with React, Three.js, and modern web technologies.'
+        />
+        <meta property='og:title' content='Mark Artishuk - Creative Developer' />
+        <meta
+          property='og:description'
+          content='Senior Software Engineer crafting polished digital experiences with React, Three.js, and modern web technologies.'
+        />
+        <meta property='og:type' content='website' />
+        <meta property='og:url' content='https://markartishuk.com' />
+        <meta name='twitter:card' content='summary' />
+        <meta name='twitter:title' content='Mark Artishuk - Creative Developer' />
+        <meta
+          name='twitter:description'
+          content='Senior Software Engineer crafting polished digital experiences with React, Three.js, and modern web technologies.'
+        />
       </head>
       <body>
-        <Layout className={`${font1.className}`}>{children}</Layout>
+        <Layout className={font1.className}>{children}</Layout>
       </body>
     </html>
   )

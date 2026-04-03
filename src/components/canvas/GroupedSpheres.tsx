@@ -13,7 +13,8 @@ const GroupedSpheres = () => {
       const { x, y, z } = groupRef.current.position
       camera.lookAt(x, y - 30, z)
     }
-  }, [groupRef?.current, camera])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [camera])
 
   useFrame((state, delta) => {
     const rotationSpeed = 0.25

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, type HTMLMotionProps } from 'motion/react'
 import classNames from 'classnames'
 import { useTheme } from '@/theme/ThemeContext'
@@ -115,6 +115,7 @@ const ChevronRight = () => (
 const Gallery: React.FC<GalleryProps> = ({ images, aspect = 'aspect-[16/10]', className }) => {
   const { theme } = useCard()
   const [active, setActive] = useState(0)
+  const containerRef = useRef<HTMLDivElement>(null)
   const hasMultiple = images.length > 1
 
   const prev = useCallback(() => {
@@ -125,12 +126,36 @@ const Gallery: React.FC<GalleryProps> = ({ images, aspect = 'aspect-[16/10]', cl
     setActive((c) => (c === images.length - 1 ? 0 : c + 1))
   }, [images.length])
 
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el || !hasMultiple) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        prev()
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        next()
+      }
+    }
+
+    el.addEventListener('keydown', handleKeyDown)
+    return () => el.removeEventListener('keydown', handleKeyDown)
+  }, [hasMultiple, prev, next])
+
   if (images.length === 0) {
     return null
   }
 
   return (
-    <div className={classNames('relative overflow-hidden', className)}>
+    <div
+      ref={containerRef}
+      tabIndex={hasMultiple ? 0 : undefined}
+      role={hasMultiple ? 'region' : undefined}
+      aria-label={hasMultiple ? 'Project image gallery' : undefined}
+      className={classNames('relative overflow-hidden outline-none', className)}
+    >
       {/* Image area -- aspect ratio provides min height, h-full stretches in row layouts */}
       <div className={classNames('relative h-full min-h-0', aspect, themed('bg-surface-bg', 'bg-[#E8E8E8]', theme))}>
         <AnimatePresence mode='wait'>

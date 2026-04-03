@@ -32,6 +32,7 @@ const StatusIndicator = () => {
 
 const navLinks = [
   { label: 'ABOUT', href: '#about' },
+  { label: 'EXPERIENCE', href: '#experience' },
   { label: 'PROJECTS', href: '#projects' },
   { label: 'CONTACT', href: '#contact' },
   { label: 'RESUME', href: '/resume.pdf', external: true },

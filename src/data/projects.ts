@@ -11,158 +11,97 @@ export interface Project {
   images: ProjectImage[]
   liveUrl?: string
   githubUrl?: string
+  privateRepo?: boolean
   featured: boolean
   role: string
   year: string
   highlights?: string[]
+  placeholder?: 'automation'
 }
 
 export const projects: Project[] = [
   {
-    slug: 'synth-dashboard',
-    title: 'Synth Dashboard',
+    slug: 'huntnhook',
+    title: 'HuntNHook',
     description:
-      'Real-time analytics platform for a music production SaaS. Built the entire data pipeline from WebSocket ingestion to interactive D3 visualizations -- handling 12k+ monthly active users with sub-200ms update latency.',
-    tech: ['Next.js', 'TypeScript', 'D3.js', 'WebSockets', 'PostgreSQL'],
+      'Co-founded and sole-engineered a two-sided marketplace for fishing charters, hunting trips, and outdoor recreation. End-to-end platform covering map-based search, booking with hold-based payments, real-time messaging, Stripe Connect host payouts, and background job processing.',
+    tech: [
+      'Next.js',
+      'TypeScript',
+      'PostgreSQL / PostGIS',
+      'GraphQL',
+      'Stripe Connect',
+      'Redis / BullMQ',
+      'Prisma',
+      'Apollo Client',
+      'TipTap',
+    ],
+    images: [
+      { src: '/images/projects/huntnhook/hnh-1.jpg', alt: 'Landing page with category selection and search' },
+      { src: '/images/projects/huntnhook/hnh-2.png', alt: 'Map-based search with PostGIS filtering and listing cards' },
+      { src: '/images/projects/huntnhook/hnh-4.png', alt: 'Listing detail page with photo gallery and booking widget' },
+      {
+        src: '/images/projects/huntnhook/hnh-3.png',
+        alt: 'Booking flow with date selection, party size, and price breakdown',
+      },
+      { src: '/images/projects/huntnhook/hnh-5.png', alt: 'Real-time messaging between host and guest' },
+    ],
+    privateRepo: true,
+    featured: true,
+    role: 'Co-Founder',
+    year: '2026',
+    highlights: [
+      'Full Stripe Connect integration -- hold-based payments, cancellation compensation, dispute handling, delayed host payouts with daily sweep jobs, and idempotent webhook processing',
+      'PostGIS spatial search with bounding-box filtering, distance sorting, and multi-dimensional filters (species, techniques, price, date availability)',
+      'PM2 cluster deployment with dedicated BullMQ worker process, Redis PubSub for cross-instance GraphQL subscriptions, and 3-tier repo cache invalidation (surgical/broad/nuclear)',
+    ],
+  },
+  {
+    slug: 'rafa-sauna',
+    title: 'Rafa Sauna',
+    description:
+      'Full-stack booking, membership, and POS platform for a sauna house. Spans a Next.js admin dashboard, a React Native NFC wristband app, and a self-service kiosk for tab-free food and drink orders.',
+    tech: ['Next.js', 'TypeScript', 'Prisma / PostgreSQL', 'tRPC', 'Stripe', 'AWS EB', 'React Native', 'NFC', 'Resend'],
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&h=800&fit=crop',
-        alt: 'Dashboard analytics overview',
+        src: '/images/projects/rafa/dashboard.png',
+        alt: 'Staff admin dashboard with visit analytics and capacity tracking',
       },
       {
-        src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1280&h=800&fit=crop',
-        alt: 'Data visualization charts',
+        src: '/images/projects/rafa/booking.png',
+        alt: 'Bookings management view with reservations and check-in status',
       },
-      {
-        src: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1280&h=800&fit=crop',
-        alt: 'Code and development view',
-      },
+      { src: '/images/projects/rafa/timeslots.png', alt: 'Customer booking flow with real-time availability slots' },
+      { src: '/images/projects/rafa/tiers.png', alt: 'Membership tier pricing and subscription plans' },
     ],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
+    liveUrl: 'https://app.rafasauna.com',
+    privateRepo: true,
     featured: true,
-    role: 'Full Stack',
+    role: 'Solo Developer',
     year: '2025',
     highlights: [
-      'Sub-200ms data latency across live WebSocket streams',
-      'Custom D3 charting library with spring-based transitions',
-      '12k+ MAU with zero downtime since launch',
+      'NFC wristband pipeline: JWT generation, React Native writer, kiosk reader for contactless tab orders',
+      'In-memory booking engine with party-aware capacity, dynamic pricing, and blockout rules (no timeslot table)',
+      'Stripe integration: subscriptions, one-time payments, Apple Pay, webhooks, refunds, and promo codes',
     ],
   },
   {
-    slug: 'arcadia-ecommerce',
-    title: 'Arcadia',
+    slug: 'construction-automation',
+    title: 'Construction Automation Platform',
     description:
-      'Led frontend development for a premium e-commerce platform featuring 3D product configurators and AI-driven recommendations. Drove a 40% lift in conversion rate and achieved a Lighthouse score of 96.',
-    tech: ['React', 'Three.js', 'Node.js', 'Stripe', 'Sanity CMS'],
-    images: [
-      {
-        src: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1280&h=800&fit=crop',
-        alt: 'E-commerce storefront',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1280&h=800&fit=crop',
-        alt: 'Product detail page',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1280&h=800&fit=crop',
-        alt: 'Shopping cart and checkout',
-      },
-    ],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
-    featured: true,
-    role: 'Frontend Lead',
-    year: '2024',
+      "Internal automation tool for a construction company. Reverse-engineered a closed third-party API to unlock data entry automation, sales pipeline syncing, and invoice generation that the vendor's own product didn't support.",
+    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Puppeteer', 'AWS Lambda'],
+    images: [],
+    privateRepo: true,
+    featured: false,
+    role: 'Contract Developer',
+    year: '2025',
+    placeholder: 'automation',
     highlights: [
-      'Interactive 3D product configurator with real-time material swapping',
-      '40% conversion lift vs. previous storefront',
-      'Lighthouse performance score of 96',
+      "Reverse-engineered an undocumented, closed API to programmatically interface with the client's existing vendor platform",
+      'Automated 20+ daily data entry records, eliminating manual input and reducing human error across project records',
+      'Built pipeline-to-invoice sync that maps construction project models from the sales pipeline into auto-generated invoices',
+      "Headless browser automation via Puppeteer on AWS Lambda for workflows the API couldn't cover",
     ],
-  },
-  {
-    slug: 'noter',
-    title: 'Noter',
-    description:
-      'Collaborative markdown editor with real-time sync, offline-first architecture, and a distraction-free writing mode. Built on Supabase for auth and storage with TipTap for rich text.',
-    tech: ['Next.js', 'TypeScript', 'Supabase', 'TipTap', 'Tailwind CSS'],
-    images: [
-      {
-        src: 'https://images.unsplash.com/photo-1517842645767-c639042777db?w=1280&h=800&fit=crop',
-        alt: 'Note-taking interface',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1280&h=800&fit=crop',
-        alt: 'Organized notes and lists',
-      },
-    ],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com',
-    featured: false,
-    role: 'Full Stack',
-    year: '2024',
-  },
-  {
-    slug: 'pulse-api',
-    title: 'Pulse API',
-    description:
-      'High-throughput API gateway aggregating health data from multiple wearable platforms. Unified REST and GraphQL interfaces with Redis caching and containerized deployment on AWS.',
-    tech: ['Node.js', 'GraphQL', 'Redis', 'Docker', 'AWS'],
-    images: [
-      {
-        src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1280&h=800&fit=crop',
-        alt: 'Server infrastructure',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1280&h=800&fit=crop',
-        alt: 'API monitoring dashboard',
-      },
-    ],
-    githubUrl: 'https://github.com',
-    featured: false,
-    role: 'Backend',
-    year: '2024',
-  },
-  {
-    slug: 'chromaflow',
-    title: 'ChromaFlow',
-    description:
-      'Generative art tool for creating procedural color palettes and gradient compositions. Export to CSS, SVG, or PNG -- used by designers for rapid prototyping.',
-    tech: ['React', 'Canvas API', 'WebGL', 'Framer Motion'],
-    images: [
-      {
-        src: 'https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?w=1280&h=800&fit=crop',
-        alt: 'Generative color art',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1280&h=800&fit=crop',
-        alt: 'Gradient compositions',
-      },
-    ],
-    liveUrl: 'https://example.com',
-    featured: false,
-    role: 'Creator',
-    year: '2023',
-  },
-  {
-    slug: 'devfolio-cli',
-    title: 'Devfolio CLI',
-    description:
-      'Open-source CLI that scaffolds production-ready portfolio sites from curated templates with one-command deployment to Vercel or Netlify.',
-    tech: ['TypeScript', 'Node.js', 'Ink', 'Commander.js'],
-    images: [
-      {
-        src: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1280&h=800&fit=crop',
-        alt: 'Terminal and CLI interface',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1280&h=800&fit=crop',
-        alt: 'Code editor view',
-      },
-    ],
-    githubUrl: 'https://github.com',
-    featured: false,
-    role: 'Creator',
-    year: '2023',
   },
 ]

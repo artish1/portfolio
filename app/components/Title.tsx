@@ -29,7 +29,7 @@ const Title = () => {
         transition={{ duration: 0.6, delay: 0.8 }}
         className='absolute right-[50%] bottom-[60%] translate-x-[50%] translate-y-[calc(50%+clamp(4rem,12vw,11rem))] pointer-events-none select-none'
       >
-        <p className='px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-surface-bg/60 backdrop-blur-md border border-white/[0.06] text-accent-light text-center uppercase font-semibold text-[0.6rem] sm:text-[clamp(0.65rem,0.9vw,0.8rem)] tracking-[0.15em] sm:tracking-[0.25em]'>
+        <p className='px-6 py-2.5 sm:px-6 sm:py-3 rounded-full bg-surface-bg/60 backdrop-blur-md border border-white/[0.06] text-accent-light text-center uppercase font-bold text-[0.6rem] sm:text-[clamp(0.65rem,0.9vw,0.8rem)] tracking-[0.15em] sm:tracking-[0.25em]'>
           Where Architecture Meets Experience
         </p>
       </motion.div>

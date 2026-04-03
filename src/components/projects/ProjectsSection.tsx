@@ -21,7 +21,7 @@ const FeaturedProject = ({
         <ProjectCard.Description>{project.description}</ProjectCard.Description>
         {project.highlights && <ProjectCard.Highlights items={project.highlights} />}
         <ProjectCard.Tech items={project.tech} />
-        <ProjectCard.Links liveUrl={project.liveUrl} githubUrl={project.githubUrl} />
+        <ProjectCard.Links liveUrl={project.liveUrl} githubUrl={project.githubUrl} privateRepo={project.privateRepo} />
       </ProjectCard.Content>
     </ProjectCard.Layout>
   </ProjectCard.Root>
@@ -30,13 +30,18 @@ const FeaturedProject = ({
 const CompactProject = ({ project, index }: { project: Project; index: number }) => (
   <ProjectCard.Root index={index}>
     <ProjectCard.Layout direction='column'>
-      <ProjectCard.Gallery images={project.images} />
+      {project.images.length > 0 ? (
+        <ProjectCard.Gallery images={project.images} />
+      ) : (
+        <ProjectCard.Placeholder type={project.placeholder} />
+      )}
       <ProjectCard.Content>
         <ProjectCard.Meta role={project.role} year={project.year} />
         <ProjectCard.Title className='text-xl md:text-2xl'>{project.title}</ProjectCard.Title>
         <ProjectCard.Description>{project.description}</ProjectCard.Description>
+        {project.highlights && <ProjectCard.Highlights items={project.highlights} />}
         <ProjectCard.Tech items={project.tech} />
-        <ProjectCard.Links liveUrl={project.liveUrl} githubUrl={project.githubUrl} />
+        <ProjectCard.Links liveUrl={project.liveUrl} githubUrl={project.githubUrl} privateRepo={project.privateRepo} />
       </ProjectCard.Content>
     </ProjectCard.Layout>
   </ProjectCard.Root>

@@ -1,4 +1,5 @@
 import ProjectsSection from '@/components/projects/ProjectsSection'
+import ExperienceSection from '@/components/experience/ExperienceSection'
 import useTailwindThemes from '@/hooks/useTailwindThemes'
 import { useTheme } from '@/theme/ThemeContext'
 import classNames from 'classnames'
@@ -48,8 +49,8 @@ const About = () => {
               isDark ? 'text-white/80' : 'text-black/80',
             )}
           >
-            I architect and ship products end-to-end -- from system design through to the pixels a user touches. I care
-            about the full stack, not just one layer of it.
+            I architect and ship products end-to-end, from system design down to the pixels a user touches. I care about
+            the full stack, not just one layer of it.
           </p>
           <p
             className={classNames(
@@ -57,15 +58,11 @@ const About = () => {
               isDark ? 'text-white/50' : 'text-black/50',
             )}
           >
-            Over the past several years I&apos;ve led frontend and full-stack efforts across fintech, e-commerce, and
-            SaaS -- owning technical decisions, mentoring engineers, and driving projects from ambiguous requirements to
-            production. I&apos;ve scaled real-time platforms to tens of thousands of users, built design systems from
-            scratch, and consistently shipped work where performance, accessibility, and craft aren&apos;t
-            afterthoughts.
-          </p>
-          <p className={classNames('text-sm md:text-base leading-relaxed', isDark ? 'text-white/50' : 'text-black/50')}>
-            I&apos;m looking for a senior or staff-level role on a team that values ownership, moves fast, and builds
-            things worth building.
+            Professionally, I lead feature development, drive architectural decisions, and mentor engineers at
+            production-scale companies. I take ambiguous requirements, break them into deliverables, and see them
+            through to release. I think about systems holistically: how they scale, how they fail, and how other
+            engineers will maintain them long after the initial build. Outside of work, I design and build my own
+            products end-to-end because I genuinely enjoy the craft.
           </p>
         </div>
 
@@ -139,10 +136,10 @@ const Footer = () => {
           interesting collaboration. If you think we&apos;d be a good fit, I&apos;d love to hear from you.
         </p>
         <a
-          href='mailto:hello@markartishuk.com'
+          href='mailto:markyshuk@gmail.com'
           className='inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold rounded-full bg-accent text-surface-bg hover:bg-accent-light transition-all duration-200'
         >
-          hello@markartishuk.com
+          markyshuk@gmail.com
           <svg
             width='14'
             height='14'
@@ -184,7 +181,7 @@ const Footer = () => {
           >
             LinkedIn
           </a>
-          <a href='mailto:hello@markartishuk.com' className='hover:text-accent transition-colors duration-200'>
+          <a href='mailto:markyshuk@gmail.com' className='hover:text-accent transition-colors duration-200'>
             Email
           </a>
         </div>
@@ -210,6 +207,12 @@ const Content = ({ divRef }: { divRef: React.RefObject<HTMLDivElement> }) => {
         <div id='about' className='pt-20'>
           <SectionHeader>About</SectionHeader>
           <About />
+        </div>
+
+        {/* Experience */}
+        <div id='experience'>
+          <SectionHeader>Experience</SectionHeader>
+          <ExperienceSection />
         </div>
 
         {/* Projects */}

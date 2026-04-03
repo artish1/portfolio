@@ -6,11 +6,11 @@ import { useToggled } from '@/contexts/ToggledContext'
 import { useTheme } from '@/theme/ThemeContext'
 
 const FogComponent = ({ color = '#17171b' }) => {
-  const { toggled } = useToggled();
-  const { theme } = useTheme();
+  const { toggled } = useToggled()
+  const { theme } = useTheme()
 
   const near = toggled ? 78 : 60
-  const far = toggled ? theme === 'light' ? 110 : 100 : 70
+  const far = toggled ? (theme === 'light' ? 110 : 100) : 70
 
   const { scene } = useThree() // Get access to the scene
   const nearMotion = useMotionValue(near)
@@ -30,4 +30,4 @@ const FogComponent = ({ color = '#17171b' }) => {
   return null
 }
 
-export default FogComponent;
+export default FogComponent

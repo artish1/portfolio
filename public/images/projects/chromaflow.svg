@@ -1,0 +1,75 @@
+<svg width="1280" height="800" viewBox="0 0 1280 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1280" height="800" rx="8" fill="#0A0A0A"/>
+  <rect width="1280" height="40" rx="8" fill="#1A1A1A"/>
+  <circle cx="24" cy="20" r="6" fill="#FF5F57"/>
+  <circle cx="44" cy="20" r="6" fill="#FFBD2E"/>
+  <circle cx="64" cy="20" r="6" fill="#28CA41"/>
+
+  <!-- Tool bar -->
+  <rect x="0" y="40" width="70" height="760" fill="#0F0F0F"/>
+  <rect x="15" y="65" width="40" height="40" rx="8" fill="#1a1a1a"/>
+  <rect x="15" y="120" width="40" height="40" rx="8" fill="#1a1a1a"/>
+  <rect x="15" y="175" width="40" height="40" rx="8" fill="#1a1a1a"/>
+  <rect x="15" y="230" width="40" height="40" rx="8" fill="#1a1a1a"/>
+
+  <!-- Canvas area -->
+  <rect x="70" y="40" width="900" height="760" fill="#0A0A0A"/>
+
+  <!-- Generative art - flowing gradients -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d7b1" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#ceab8e" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#6B8F71" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4d6071" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#f5d7b1" stop-opacity="0.3"/>
+    </linearGradient>
+    <radialGradient id="grad3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ceab8e" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="350" cy="350" rx="250" ry="200" fill="url(#grad1)"/>
+  <ellipse cx="600" cy="450" rx="300" ry="180" fill="url(#grad2)"/>
+  <ellipse cx="500" cy="300" rx="180" ry="180" fill="url(#grad3)"/>
+  <ellipse cx="700" cy="350" rx="150" ry="220" fill="url(#grad1)" opacity="0.3"/>
+  <circle cx="400" cy="500" r="120" fill="#6B8F71" opacity="0.15"/>
+  <circle cx="650" cy="250" r="80" fill="#f5d7b1" opacity="0.12"/>
+
+  <!-- Right panel - controls -->
+  <rect x="970" y="40" width="310" height="760" fill="#111111"/>
+  <rect x="990" y="70" width="120" height="14" rx="4" fill="#444"/>
+
+  <!-- Color palette -->
+  <rect x="990" y="110" width="40" height="40" rx="8" fill="#f5d7b1"/>
+  <rect x="1040" y="110" width="40" height="40" rx="8" fill="#ceab8e"/>
+  <rect x="1090" y="110" width="40" height="40" rx="8" fill="#6B8F71"/>
+  <rect x="1140" y="110" width="40" height="40" rx="8" fill="#4d6071"/>
+  <rect x="1190" y="110" width="40" height="40" rx="8" fill="#442f24"/>
+
+  <!-- Sliders -->
+  <rect x="990" y="180" width="80" height="8" rx="3" fill="#333"/>
+  <rect x="990" y="195" width="260" height="4" rx="2" fill="#1a1a1a"/>
+  <rect x="990" y="195" width="160" height="4" rx="2" fill="#f5d7b1" opacity="0.6"/>
+  <circle cx="1150" cy="197" r="8" fill="#f5d7b1"/>
+
+  <rect x="990" y="230" width="80" height="8" rx="3" fill="#333"/>
+  <rect x="990" y="245" width="260" height="4" rx="2" fill="#1a1a1a"/>
+  <rect x="990" y="245" width="200" height="4" rx="2" fill="#6B8F71" opacity="0.6"/>
+  <circle cx="1190" cy="247" r="8" fill="#6B8F71"/>
+
+  <rect x="990" y="280" width="80" height="8" rx="3" fill="#333"/>
+  <rect x="990" y="295" width="260" height="4" rx="2" fill="#1a1a1a"/>
+  <rect x="990" y="295" width="100" height="4" rx="2" fill="#4d6071" opacity="0.6"/>
+  <circle cx="1090" cy="297" r="8" fill="#4d6071"/>
+
+  <!-- Export buttons -->
+  <rect x="990" y="350" width="120" height="36" rx="6" fill="#f5d7b1" opacity="0.15"/>
+  <rect x="1005" y="363" width="90" height="10" rx="3" fill="#f5d7b1" opacity="0.6"/>
+  <rect x="1130" y="350" width="120" height="36" rx="6" fill="#6B8F71" opacity="0.15"/>
+  <rect x="1145" y="363" width="90" height="10" rx="3" fill="#6B8F71" opacity="0.6"/>
+</svg>

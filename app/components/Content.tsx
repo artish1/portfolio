@@ -23,26 +23,28 @@ const SectionHeader = ({ children, id }: { children: React.ReactNode; id?: strin
 // ─── About Section ────────────────────────────────────────
 
 const techAreas: { label: string; items: string[] }[] = [
-  { label: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'React Native', 'Tailwind CSS', 'Apollo'] },
+  {
+    label: 'Frontend',
+    items: ['React', 'Next.js', 'TypeScript', 'React Native', 'Tailwind CSS', 'Three.js', 'Framer Motion'],
+  },
   {
     label: 'Backend',
     items: [
       'Node.js',
-      'Rust',
       'GraphQL',
-      'C#',
-      'VB.NET',
-      'SQL',
-      'NoSQL',
-      'Redis',
-      'Kafka',
-      'BullMQ',
       'tRPC',
+      'REST APIs',
+      'Express',
       'Prisma',
-      'Drizzle',
+      'PostgreSQL',
+      'Redis',
+      'BullMQ',
+      'Elasticsearch',
+      'Rust',
+      'C#',
     ],
   },
-  { label: 'Infrastructure', items: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Cloudflare'] },
+  { label: 'Infrastructure', items: ['AWS', 'Docker', 'CI/CD', 'Vercel', 'PM2'] },
 ]
 
 const About = () => {
@@ -66,8 +68,8 @@ const About = () => {
               isDark ? 'text-white/80' : 'text-black/80',
             )}
           >
-            I architect and ship products end-to-end, from system design down to the pixels a user touches. I care about
-            the full stack, not just one layer of it.
+            Senior Software Engineer with 6+ years of experience building scalable full-stack applications. I architect
+            and ship products end-to-end, from system design down to the pixels a user touches.
           </p>
           <p
             className={classNames(
@@ -75,11 +77,11 @@ const About = () => {
               isDark ? 'text-white/50' : 'text-black/50',
             )}
           >
-            Professionally, I lead feature development, drive architectural decisions, and mentor engineers at
-            production-scale companies. I take ambiguous requirements, break them into deliverables, and see them
-            through to release. I think about systems holistically: how they scale, how they fail, and how other
-            engineers will maintain them long after the initial build. Outside of work, I design and build my own
-            products end-to-end because I genuinely enjoy the craft.
+            I lead end-to-end feature development, drive architectural decisions, and mentor engineers at
+            production-scale companies serving 200,000+ users. I translate ambiguous requirements into scalable
+            technical solutions and think about systems holistically: how they scale, how they fail, and how other
+            engineers will maintain them. Outside of work, I design and build my own products because I genuinely enjoy
+            the craft.
           </p>
         </div>
 

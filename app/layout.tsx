@@ -35,7 +35,7 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => {
         <title>Mark Artishuk - Senior Software Engineer</title>
         <meta
           name='description'
-          content='Senior Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
+          content='Senior Software Engineer with 6+ years of experience building scalable full-stack applications using TypeScript, React, Next.js, and Node.js. Open to new opportunities.'
         />
         <meta name='author' content='Mark Artishuk' />
         <meta name='robots' content='index,follow' />
@@ -45,7 +45,7 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => {
         <meta property='og:title' content='Mark Artishuk - Senior Software Engineer' />
         <meta
           property='og:description'
-          content='Senior Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
+          content='Senior Software Engineer with 6+ years of experience building scalable full-stack applications using TypeScript, React, Next.js, and Node.js. Open to new opportunities.'
         />
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://markartishuk.com' />
@@ -57,7 +57,7 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => {
         <meta name='twitter:title' content='Mark Artishuk - Senior Software Engineer' />
         <meta
           name='twitter:description'
-          content='Senior Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
+          content='Senior Software Engineer with 6+ years of experience building scalable full-stack applications using TypeScript, React, Next.js, and Node.js. Open to new opportunities.'
         />
         <meta name='twitter:image' content='https://markartishuk.com/icons/share.png' />
 

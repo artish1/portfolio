@@ -101,52 +101,51 @@ const Resume = () => {
         >
           {/* ─── Header ──────────────────────────────────── */}
           <header style={{ marginBottom: '1.25rem', borderBottom: '1.5px solid #e0e0e0', paddingBottom: '1rem' }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-              }}
-            >
-              <div>
-                <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, letterSpacing: '0.02em' }}>
-                  MARK ARTISHUK
-                </h1>
-                <p style={{ fontSize: '0.85rem', color: '#555', margin: '0.2rem 0 0', fontWeight: 500 }}>
-                  Senior Software Engineer
-                </p>
-              </div>
-              <div style={{ textAlign: 'right', fontSize: '0.78rem', color: '#444', lineHeight: 1.7 }}>
-                <div>markyshuk@gmail.com</div>
-                <div>(916) 420-8178</div>
-                <div>markartishuk.com</div>
-                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
-                  <span>github.com/artish1</span>
-                  <span>linkedin.com/in/mark-artishuk</span>
-                </div>
-              </div>
+            <div style={{ textAlign: 'center' }}>
+              <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, letterSpacing: '0.02em' }}>MARK ARTISHUK</h1>
+              <p style={{ fontSize: '0.85rem', color: '#555', margin: '0.2rem 0 0', fontWeight: 500 }}>
+                Senior Software Engineer
+              </p>
+              <p style={{ fontSize: '0.78rem', color: '#444', margin: '0.35rem 0 0' }}>
+                <a href='mailto:markyshuk@gmail.com' style={{ color: '#444', textDecoration: 'none' }}>
+                  markyshuk@gmail.com
+                </a>
+                {' • '}(916) 420-8178
+              </p>
+              <p style={{ fontSize: '0.78rem', color: '#444', margin: '0.15rem 0 0' }}>
+                markartishuk.com • github.com/artish1 • linkedin.com/in/mark-artishuk
+              </p>
             </div>
           </header>
+
+          {/* ─── Summary ─────────────────────────────────── */}
+          <section style={{ marginBottom: '1.1rem' }}>
+            <SectionTitle>Summary</SectionTitle>
+            <p style={{ fontSize: '0.78rem', color: '#333', margin: 0, lineHeight: 1.6 }}>
+              Senior Software Engineer with 6+ years of experience building scalable full-stack applications using
+              TypeScript, React, Next.js, and Node.js. Expertise in designing distributed systems, GraphQL APIs, and
+              high-performance backend architectures. Proven ability to lead end-to-end feature development, optimize
+              system performance, and deliver production-ready solutions serving 200,000+ users.
+            </p>
+          </section>
 
           {/* ─── Technical Skills ────────────────────────── */}
           <section style={{ marginBottom: '1.1rem' }}>
             <SectionTitle>Technical Skills</SectionTitle>
             <div style={{ fontSize: '0.78rem', lineHeight: 1.8 }}>
               <SkillRow label='Languages' value='TypeScript, JavaScript, SQL, Rust, C#, Java' />
-              <SkillRow
-                label='Frontend'
-                value='React, Next.js, React Native, Tailwind CSS, Three.js, Framer Motion, Apollo Client'
-              />
+              <SkillRow label='Frontend' value='React, Next.js, React Native, Tailwind CSS, Three.js, Framer Motion' />
               <SkillRow
                 label='Backend'
-                value='Node.js, GraphQL, tRPC, Express, REST, Prisma, PostgreSQL, Redis, BullMQ, Elasticsearch'
+                value='Node.js, GraphQL, tRPC, REST APIs, Express, Prisma ORM, PostgreSQL, Redis, BullMQ, Elasticsearch'
               />
-              <SkillRow label='Infrastructure' value='AWS (Lambda, EB, S3), Docker, CI/CD, Vercel, PM2, Puppeteer' />
               <SkillRow
-                label='Practices'
-                value='System Design, API Design, Performance Optimization, Code Review, Technical Mentorship'
+                label='Infrastructure & Cloud'
+                value='AWS (Lambda, Elastic Beanstalk, S3), Docker, CI/CD, Vercel, PM2'
+              />
+              <SkillRow
+                label='Concepts'
+                value='System Design, Distributed Systems, API Design, Microservices, Caching Strategies, Performance Optimization, Scalability, Technical Mentorship'
               />
             </div>
           </section>
@@ -154,59 +153,76 @@ const Resume = () => {
           {/* ─── Experience ──────────────────────────────── */}
           <section style={{ marginBottom: '1.1rem' }}>
             <SectionTitle>Experience</SectionTitle>
+            <p style={{ fontSize: '0.68rem', color: '#999', margin: '0 0 0.6rem', fontStyle: 'italic' }}>
+              Keywords: TypeScript, React, Next.js, Node.js, GraphQL, PostgreSQL, AWS, Redis, System Design, APIs,
+              Scalability
+            </p>
 
             <div className='experience-item' style={{ marginBottom: '0.9rem' }}>
               <ExperienceHeader
                 company='American Poolplayers Association'
                 location='Remote'
-                role='Software Engineer'
-                period='Feb 2021 - Present'
+                role='Senior Software Engineer'
+                period='Feb 2021 – Present'
               />
               <ul style={{ margin: '0.3rem 0 0', paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#333' }}>
                 <Li>
-                  Lead feature development and technical planning for web and mobile applications serving 200,000+
-                  members nationwide, owning tickets from requirements through release
+                  Led end-to-end development of core platform features supporting 200,000+ active users across league
+                  play, tournament management, and internal operations
                 </Li>
                 <Li>
-                  Architect and maintain scalable systems across member services, tournament management, league play,
-                  and internal staff tools
+                  Drove architectural decisions across frontend and backend systems, improving scalability and
+                  maintainability of high-traffic applications
                 </Li>
                 <Li>
-                  Drive frontend performance improvements — reduced unnecessary re-renders, optimized component
-                  architecture, and improved mobile responsiveness across the platform
+                  Reduced critical endpoint latency by up to 77% and improved overall system responsiveness by ~20%
+                  through advanced query optimization, indexing strategies, multi-layer caching, and re-architecting
+                  idempotency handling to significantly reduce database load and improve request throughput
                 </Li>
                 <Li>
-                  Improve backend reliability through query optimization, caching strategies, and response time
-                  reduction on high-traffic API endpoints
+                  Spearheaded frontend performance improvements by eliminating unnecessary re-renders and restructuring
+                  component architecture, resulting in significantly faster load times and improved mobile
+                  responsiveness
                 </Li>
                 <Li>
-                  Enforce code quality through documentation, thorough code reviews, and mentoring engineers on best
-                  practices and modern development patterns
+                  Mentored engineers through code reviews, system design guidance, and enforcing modern development
+                  standards across the team
+                </Li>
+                <Li>
+                  Partnered with product and stakeholders to translate ambiguous requirements into scalable technical
+                  solutions
                 </Li>
               </ul>
             </div>
 
             <div className='experience-item' style={{ marginBottom: '0.9rem' }}>
-              <ExperienceHeader company='HuntNHook' role='Co-Founder' period='2025 - Present' />
+              <ExperienceHeader company='HuntNHook' role='Co-Founder / Lead Engineer' period='2025 – Present' />
               <ul style={{ margin: '0.3rem 0 0', paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#333' }}>
                 <Li>
-                  Co-founded and sole-engineered a two-sided marketplace for fishing charters, hunting trips, and
-                  outdoor recreation — owned every layer from schema design to deployment
+                  Architected and built a two-sided marketplace for outdoor experiences (fishing, hunting, recreation),
+                  owning all technical decisions from schema design to production deployment
                 </Li>
                 <Li>
-                  Built full Stripe Connect integration: hold-based payments, cancellation compensation, dispute
-                  handling, delayed host payouts with daily sweep jobs, and idempotent webhook processing
+                  Designed and implemented a full Stripe Connect payment system including escrow-style holds, delayed
+                  payouts, dispute handling, and idempotent webhook processing
                 </Li>
                 <Li>
-                  Implemented PostGIS spatial search with bounding-box filtering, distance sorting, and
-                  multi-dimensional filters across species, techniques, price, and date availability
+                  Built geospatial search using PostGIS with efficient bounding-box queries, distance sorting, and
+                  multi-dimensional filtering
                 </Li>
                 <Li>
-                  Architected PM2 cluster deployment with dedicated BullMQ worker processes, Redis PubSub for
-                  cross-instance GraphQL subscriptions, and 3-tier cache invalidation
+                  Designed distributed system architecture using PM2 clustering, BullMQ worker queues, and Redis Pub/Sub
+                  for real-time GraphQL subscriptions across instances
+                </Li>
+                <Li>
+                  Implemented a multi-layer caching strategy with intelligent invalidation to support scalable,
+                  low-latency data access patterns
+                </Li>
+                <Li>
+                  Established production-ready infrastructure and deployment workflows for a scalable marketplace
+                  platform
                 </Li>
               </ul>
-              <TechLine tech='Next.js, TypeScript, PostgreSQL/PostGIS, GraphQL, Stripe Connect, Redis/BullMQ, Prisma, Apollo Client' />
             </div>
           </section>
 
@@ -218,77 +234,68 @@ const Resume = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
                   <h3 style={{ fontSize: '0.82rem', fontWeight: 700, margin: 0 }}>Rafa Sauna</h3>
-                  <span style={{ fontSize: '0.7rem', color: '#888' }}>— Solo Developer (Contract)</span>
+                  <span style={{ fontSize: '0.7rem', color: '#888' }}>— Full-Stack Platform (Contract)</span>
                 </div>
                 <span style={{ fontSize: '0.72rem', color: '#888' }}>2025</span>
               </div>
-              <p style={{ fontSize: '0.78rem', color: '#444', margin: '0.2rem 0' }}>
-                Full-stack booking, membership, and POS platform for a sauna house. Next.js admin dashboard, React
-                Native NFC wristband app, and self-service kiosk for contactless food and drink orders.
-              </p>
-              <ul style={{ margin: '0.2rem 0 0', paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#333' }}>
+              <ul style={{ margin: '0.3rem 0 0', paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#333' }}>
                 <Li>
-                  Built NFC wristband pipeline: JWT generation, React Native writer, and kiosk reader for contactless
-                  tab orders
+                  Designed and delivered a full-stack booking, membership, and POS platform, including admin dashboard,
+                  customer-facing flows, and kiosk systems
                 </Li>
                 <Li>
-                  Designed in-memory booking engine with party-aware capacity, dynamic pricing, and blockout rules
+                  Built NFC-based payment system using JWT-backed wristbands, enabling seamless contactless transactions
+                  across devices
                 </Li>
                 <Li>
-                  Integrated Stripe: subscriptions, one-time payments, Apple Pay, webhooks, refunds, and promo codes
+                  Architected a custom booking engine supporting capacity constraints, dynamic pricing, and real-time
+                  availability management
                 </Li>
+                <Li>Integrated Stripe for subscriptions, one-time payments, Apple Pay, refunds, and promotions</Li>
+                <Li>Delivered a production-ready system spanning web, mobile, and kiosk environments</Li>
               </ul>
-              <TechLine tech='Next.js, TypeScript, Prisma/PostgreSQL, tRPC, Stripe, AWS EB, React Native, NFC' />
             </div>
 
             <div className='project-item' style={{ marginBottom: '0.75rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
                   <h3 style={{ fontSize: '0.82rem', fontWeight: 700, margin: 0 }}>Construction Automation Platform</h3>
-                  <span style={{ fontSize: '0.7rem', color: '#888' }}>— Contract Developer</span>
+                  <span style={{ fontSize: '0.7rem', color: '#888' }}>— Contract</span>
                 </div>
                 <span style={{ fontSize: '0.72rem', color: '#888' }}>2025</span>
               </div>
-              <p style={{ fontSize: '0.78rem', color: '#444', margin: '0.2rem 0' }}>
-                Internal automation tool for a construction company. Reverse-engineered a closed third-party API to
-                enable data entry automation, sales pipeline syncing, and invoice generation.
-              </p>
-              <ul style={{ margin: '0.2rem 0 0', paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#333' }}>
+              <ul style={{ margin: '0.3rem 0 0', paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#333' }}>
                 <Li>
-                  Reverse-engineered an undocumented API to programmatically interface with the client&apos;s existing
-                  vendor platform
+                  Engineered an internal automation system by reverse-engineering a closed third-party API to enable
+                  programmatic data entry and workflow automation
                 </Li>
                 <Li>
-                  Automated 20+ daily data entry records and built pipeline-to-invoice sync mapping construction models
-                  into auto-generated invoices
+                  Automated high-volume operational tasks (20+ daily records), reducing manual workload and improving
+                  data accuracy
                 </Li>
                 <Li>
-                  Implemented headless browser automation via Puppeteer on AWS Lambda for workflows the API
-                  couldn&apos;t cover
+                  Built pipeline-to-invoice synchronization logic, transforming operational data into structured
+                  financial outputs
                 </Li>
+                <Li>Implemented headless browser automation using Puppeteer on AWS Lambda for unsupported workflows</Li>
               </ul>
-              <TechLine tech='Next.js, TypeScript, PostgreSQL, Puppeteer, AWS Lambda' />
             </div>
           </section>
 
           {/* ─── Education ───────────────────────────────── */}
           <section>
             <SectionTitle>Education</SectionTitle>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
+            <div style={{ fontSize: '0.78rem' }}>
               <div>
                 <span style={{ fontWeight: 600 }}>Lambda School</span>
                 <span style={{ color: '#666' }}> — Full Stack Web Development</span>
               </div>
-              <span style={{ color: '#888', fontSize: '0.72rem' }}>2020</span>
             </div>
-            <div
-              style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginTop: '0.25rem' }}
-            >
+            <div style={{ fontSize: '0.78rem', marginTop: '0.25rem' }}>
               <div>
                 <span style={{ fontWeight: 600 }}>Sierra College</span>
                 <span style={{ color: '#666' }}> — Computer Science</span>
               </div>
-              <span style={{ color: '#888', fontSize: '0.72rem' }}>2018</span>
             </div>
           </section>
         </div>
@@ -349,10 +356,6 @@ const ExperienceHeader = ({
 
 const Li = ({ children }: { children: React.ReactNode }) => (
   <li style={{ marginBottom: '0.15rem', lineHeight: 1.55, paddingLeft: '0.15rem' }}>{children}</li>
-)
-
-const TechLine = ({ tech }: { tech: string }) => (
-  <p style={{ fontSize: '0.7rem', color: '#777', margin: '0.3rem 0 0', fontStyle: 'italic' }}>Tech: {tech}</p>
 )
 
 export default Resume

@@ -24,7 +24,7 @@ export const projects: Project[] = [
     slug: 'huntnhook',
     title: 'HuntNHook',
     description:
-      'Co-founded and sole-engineered a two-sided marketplace for fishing charters, hunting trips, and outdoor recreation. End-to-end platform covering map-based search, booking with hold-based payments, real-time messaging, Stripe Connect host payouts, and background job processing.',
+      'Architected and built a two-sided marketplace for outdoor experiences (fishing, hunting, recreation), owning all technical decisions from schema design to production deployment. End-to-end platform covering geospatial search, booking with escrow-style payments, real-time messaging, Stripe Connect host payouts, and distributed background job processing.',
     tech: [
       'Next.js',
       'TypeScript',
@@ -48,19 +48,21 @@ export const projects: Project[] = [
     ],
     privateRepo: true,
     featured: true,
-    role: 'Co-Founder',
+    role: 'Co-Founder / Lead Engineer',
     year: '2026',
     highlights: [
-      'Full Stripe Connect integration -- hold-based payments, cancellation compensation, dispute handling, delayed host payouts with daily sweep jobs, and idempotent webhook processing',
-      'PostGIS spatial search with bounding-box filtering, distance sorting, and multi-dimensional filters (species, techniques, price, date availability)',
-      'PM2 cluster deployment with dedicated BullMQ worker process, Redis PubSub for cross-instance GraphQL subscriptions, and 3-tier repo cache invalidation (surgical/broad/nuclear)',
+      'Designed and implemented a full Stripe Connect payment system including escrow-style holds, delayed payouts, dispute handling, and idempotent webhook processing',
+      'Built geospatial search using PostGIS with efficient bounding-box queries, distance sorting, and multi-dimensional filtering',
+      'Designed distributed system architecture using PM2 clustering, BullMQ worker queues, and Redis Pub/Sub for real-time GraphQL subscriptions across instances',
+      'Implemented a multi-layer caching strategy with intelligent invalidation to support scalable, low-latency data access patterns',
+      'Established production-ready infrastructure and deployment workflows for a scalable marketplace platform',
     ],
   },
   {
     slug: 'rafa-sauna',
     title: 'Rafa Sauna',
     description:
-      'Full-stack booking, membership, and POS platform for a sauna house. Spans a Next.js admin dashboard, a React Native NFC wristband app, and a self-service kiosk for tab-free food and drink orders.',
+      'Designed and delivered a full-stack booking, membership, and POS platform, including admin dashboard, customer-facing flows, and kiosk systems. Built NFC-based payment system using JWT-backed wristbands for seamless contactless transactions across devices.',
     tech: ['Next.js', 'TypeScript', 'Prisma / PostgreSQL', 'tRPC', 'Stripe', 'AWS EB', 'React Native', 'NFC', 'Resend'],
     images: [
       {
@@ -90,12 +92,13 @@ export const projects: Project[] = [
     liveUrl: 'https://app.rafasauna.com/booking',
     privateRepo: true,
     featured: true,
-    role: 'Solo Contract Developer',
+    role: 'Full-Stack Platform (Contract)',
     year: '2025',
     highlights: [
-      'NFC wristband pipeline: JWT generation, React Native writer, kiosk reader for contactless tab orders',
-      'In-memory booking engine with party-aware capacity, dynamic pricing, and blockout rules (no timeslot table)',
-      'Stripe integration: subscriptions, one-time payments, Apple Pay, webhooks, refunds, and promo codes',
+      'Built NFC-based payment system using JWT-backed wristbands, enabling seamless contactless transactions across devices',
+      'Architected a custom booking engine supporting capacity constraints, dynamic pricing, and real-time availability management',
+      'Integrated Stripe for subscriptions, one-time payments, Apple Pay, refunds, and promotions',
+      'Delivered a production-ready system spanning web, mobile, and kiosk environments',
     ],
   },
   {
@@ -133,7 +136,7 @@ export const projects: Project[] = [
     slug: 'construction-automation',
     title: 'Construction Automation Platform',
     description:
-      "Internal automation tool for a construction company. Reverse-engineered a closed third-party API to unlock data entry automation, sales pipeline syncing, and invoice generation that the vendor's own product didn't support.",
+      'Engineered an internal automation system by reverse-engineering a closed third-party API to enable programmatic data entry and workflow automation. Automated high-volume operational tasks, reducing manual workload and improving data accuracy.',
     tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Puppeteer', 'AWS Lambda'],
     images: [],
     privateRepo: true,
@@ -142,10 +145,10 @@ export const projects: Project[] = [
     year: '2025',
     placeholder: 'automation',
     highlights: [
-      "Reverse-engineered an undocumented, closed API to programmatically interface with the client's existing vendor platform",
-      'Automated 20+ daily data entry records, eliminating manual input and reducing human error across project records',
-      'Built pipeline-to-invoice sync that maps construction project models from the sales pipeline into auto-generated invoices',
-      "Headless browser automation via Puppeteer on AWS Lambda for workflows the API couldn't cover",
+      'Engineered an internal automation system by reverse-engineering a closed third-party API to enable programmatic data entry and workflow automation',
+      'Automated high-volume operational tasks (20+ daily records), reducing manual workload and improving data accuracy',
+      'Built pipeline-to-invoice synchronization logic, transforming operational data into structured financial outputs',
+      'Implemented headless browser automation using Puppeteer on AWS Lambda for unsupported workflows',
     ],
   },
 ]

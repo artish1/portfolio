@@ -10,29 +10,32 @@ export interface Experience {
 
 export const experience: Experience[] = [
   {
-    company: 'HuntNHook',
-    role: 'Co-Founder',
-    period: '2025 - Present',
-    type: 'cofounded',
+    company: 'American Poolplayers Association',
+    role: 'Senior Software Engineer',
+    period: 'Feb 2021 – Present',
+    type: 'fulltime',
     description:
-      'Co-founded and sole-engineered a two-sided marketplace for outdoor recreation. Owned every layer from database schema to deployment pipeline.',
+      'Led end-to-end development of core platform features supporting 200,000+ active users across league play, tournament management, and internal operations.',
     highlights: [
-      'Designed and built the full platform end-to-end: PostGIS search, Stripe Connect payments, real-time messaging, and background job processing',
-      'Architected PM2 cluster deployment with dedicated BullMQ workers, Redis PubSub for cross-instance subscriptions, and multi-tier cache invalidation',
+      'Drove architectural decisions across frontend and backend systems, improving scalability and maintainability of high-traffic applications',
+      'Reduced critical endpoint latency by up to 77% and improved overall system responsiveness by ~20% through advanced query optimization, indexing strategies, and multi-layer caching',
+      'Spearheaded frontend performance improvements by eliminating unnecessary re-renders and restructuring component architecture',
+      'Mentored engineers through code reviews, system design guidance, and enforcing modern development standards across the team',
+      'Partnered with product and stakeholders to translate ambiguous requirements into scalable technical solutions',
     ],
   },
   {
-    company: 'American Poolplayers Association',
-    role: 'Software Engineer',
-    period: 'Feb 2021 - Present',
-    type: 'fulltime',
+    company: 'HuntNHook',
+    role: 'Co-Founder / Lead Engineer',
+    period: '2025 – Present',
+    type: 'cofounded',
     description:
-      'Lead feature development and architecture for member services, tournament systems, and internal staff tools across web and mobile.',
+      'Architected and built a two-sided marketplace for outdoor experiences (fishing, hunting, recreation), owning all technical decisions from schema design to production deployment.',
     highlights: [
-      'Lead and plan feature development, creating tickets, defining requirements, and ensuring smooth execution across the engineering team',
-      "Architect and maintain scalable web and mobile applications serving the organization's nationwide member base",
-      'Improve system reliability by refactoring legacy code, optimizing queries, and implementing modern development practices',
-      'Enforce code quality and maintainability through documentation, code reviews, and best practices',
+      'Designed and implemented a full Stripe Connect payment system including escrow-style holds, delayed payouts, dispute handling, and idempotent webhook processing',
+      'Built geospatial search using PostGIS with efficient bounding-box queries, distance sorting, and multi-dimensional filtering',
+      'Designed distributed system architecture using PM2 clustering, BullMQ worker queues, and Redis Pub/Sub for real-time GraphQL subscriptions across instances',
+      'Implemented a multi-layer caching strategy with intelligent invalidation to support scalable, low-latency data access patterns',
     ],
   },
 ]

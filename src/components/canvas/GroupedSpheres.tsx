@@ -11,7 +11,7 @@ const GroupedSpheres = () => {
   useEffect(() => {
     if (groupRef.current && camera) {
       const { x, y, z } = groupRef.current.position
-      camera.lookAt(x, y - 30, z)
+      camera.lookAt(x, y - 3, z)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [camera])
@@ -24,7 +24,7 @@ const GroupedSpheres = () => {
   return (
     <>
       {/* @ts-ignore */}
-      <group ref={groupRef} position={[0, 3.5, 0]}>
+      <group ref={groupRef} position={[0, 3.5, 0]} >
         <SimpleSphere color={colors.primary} scale1D={3.3} position={[0, -1, 2.1]} />
         <SimpleSphere color={colors.accent2} scale1D={2.8} position={[0, 2.8, -2.8]} />
         <SimpleSphere color={colors.light} scale1D={2} position={[-2, 5, 3.5]} />

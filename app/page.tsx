@@ -43,19 +43,25 @@ const Background = () => {
   }, [])
 
   return (
-    <div className='flex items-center justify-center flex-col h-[2600px]'>
-      <Scene />
+    <div className='relative flex items-center justify-center flex-col h-screen'>
+      <motion.div className="h-full w-full" transition={{ duration: 0.6 }} animate={{ opacity: toggled ? 1 : 0 }}>
+        <Scene />
+      </motion.div>
 
       <View>
         <Suspense fallback={null}>
           <FogComponent color={isDark ? '#28231F' : '#ffffff'} />
           <Environment files='/assets/brown-environment.hdr' />
-          <PerspectiveCamera makeDefault fov={52} position={[58, 10, 70]} />
+          <PerspectiveCamera makeDefault
+            fov={40}
+            position={[40, 8, 50]}
+          />
+
           <GroupedSpheres />
           {/* @ts-expect-error -- R3F extends JSX.IntrinsicElements at runtime */}
           <ambientLight intensity={0.7} />
           {/* @ts-expect-error -- R3F extends JSX.IntrinsicElements at runtime */}
-          <directionalLight castShadow position={[13, 6, 8]} intensity={1.2} />
+          <directionalLight castShadow position={[13, 6, 8]} intensity={0.2} />
         </Suspense>
       </View>
 

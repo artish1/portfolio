@@ -3,14 +3,13 @@ import { useMotionValue, useSpring } from 'motion/react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
 import { useToggled } from '@/contexts/ToggledContext'
-import { useTheme } from '@/theme/ThemeContext'
 
 const FogComponent = ({ color = '#17171b' }: { color?: string }) => {
   const { toggled } = useToggled()
-  const { theme } = useTheme()
+  // const toggled = false;
 
-  const near = toggled ? 78 : 60
-  const far = toggled ? (theme === 'light' ? 110 : 100) : 70
+  const near = toggled ? 50 : -40
+  const far = toggled ? 83 : 0
 
   const { scene } = useThree()
   const nearMotion = useMotionValue(near)

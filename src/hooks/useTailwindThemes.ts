@@ -9,13 +9,6 @@ type ThemeTailwindVariants = {
 }
 
 const themes: Record<Theme, ThemeTailwindVariants> = {
-  light: {
-    background: 'bg-white',
-    text: 'text-black',
-    backgroundLight: 'bg-[#F5F5F5]',
-    backgroundAccent: 'bg-black',
-    textAccent: 'text-white',
-  },
   dark: {
     background: 'bg-surface-bg',
     backgroundAccent: 'bg-accent',

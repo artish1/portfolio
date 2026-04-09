@@ -15,7 +15,7 @@ const SectionHeader = ({ children, id }: { children: React.ReactNode; id?: strin
       transition={{ duration: 0.5 }}
       className='mb-10'
     >
-      <h2 className='text-sm font-medium uppercase tracking-[0.2em] text-accent/60'>{children}</h2>
+      <h2 className='text-sm font-medium uppercase tracking-[0.2em] text-accent/70'>{children}</h2>
     </motion.div>
   )
 }
@@ -25,7 +25,22 @@ const SectionHeader = ({ children, id }: { children: React.ReactNode; id?: strin
 const techAreas: { label: string; items: string[] }[] = [
   { label: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'React Native', 'Tailwind CSS', 'Apollo'] },
   {
-    label: 'Backend', items: ['Node.js', 'Rust', 'GraphQL', 'C#', 'VB.NET', 'SQL', 'NoSQL', 'Redis', 'Kafka', 'BullMQ', 'tRPC', 'Prisma', 'Drizzle']
+    label: 'Backend',
+    items: [
+      'Node.js',
+      'Rust',
+      'GraphQL',
+      'C#',
+      'VB.NET',
+      'SQL',
+      'NoSQL',
+      'Redis',
+      'Kafka',
+      'BullMQ',
+      'tRPC',
+      'Prisma',
+      'Drizzle',
+    ],
   },
   { label: 'Infrastructure', items: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Cloudflare'] },
 ]
@@ -86,9 +101,7 @@ const About = () => {
                     key={tech}
                     className={classNames(
                       'inline-block px-3 py-1.5 text-[0.75rem] font-medium rounded-full transition-colors duration-200',
-                      isDark
-                        ? 'bg-white/[0.05] text-white/50 hover:bg-accent/10 hover:text-accent'
-                        : 'bg-black/[0.05] text-black/50 hover:bg-black/[0.1] hover:text-black/70',
+                      'bg-surface-card text-white/50 hover:bg-accent/10 hover:text-accent',
                     )}
                   >
                     {tech}
@@ -210,6 +223,8 @@ const Content = ({ divRef }: { divRef: React.RefObject<HTMLDivElement> }) => {
           <SectionHeader>About</SectionHeader>
           <About />
         </div>
+
+        <hr className='border-t border-white/[0.15] mb-20' />
 
         {/* Experience */}
         <div id='experience'>

@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'PP Editorial New';
+  src: url('/fonts/PP Editorial New Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Editorial New';
+  src: url('/fonts/PP Editorial New Ultralight Italic.otf') format('opentype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -35,5 +51,42 @@
   *:focus-visible {
     outline: 2px solid #c8a47e;
     outline-offset: 2px;
+  }
+}
+
+/* Animated noise texture – shifts background-position through the tiled image */
+@keyframes noise {
+  0% {
+    background-position: 0 0;
+  }
+  10% {
+    background-position: -100px -25px;
+  }
+  20% {
+    background-position: -200px -50px;
+  }
+  30% {
+    background-position: -75px -150px;
+  }
+  40% {
+    background-position: -150px -75px;
+  }
+  50% {
+    background-position: -50px -200px;
+  }
+  60% {
+    background-position: -175px -125px;
+  }
+  70% {
+    background-position: -25px -100px;
+  }
+  80% {
+    background-position: -125px -175px;
+  }
+  90% {
+    background-position: -200px -50px;
+  }
+  100% {
+    background-position: 0 0;
   }
 }

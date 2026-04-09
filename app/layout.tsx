@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import { Noto_Sans } from 'next/font/google'
 import { ToggledProvider } from './contexts/ToggledContext'
 import useTailwindThemes from '@/hooks/useTailwindThemes'
+import BackgroundGrid from '@/components/decorative/BackgroundGrid'
 
 const font1 = Noto_Sans({
   weight: ['400', '500', '700'],
@@ -70,6 +71,7 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => {
         <link rel='shortcut icon' href='/icons/apple-touch-icon.png' />
       </head>
       <body>
+        <BackgroundGrid />
         <Layout className={font1.className}>{children}</Layout>
       </body>
     </html>

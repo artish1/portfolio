@@ -32,32 +32,32 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => {
       <head>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, minimum-scale=1, initial-scale=1.0' />
-        <title>Mark Artishuk - Senior Software Engineer</title>
+        <title>Mark Artishuk - Software Engineer</title>
         <meta
           name='description'
-          content='Senior Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
+          content='Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
         />
         <meta name='author' content='Mark Artishuk' />
         <meta name='robots' content='index,follow' />
         <meta name='theme-color' content='#28231F' />
 
         {/* Open Graph */}
-        <meta property='og:title' content='Mark Artishuk - Senior Software Engineer' />
+        <meta property='og:title' content='Mark Artishuk - Software Engineer' />
         <meta
           property='og:description'
-          content='Senior Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
+          content='Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
         />
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://markartishuk.com' />
         <meta property='og:image' content='https://markartishuk.com/icons/share.png' />
-        <meta property='og:site_name' content='Mark Artishuk - Senior Software Engineer' />
+        <meta property='og:site_name' content='Mark Artishuk - Software Engineer' />
 
         {/* Twitter */}
         <meta name='twitter:card' content='summary_large_image' />
-        <meta name='twitter:title' content='Mark Artishuk - Senior Software Engineer' />
+        <meta name='twitter:title' content='Mark Artishuk - Software Engineer' />
         <meta
           name='twitter:description'
-          content='Senior Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
+          content='Software Engineer building polished products with React, Next.js, TypeScript, and Node.js. Open to new opportunities.'
         />
         <meta name='twitter:image' content='https://markartishuk.com/icons/share.png' />
 

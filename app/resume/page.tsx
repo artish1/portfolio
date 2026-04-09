@@ -115,7 +115,7 @@ const Resume = () => {
                   MARK ARTISHUK
                 </h1>
                 <p style={{ fontSize: '0.85rem', color: '#555', margin: '0.2rem 0 0', fontWeight: 500 }}>
-                  Senior Software Engineer
+                  Software Engineer
                 </p>
               </div>
               <div style={{ textAlign: 'right', fontSize: '0.78rem', color: '#444', lineHeight: 1.7 }}>

@@ -66,7 +66,8 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ onAnimationComple
           {/* Center -- name + status */}
           <div className='flex flex-col items-center gap-1 mx-16'>
             <SlideUp delay={headerAnimationOffset} onComplete={onAnimationComplete}>
-              <h1 className={classNames('text-lg font-bold tracking-wide', text)}>MARK ARTISHUK</h1>
+              <h1
+                className={classNames('text-xl font-bold tracking-wide', text)}>MARK ARTISHUK</h1>
             </SlideUp>
             <SlideUp delay={headerAnimationOffset + 0.1}>
               <StatusIndicator />

@@ -7,6 +7,7 @@ import { Noto_Sans } from 'next/font/google'
 import { ToggledProvider } from './contexts/ToggledContext'
 import useTailwindThemes from '@/hooks/useTailwindThemes'
 import BackgroundGrid from '@/components/decorative/BackgroundGrid'
+import { usePathname } from 'next/navigation'
 
 const font1 = Noto_Sans({
   weight: ['400', '500', '700'],
@@ -26,6 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 const LayoutContent = ({ children }: { children: React.ReactNode }) => {
   const { background } = useTailwindThemes()
+  const pathname = usePathname()
+  const isResume = pathname === '/resume'
 
   return (
     <html lang='en' className={classNames('antialiased', background)}>
@@ -71,7 +74,7 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => {
         <link rel='shortcut icon' href='/icons/apple-touch-icon.png' />
       </head>
       <body>
-        <BackgroundGrid />
+        {!isResume && <BackgroundGrid />}
         <Layout className={font1.className}>{children}</Layout>
       </body>
     </html>

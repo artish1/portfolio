@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useTheme } from '@/theme/ThemeContext'
 import PerlinNoise from './PerlinNoise'
 
@@ -11,6 +10,9 @@ import PerlinNoise from './PerlinNoise'
  * repeating diagonal-checker SVG pattern, and a transparent centre column
  * that lets the actual page content show through.
  *
+ * The wrapper is position:absolute spanning the full document height, so the
+ * background scrolls naturally with the page — no scroll listeners needed.
+ *
  * Inspired by hex.tech's geometric side-rail treatment.
  */
 const BackgroundGrid = () => {
@@ -20,14 +22,6 @@ const BackgroundGrid = () => {
   // Encode the fill colour for the SVG data-URI.
   // Dark mode: subtle lift above the page bg (#28231F) – just a few steps lighter.
   // Light mode: very faint warm grey.
-  const [scrollY, setScrollY] = useState(0)
-
-  useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   const fill = isDark ? '%233d3632' : '%23ddd8da'
 
   const patternUrl = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><rect width='2' height='2' fill='${fill}'/><rect x='2' y='2' width='2' height='2' fill='${fill}'/></svg>")`
@@ -35,15 +29,16 @@ const BackgroundGrid = () => {
   const sideStyle: React.CSSProperties = {
     backgroundImage: patternUrl,
     backgroundRepeat: 'repeat',
-    backgroundPosition: `0 ${-scrollY}px`,
   }
 
   return (
     <div
-      className='pointer-events-none fixed inset-0 z-[1]'
+      className='pointer-events-none absolute top-0 left-0 right-0 z-[1]'
       style={{
         display: 'grid',
         gridTemplateColumns: '2% 1fr 2%',
+        minHeight: '100%',
+        height: '100%',
       }}
     >
       {/* Left gutter – checkerboard only */}
@@ -58,7 +53,6 @@ const BackgroundGrid = () => {
             backgroundImage: 'url("/assets/light-bkg-noise.webp")',
             backgroundRepeat: 'repeat',
             backgroundSize: '256px 256px',
-            backgroundPosition: `0 ${-scrollY}px`,
             mixBlendMode: 'soft-light',
             opacity: 0.5,
           }}

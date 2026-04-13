@@ -11,7 +11,7 @@ export interface Experience {
 export const experience: Experience[] = [
   {
     company: 'American Poolplayers Association',
-    role: 'Senior Software Engineer',
+    role: 'Software Engineer',
     period: 'Feb 2021 – Present',
     type: 'fulltime',
     description:

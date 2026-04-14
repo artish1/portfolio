@@ -104,7 +104,7 @@ const Resume = () => {
             <div style={{ textAlign: 'center' }}>
               <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0, letterSpacing: '0.02em' }}>MARK ARTISHUK</h1>
               <p style={{ fontSize: '0.85rem', color: '#555', margin: '0.2rem 0 0', fontWeight: 500 }}>
-                Senior Software Engineer
+                Software Engineer
               </p>
               <p style={{ fontSize: '0.78rem', color: '#444', margin: '0.35rem 0 0' }}>
                 <a href='mailto:markyshuk@gmail.com' style={{ color: '#444', textDecoration: 'none' }}>
@@ -162,7 +162,7 @@ const Resume = () => {
               <ExperienceHeader
                 company='American Poolplayers Association'
                 location='Remote'
-                role='Senior Software Engineer'
+                role='Software Engineer'
                 period='Feb 2021 – Present'
               />
               <ul style={{ margin: '0.3rem 0 0', paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#333' }}>

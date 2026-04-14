@@ -68,7 +68,7 @@ const About = () => {
               isDark ? 'text-white/80' : 'text-black/80',
             )}
           >
-            Senior Software Engineer with 6+ years of experience building scalable full-stack applications. I architect
+            Software Engineer with 6+ years of experience building scalable full-stack applications. I architect
             and ship products end-to-end, from system design down to the pixels a user touches.
           </p>
           <p

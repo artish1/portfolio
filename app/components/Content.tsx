@@ -68,8 +68,8 @@ const About = () => {
               isDark ? 'text-white/80' : 'text-black/80',
             )}
           >
-            Software Engineer with 6+ years of experience building scalable full-stack applications. I architect
-            and ship products end-to-end, from system design down to the pixels a user touches.
+            Software Engineer with 6+ years of experience building scalable full-stack applications. I architect and
+            ship products end-to-end, from system design down to the pixels a user touches.
           </p>
           <p
             className={classNames(
@@ -214,10 +214,7 @@ const Content = ({ divRef }: { divRef: React.RefObject<HTMLDivElement> }) => {
   return (
     <div
       ref={divRef}
-      className={classNames(
-        'absolute top-[100vh] z-7 left-[50%] translate-x-[-50%] max-w-7xl w-full pb-16 flex items-start justify-center',
-        text,
-      )}
+      className={classNames('relative z-7 mx-auto max-w-7xl w-full pb-16 flex items-start justify-center', text)}
     >
       <div className='w-full px-6 md:px-12 lg:px-16'>
         {/* About */}

@@ -33,12 +33,10 @@ const BackgroundGrid = () => {
 
   return (
     <div
-      className='pointer-events-none absolute top-0 left-0 right-0 z-[1]'
+      className='pointer-events-none absolute inset-0 z-[1]'
       style={{
         display: 'grid',
         gridTemplateColumns: '2% 1fr 2%',
-        minHeight: '100%',
-        height: '100%',
       }}
     >
       {/* Left gutter – checkerboard only */}

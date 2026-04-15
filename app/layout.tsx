@@ -74,8 +74,10 @@ const LayoutContent = ({ children }: { children: React.ReactNode }) => {
         <link rel='shortcut icon' href='/icons/apple-touch-icon.png' />
       </head>
       <body>
-        {!isResume && <BackgroundGrid />}
-        <Layout className={font1.className}>{children}</Layout>
+        <div className='relative min-h-screen'>
+          {!isResume && <BackgroundGrid />}
+          <Layout className={font1.className}>{children}</Layout>
+        </div>
       </body>
     </html>
   )

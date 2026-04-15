@@ -44,6 +44,66 @@
     position: relative;
   }
 
+  html.dark {
+    --dot-color: rgba(255, 255, 255, 0.1);
+    --gutter-fill: %233d3632;
+  }
+
+  /* ── Full-page dot grid ─────────────────────────────────── */
+  /* Applied to <html> so it paints the canvas and covers the */
+  /* entire scrollable document — no JS, scrolls naturally.   */
+  html::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-color: var(--dot-color);
+    -webkit-mask-image: radial-gradient(white 1px, transparent 1px);
+    mask-image: radial-gradient(white 1px, transparent 1px);
+    -webkit-mask-size: 10px 10px;
+    mask-size: 10px 10px;
+    min-height: 100%;
+  }
+
+  /* ── Side gutter checkerboard ───────────────────────────── */
+  html::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: var(--gutter-pattern), var(--gutter-pattern);
+    background-repeat: repeat, repeat;
+    background-size:
+      4px 4px,
+      4px 4px;
+    background-position:
+      left top,
+      right top;
+    -webkit-mask-image:
+      linear-gradient(to right, black 2%, transparent 2%), linear-gradient(to left, black 2%, transparent 2%);
+    mask-image: linear-gradient(to right, black 2%, transparent 2%), linear-gradient(to left, black 2%, transparent 2%);
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
+  }
+
+  /* ── Paper noise texture (centre column only) ───────────── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url('/assets/light-bkg-noise.webp');
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    mix-blend-mode: soft-light;
+    opacity: 0.5;
+    -webkit-mask-image: linear-gradient(to right, transparent 2%, black 2%, black 98%, transparent 98%);
+    mask-image: linear-gradient(to right, transparent 2%, black 2%, black 98%, transparent 98%);
+  }
+
   /* Remove default focus outline but keep accessible focus-visible */
   *:focus {
     outline: none;

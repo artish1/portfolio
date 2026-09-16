@@ -1,3 +1,4 @@
+import { yearsOfExperience } from '@/data/experience'
 import ProjectsSection from '@/components/projects/ProjectsSection'
 import ExperienceSection from '@/components/experience/ExperienceSection'
 import useTailwindThemes from '@/hooks/useTailwindThemes'
@@ -68,8 +69,9 @@ const About = () => {
               isDark ? 'text-white/80' : 'text-black/80',
             )}
           >
-            Software Engineer with 6+ years of experience building scalable full-stack applications. I architect and
-            ship products end-to-end, from system design down to the pixels a user touches.
+            {`Software Engineer with ${yearsOfExperience()}+ years of experience building scalable full-stack ` +
+              `applications. I architect and ship products end-to-end, from system design down to the pixels a ` +
+              `user touches.`}
           </p>
           <p
             className={classNames(

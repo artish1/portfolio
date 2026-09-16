@@ -8,6 +8,8 @@
  * All text is real DOM content — selectable, searchable, copyable.
  */
 
+import { yearsOfExperience } from '@/data/experience'
+
 const Resume = () => {
   return (
     <>
@@ -122,10 +124,11 @@ const Resume = () => {
           <section style={{ marginBottom: '1.1rem' }}>
             <SectionTitle>Summary</SectionTitle>
             <p style={{ fontSize: '0.78rem', color: '#333', margin: 0, lineHeight: 1.6 }}>
-              Senior Software Engineer with 6+ years of experience building scalable full-stack applications using
-              TypeScript, React, Next.js, and Node.js. Expertise in designing distributed systems, GraphQL APIs, and
-              high-performance backend architectures. Proven ability to lead end-to-end feature development, optimize
-              system performance, and deliver production-ready solutions serving 200,000+ users.
+              {`Software Engineer with ${yearsOfExperience()}+ years of experience building scalable full-stack ` +
+                `applications using TypeScript, React, Next.js, and Node.js. Expertise in designing distributed ` +
+                `systems, GraphQL APIs, and high-performance backend architectures. Proven ability to lead ` +
+                `end-to-end feature development, optimize system performance, and deliver production-ready ` +
+                `solutions serving 200,000+ users.`}
             </p>
           </section>
 

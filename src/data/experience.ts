@@ -1,3 +1,25 @@
+/**
+ * Start of professional software engineering career (first role: APA).
+ * Single source of truth — the "N+ years of experience" figure shown on the
+ * landing page, the resume, and in page metadata is all derived from this.
+ */
+export const CAREER_START = new Date(2021, 1, 1) // Feb 2021
+
+/**
+ * Completed years since CAREER_START, floored — the figure never overstates,
+ * it only increments once the anniversary has actually passed.
+ */
+export function yearsOfExperience(asOf: Date = new Date()): number {
+  let years = asOf.getFullYear() - CAREER_START.getFullYear()
+  const monthDelta = asOf.getMonth() - CAREER_START.getMonth()
+
+  if (monthDelta < 0 || (monthDelta === 0 && asOf.getDate() < CAREER_START.getDate())) {
+    years--
+  }
+
+  return years
+}
+
 export interface Experience {
   company: string
   role: string

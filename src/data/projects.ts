@@ -64,8 +64,10 @@ export const projects: Project[] = [
       ['Jobs', 'BullMQ, PM2'],
     ],
     images: [
-      { src: '/images/projects/huntnhook/hnh-1.jpg', alt: 'Landing page with category selection and search' },
-      { src: '/images/projects/huntnhook/hnh-2.png', alt: 'Map-based search with PostGIS filtering and listing cards' },
+      { src: '/images/projects/huntnhook/01-landing-hero.png', alt: 'Landing page with category selection and search' },
+      { src: '/images/projects/huntnhook/02-search-map.png', alt: 'Map-based search with PostGIS filtering and listing cards' },
+      { src: '/images/projects/huntnhook/04-listing-detail.png', alt: 'Listing detail page with photo gallery, host and pricing' },
+      { src: '/images/projects/huntnhook/05-booking-flow.png', alt: 'Booking flow with session selection, date, guests and add-ons' },
     ],
   },
   {

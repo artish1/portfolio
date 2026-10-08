@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: 'Software engineer building full-stack web products. Sacramento, open to remote.',
     type: 'website',
     url: '/',
-    images: ['/images/projects/huntnhook/hnh-1.jpg'],
+    images: ['/images/projects/huntnhook/01-landing-hero.png'],
   },
   twitter: { card: 'summary_large_image' },
 }

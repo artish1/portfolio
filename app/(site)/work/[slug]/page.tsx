@@ -21,7 +21,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       description: p.outcome,
       type: 'article',
       url: projectHref(p.slug),
-      images: [p.images[0]?.src ?? '/images/projects/huntnhook/hnh-1.jpg'],
+      images: [p.images[0]?.src ?? '/images/projects/huntnhook/01-landing-hero.png'],
     },
     twitter: { card: 'summary_large_image' },
   }

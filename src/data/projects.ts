@@ -31,9 +31,9 @@ export const projects: Project[] = [
     role: 'Co-founder / Lead Engineer',
     year: '2025–present',
     outcome:
-      'A two-sided marketplace for guided fishing and hunting trips. I built it from the database schema to production as the only engineer.',
+      'A two-sided marketplace for guided fishing and hunting trips. I own the full technical build, from database schema to production.',
     context:
-      "Hosts shouldn't get paid until a trip actually happens, guests need a way to get refunds and open disputes, and search has to work by distance in rural areas. I built and run all of it myself.",
+      "Hosts shouldn't get paid until a trip actually happens, guests need a way to get refunds and open disputes, and search has to work by distance in rural areas. I designed the system to handle all three.",
     decisions: [
       {
         title: 'Escrow-style payments on Stripe Connect',

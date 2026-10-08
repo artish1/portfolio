@@ -34,18 +34,16 @@ export const LINKEDIN_URL = 'https://linkedin.com/in/mark-artishuk'
 export const RESUME_URL = '/resume'
 
 export const skills: { label: string; items: string }[] = [
-  { label: 'Languages', items: 'TypeScript, JavaScript, SQL, Rust, C#' },
-  { label: 'Frontend', items: 'React, Next.js, React Native, Tailwind, Three.js, Framer Motion' },
-  {
-    label: 'Backend',
-    items: 'Node.js, GraphQL, tRPC, Express, Prisma, PostgreSQL / PostGIS, Redis, BullMQ, Elasticsearch',
-  },
+  { label: 'Languages', items: 'TypeScript, JavaScript, Java, C#, VB.NET, SQL, Rust' },
+  { label: 'Frontend', items: 'React, Next.js, React Native, Expo, Tailwind, Three.js, Framer Motion' },
+  { label: 'Backend', items: 'Node.js, Express, GraphQL, tRPC, REST APIs, Prisma, BullMQ' },
+  { label: 'Databases', items: 'PostgreSQL, SQL Server, MongoDB, Redis, Elasticsearch' },
   {
     label: 'Systems & architecture',
     items:
-      'System design, Distributed systems, Event-driven architecture, Caching, Scalability, Query optimization, Payment systems, Real-time',
+      'System design, Distributed systems, Event-driven architecture, Real-time systems, Caching strategies, Query optimization, Payment systems',
   },
-  { label: 'Cloud & delivery', items: 'AWS, serverless, Docker, CI/CD pipelines, Vercel, PM2' },
+  { label: 'Cloud & delivery', items: 'AWS, Cloudflare, serverless, Docker, Kubernetes, Terraform, CI/CD pipelines, Vercel, PM2' },
 ]
 
 /** APA highlights. Segments with `b` render bold (metrics only). */
@@ -80,7 +78,7 @@ export const otherRoles: {
     role: 'Co-founder / Lead Engineer',
     company: 'HuntNHook',
     period: '2025–present',
-    summary: 'I am the only engineer on a marketplace for guided outdoor trips.',
+    summary: 'Architected and shipped a two-sided marketplace for guided outdoor trips, end to end.',
     href: '/work/huntnhook',
     linkLabel: 'See project',
     arrow: '→',

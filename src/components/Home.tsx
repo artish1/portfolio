@@ -124,14 +124,14 @@ export default function Home({ active, nav, dark, onTheme, copied, onCopyEmail, 
           <section id='about' data-spy='about' className='about'>
             <h2 className='sr-only'>About</h2>
             <p className='lead'>
-              I&apos;ve spent five years writing production software in TypeScript, React, Next.js and Node. At the{' '}
+              I&apos;ve been writing software for six years. At the{' '}
               <strong>American Poolplayers Association</strong> I work across the stack on a platform with{' '}
-              <strong>200,000+ players</strong>. Outside of work I&apos;m co-founding{' '}
+              <strong>200,000+ players</strong>. Outside of work I&apos;m a co-founder of{' '}
               <a href={projectHref('huntnhook')} onClick={(e) => onOpenProject(e, 'huntnhook')} data-ul='1'>
                 <strong>HuntNHook</strong>
               </a>
-              , a marketplace I built and run on my own. A lot of my time goes into performance and into keeping code
-              easy for the next person to work in.
+              , a marketplace for guided outdoor trips, where I lead engineering. A lot of my time goes into performance
+              and into keeping code easy for the next person to work in.
             </p>
             <dl data-skills='1' className='skills'>
               {skills.map((s) => (

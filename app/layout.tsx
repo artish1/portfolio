@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://markartishuk.com'),
   title: TITLE,
   description:
-    'Software engineer in Sacramento, open to remote. Five years building full-stack products with TypeScript, React, Next.js and Node, including payments, geospatial search and real-time systems.',
+    'Software engineer in Sacramento, open to remote. Six years building full-stack products, including payments, geospatial search and real-time systems.',
   authors: [{ name: 'Mark Artishuk' }],
   openGraph: {
     title: TITLE,

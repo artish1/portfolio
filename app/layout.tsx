@@ -1,88 +1,65 @@
-'use client'
-import { Layout } from '@/components/dom/Layout'
-import '@/global.css'
-import { ThemeProvider } from '@/theme/ThemeContext'
-import classNames from 'classnames'
-import { Noto_Sans } from 'next/font/google'
-import { ToggledProvider } from './contexts/ToggledContext'
-import useTailwindThemes from '@/hooks/useTailwindThemes'
-import BackgroundGrid from '@/components/decorative/BackgroundGrid'
-import { usePathname } from 'next/navigation'
-import { yearsOfExperience } from '@/data/experience'
+import type { Metadata } from 'next'
+import { Cormorant_Garamond, Instrument_Sans } from 'next/font/google'
+import './global.css'
 
-const font1 = Noto_Sans({
-  weight: ['400', '500', '700'],
+const serif = Cormorant_Garamond({
+  weight: '600',
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-serif',
+  fallback: ['serif'],
+  adjustFontFallback: false,
 })
+
+const sans = Instrument_Sans({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+  fallback: ['system-ui', 'sans-serif'],
+  adjustFontFallback: false,
+})
+
+const TITLE = 'Mark Artishuk | Software Engineer'
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://markartishuk.com'),
+  title: TITLE,
+  description:
+    'Software engineer in Sacramento, open to remote. Five years building full-stack products with TypeScript, React, Next.js and Node, including payments, geospatial search and real-time systems.',
+  authors: [{ name: 'Mark Artishuk' }],
+  openGraph: {
+    title: TITLE,
+    description: 'Software engineer building full-stack web products. Sacramento, open to remote.',
+    type: 'website',
+    url: '/',
+    images: ['/images/projects/huntnhook/hnh-1.jpg'],
+  },
+  twitter: { card: 'summary_large_image' },
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Mark Artishuk',
+  jobTitle: 'Software Engineer',
+  email: 'mailto:markyshuk@gmail.com',
+  address: { '@type': 'PostalAddress', addressLocality: 'Sacramento', addressRegion: 'CA', addressCountry: 'US' },
+  worksFor: { '@type': 'Organization', name: 'American Poolplayers Association' },
+  sameAs: ['https://github.com/artish1', 'https://linkedin.com/in/mark-artishuk'],
+  knowsAbout: ['TypeScript', 'React', 'Next.js', 'Node.js', 'PostgreSQL', 'GraphQL', 'Stripe'],
+}
+
+// Applied before first paint so the stored / system theme never flashes.
+const themeScript = `(function(){var d=true;try{var s=localStorage.getItem('ma-theme-b');d=s?s==='dark':matchMedia('(prefers-color-scheme: dark)').matches}catch(e){}if(d)document.body.classList.add('dark')})()`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider>
-      <ToggledProvider>
-        <LayoutContent>{children}</LayoutContent>
-      </ToggledProvider>
-    </ThemeProvider>
-  )
-}
-
-const LayoutContent = ({ children }: { children: React.ReactNode }) => {
-  const { background } = useTailwindThemes()
-  const pathname = usePathname()
-  const isResume = pathname === '/resume'
-
-  const description =
-    `Software Engineer with ${yearsOfExperience()}+ years of experience building scalable full-stack applications ` +
-    `using TypeScript, React, Next.js, and Node.js. Open to new opportunities.`
-
-  return (
-    <html lang='en' className={classNames('antialiased', background)}>
-      <head>
-        <meta charSet='utf-8' />
-        <meta name='viewport' content='width=device-width, minimum-scale=1, initial-scale=1.0' />
-        <title>Mark Artishuk - Software Engineer</title>
-        <meta
-          name='description'
-          content={description}
-        />
-        <meta name='author' content='Mark Artishuk' />
-        <meta name='robots' content='index,follow' />
-        <meta name='theme-color' content='#28231F' />
-
-        {/* Open Graph */}
-        <meta property='og:title' content='Mark Artishuk - Software Engineer' />
-        <meta
-          property='og:description'
-          content={description}
-        />
-        <meta property='og:type' content='website' />
-        <meta property='og:url' content='https://markartishuk.com' />
-        <meta property='og:image' content='https://markartishuk.com/icons/share.png' />
-        <meta property='og:site_name' content='Mark Artishuk - Software Engineer' />
-
-        {/* Twitter */}
-        <meta name='twitter:card' content='summary_large_image' />
-        <meta name='twitter:title' content='Mark Artishuk - Software Engineer' />
-        <meta
-          name='twitter:description'
-          content={description}
-        />
-        <meta name='twitter:image' content='https://markartishuk.com/icons/share.png' />
-
-        {/* Icons */}
-        <link rel='apple-touch-icon' href='/icons/apple-touch-icon.png' />
-        <link rel='apple-touch-icon' sizes='16x16' href='/icons/favicon-16x16.png' />
-        <link rel='apple-touch-icon' sizes='32x32' href='/icons/favicon-32x32.png' />
-        <link rel='apple-touch-icon' sizes='180x180' href='/icons/apple-touch-icon.png' />
-        <link rel='manifest' href='/manifest.json' />
-        <link rel='mask-icon' color='#C8A47E' href='/icons/safari-pinned-tab.svg' />
-        <link rel='shortcut icon' href='/icons/apple-touch-icon.png' />
-      </head>
-      <body>
-        <div className='relative min-h-screen'>
-          {!isResume && <BackgroundGrid />}
-          <Layout className={font1.className}>{children}</Layout>
-        </div>
+    <html lang='en' className={`${serif.variable} ${sans.variable}`}>
+      <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        {children}
       </body>
     </html>
   )

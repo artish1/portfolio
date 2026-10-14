@@ -2,11 +2,11 @@ import Image from 'next/image'
 import { Fragment, type CSSProperties, type MouseEvent } from 'react'
 import { EMAIL, LINKEDIN_URL, RESUME_URL } from '@/data/experience'
 import { placeScreens, projectHref, projects, type ProjectImage } from '@/data/projects'
-import { CopyButton, type CopyState } from './Home'
+import { CopyButton, CountDown, type CopyState } from './Home'
 import { ArrowLeft, ArrowRight, Check, LinkIcon } from './icons'
 import {
   DECISION_SIZES,
-  HERO_SIZES,
+  heroSizes,
   SCREEN_SIZES,
   SCREEN_WIDE_SIZES,
   SHOT_QUALITY,
@@ -73,6 +73,7 @@ export default function ProjectView({
   const prev = projects[(pi - 1 + n) % n]
   const next = projects[(pi + 1) % n]
   const hero = p.images[0]
+  const heroCrop = p.heroCrop ?? (p.thumb && p.thumb.src === hero?.src ? p.thumb : undefined)
   const { beside, rest } = placeScreens(p)
   const rows = screenRows(rest)
   const nextThumb = next.images[0]?.src
@@ -223,23 +224,58 @@ export default function ProjectView({
         </dl>
 
         {hero ? (
-          <button
-            onClick={() => onZoom(pi, 0)}
-            onMouseMove={peekMove}
-            onMouseLeave={peekLeave}
-            onPointerEnter={() => warmLightbox(hero.src)}
-            onFocus={() => warmLightbox(hero.src)}
-            data-peek='1'
-            aria-label={`View full screen: ${hero.alt}`}
-            className='pv-hero vt-morph'
-            style={{ viewTransitionName: 'shot-' + p.slug }}
-          >
-            <span className='shot ratio'>
-              <Image key={hero.src} src={hero.src} alt='' fill sizes={HERO_SIZES} quality={SHOT_QUALITY} priority />
-            </span>
-          </button>
+          <>
+            <button
+              onClick={() => onZoom(pi, 0)}
+              onMouseMove={peekMove}
+              onMouseLeave={peekLeave}
+              onPointerEnter={() => warmLightbox(hero.src)}
+              onFocus={() => warmLightbox(hero.src)}
+              data-peek='1'
+              data-crop={heroCrop ? '' : undefined}
+              aria-label={`View full screen: ${hero.alt}`}
+              className='pv-hero vt-morph'
+              style={
+                {
+                  viewTransitionName: 'shot-' + p.slug,
+                  // Wider screens than the frame show whole; taller ones are cropped and panned by peek.
+                  '--ar': hero.w / hero.h > 1.6 ? `${hero.w} / ${hero.h}` : undefined,
+                  '--pos': heroCrop?.pos,
+                  '--zoom': heroCrop?.zoom,
+                } as CSSProperties
+              }
+            >
+              <span className='shot ratio'>
+                <Image
+                  key={hero.src}
+                  src={hero.src}
+                  alt=''
+                  fill
+                  sizes={heroSizes(hero.src)}
+                  quality={SHOT_QUALITY}
+                  priority
+                />
+              </span>
+            </button>
+            <p aria-hidden='true' className='pv-hero-hint'>
+              {heroCrop ? 'Close-up. Tap to see the full screen.' : 'Tap to see the full screen.'}
+            </p>
+          </>
         ) : p.pipeline ? (
           <div className='pv-hero pv-pipe vt-morph vt-tile' style={{ viewTransitionName: 'shot-' + p.slug }}>
+            {p.tile && (
+              <p className='pipe-fig'>
+                <span className='display pipe-fig-num'>
+                  {p.tile.from}
+                  <span aria-hidden='true' className='work-tile-arrow'>
+                    →
+                  </span>
+                  <span className='sr-only'> to </span>
+                  <CountDown from={p.tile.from} to={p.tile.to} />
+                </span>
+                <span className='pipe-fig-label'>{p.tile.label}</span>
+              </p>
+            )}
             <ol aria-label='How it works' className='pipe'>
               {p.pipeline.map((s) => (
                 <li key={s.step} className='pipe-step'>
@@ -440,12 +476,7 @@ export default function ProjectView({
         </div>
 
         <div data-print-hide='1' className='foot pv-foot'>
-          <button
-            onClick={onCopyLink}
-            data-press='1'
-            data-copied={linkCopied ? '' : undefined}
-            className='pv-copy'
-          >
+          <button onClick={onCopyLink} data-press='1' data-copied={linkCopied ? '' : undefined} className='pv-copy'>
             {linkCopied ? <Check /> : <LinkIcon />}
             {linkCopied ? 'Link copied' : 'Copy link to this project'}
           </button>

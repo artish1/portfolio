@@ -5,6 +5,7 @@ html {
   scroll-behavior: smooth;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-move: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 html:has(body.dark) {
   background: #161213;
@@ -773,6 +774,34 @@ body.dark .theme-opt-dark,
   font-size: 17px;
   color: var(--ink);
 }
+/* The 77% as a picture: a hairline for before, the accent for what's left after. */
+.proof-bar {
+  position: relative;
+  display: block;
+  height: 2px;
+  margin-top: 4px;
+}
+.proof-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0.5px 0;
+  background: var(--line);
+}
+.proof-bar-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(var(--after));
+  transform-origin: left;
+}
+.proof-bar-fill[data-play] {
+  animation: cutBar 1.1s 0.35s var(--ease-expo) both;
+}
+@keyframes cutBar {
+  from {
+    transform: scaleX(1);
+  }
+}
 
 /* Section heads: a heavy rule, the title, and a note on the same line */
 .section-head {
@@ -867,10 +896,19 @@ a[data-row]:hover .work-title {
   color: var(--ink);
 }
 .tag-live > span {
+  position: relative;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: #2f9e5b;
+}
+.live-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0;
+  pointer-events: none;
 }
 .work-short {
   font-size: 17px;
@@ -958,6 +996,16 @@ a[data-row]:hover .work-thumb-img > img {
   line-height: 1;
   letter-spacing: -0.04em;
   font-variant-numeric: lining-nums;
+}
+/* Countdown: the final value holds the layout; the running number overlays it and spills right. */
+.tick {
+  position: relative;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.tick-run {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .work-tile-arrow {
   font-family: var(--font-sans);
@@ -1318,7 +1366,29 @@ a[data-row]:hover .work-tile-arrow {
   cursor: zoom-in;
 }
 .ratio {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: var(--ar, 16 / 10);
+}
+/* Phones get the close-up instead of a whole desktop screen at a sixth of its size. */
+.pv-hero-hint {
+  display: none;
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--ink3);
+}
+@media (max-width: 899.98px) {
+  .pv-hero[data-crop] .ratio {
+    aspect-ratio: 16 / 10;
+  }
+  .pv-hero[data-crop] img {
+    object-position: var(--pos);
+    transform: scale(var(--zoom));
+    transform-origin: var(--pos);
+  }
+}
+@media (hover: none) {
+  .pv-hero-hint {
+    display: block;
+  }
 }
 .pv-tile {
   aspect-ratio: 2 / 1;
@@ -1337,6 +1407,34 @@ a[data-row]:hover .work-tile-arrow {
   cursor: auto;
   background: var(--ink);
   color: var(--bg);
+}
+/* The outcome leads the band, so the page states it once as a figure. */
+.pipe-fig {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 24px;
+  margin: 0 40px;
+  padding: 36px 0 28px;
+  border-bottom: 1px solid color-mix(in srgb, var(--bg) 18%, transparent);
+}
+.pipe-fig-num {
+  display: flex;
+  align-items: center;
+  gap: 0.16em;
+  font-size: clamp(64px, 8vw, 104px);
+  font-weight: 800;
+  font-stretch: 80%;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-variant-numeric: lining-nums;
+}
+.pipe-fig-label {
+  font-size: 17px;
+  color: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+.pipe-fig + .pipe {
+  padding-top: 32px;
 }
 .pipe {
   list-style: none;
@@ -1384,7 +1482,7 @@ a[data-row]:hover .work-tile-arrow {
 }
 .pv-sec {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-columns: clamp(180px, 22vw, 280px) minmax(0, 1fr);
   gap: 16px 40px;
   align-items: start;
   padding-top: 16px;
@@ -1402,9 +1500,10 @@ a[data-row]:hover .work-tile-arrow {
   position: sticky;
   top: 88px;
 }
+/* One reading measure for Context and every decision, whether or not it has a screen beside it. */
 .pv-context {
   margin: 0;
-  max-width: 62ch;
+  max-width: 27em;
   font-size: 17px;
   line-height: 1.7;
   color: var(--ink);
@@ -1417,15 +1516,12 @@ a[data-row]:hover .work-tile-arrow {
   display: grid;
   gap: 40px;
 }
+/* The claim on the left, the proof (when there is a screen) beside it; the column stays when there isn't. */
 .decisions li {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 20px 32px;
+  grid-template-columns: minmax(0, 27em) minmax(240px, 1fr);
+  gap: 20px 40px;
   align-items: start;
-}
-/* A decision with a screen: the claim on the left, the proof beside it. */
-.decisions li[data-shot] {
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
 }
 .decisions li {
   scroll-margin-top: 96px;
@@ -1442,7 +1538,6 @@ a[data-row]:hover .work-tile-arrow {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  max-width: 62ch;
 }
 .decision-shot {
   margin: 0;
@@ -1885,8 +1980,15 @@ a[data-row]:hover .work-tile-arrow {
   .pipe-name {
     font-size: 32px;
   }
-  .decisions li[data-shot] {
+  .decisions li {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .pipe-fig {
+    margin: 0 24px;
+    padding: 28px 0 24px;
+  }
+  .pipe-fig + .pipe {
+    padding-top: 28px;
   }
   .result-value {
     font-size: 56px;
@@ -1898,6 +2000,52 @@ a[data-row]:hover .work-tile-arrow {
   .pv-shot {
     flex: none !important;
     width: 100%;
+  }
+}
+
+/* ─── 77% counts up ────────────────────────────────────────────────────── */
+/* 0 → 77 on the same curve and clock as the bar being cut, so the number is the cut. The
+   real figure holds the layout and stays in the accessibility tree; the count overlays it. */
+@property --n {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+@keyframes countUp {
+  from {
+    --n: 0;
+  }
+}
+@keyframes countHold {
+  from,
+  to {
+    -webkit-text-fill-color: transparent;
+  }
+}
+@keyframes countShow {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+@media screen and (prefers-reduced-motion: no-preference) {
+  .proof-count[data-play] {
+    position: relative;
+    display: inline-block;
+    counter-reset: n var(--n);
+    animation:
+      countUp 1.1s 0.35s var(--ease-expo) both,
+      countHold 1.1s 0.35s backwards;
+  }
+  .proof-count[data-play]::after {
+    content: counter(n);
+    content: counter(n) / '';
+    position: absolute;
+    inset: 0;
+    text-align: right;
+    opacity: 0;
+    -webkit-text-fill-color: currentColor;
+    animation: countShow 1.1s 0.35s backwards;
   }
 }
 

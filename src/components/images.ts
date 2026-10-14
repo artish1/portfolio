@@ -1,13 +1,23 @@
 import { getImageProps } from 'next/image'
+import { projects } from '@/data/projects'
 
 export const HERO_SIZES = '(max-width: 1199.98px) calc(100vw - 48px), 1152px'
+// On phones a hero with a close-up is zoomed (up to 2.2×), so it needs more pixels than its box.
+const HERO_CROP_SIZES = '(max-width: 899.98px) 210vw, ' + HERO_SIZES
+const cropped = new Set(
+  projects.flatMap((p) => {
+    const src = p.images[0]?.src
+    return src && (p.heroCrop || p.thumb?.src === src) ? [src] : []
+  }),
+)
+export const heroSizes = (src: string) => (cropped.has(src) ? HERO_CROP_SIZES : HERO_SIZES)
 // Screens run full width when there's an odd one out, otherwise two to a row.
 export const SCREEN_WIDE_SIZES = HERO_SIZES
 export const SCREEN_SIZES = '(max-width: 899.98px) calc(100vw - 48px), 720px'
 // A screen set beside the decision it shows.
 export const DECISION_SIZES = '(max-width: 899.98px) calc(100vw - 48px), 520px'
-// Thumbnails are zoomed-in crops (up to ~1.9×), so they need more pixels than their box.
-export const THUMB_SIZES = '(max-width: 899.98px) 180vw, 1100px'
+// Thumbnails are zoomed-in crops (up to 2.2×), so they need more pixels than their box.
+export const THUMB_SIZES = '(max-width: 899.98px) 210vw, 1320px'
 export const LIGHTBOX_SIZES = '(max-width: 1431.98px) calc(100vw - 32px), 1400px'
 export const SHOT_QUALITY = 85
 
@@ -35,7 +45,7 @@ function warm(src: string, sizes: string, quality?: number): Promise<void> {
   return ready
 }
 
-export const warmHero = (src: string) => warm(src, HERO_SIZES, SHOT_QUALITY)
+export const warmHero = (src: string) => warm(src, heroSizes(src), SHOT_QUALITY)
 export const warmScreen = (src: string, wide: boolean) =>
   warm(src, wide ? SCREEN_WIDE_SIZES : SCREEN_SIZES, SHOT_QUALITY)
 export const warmDecision = (src: string) => warm(src, DECISION_SIZES, SHOT_QUALITY)

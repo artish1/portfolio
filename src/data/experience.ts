@@ -37,12 +37,15 @@ export const RESUME_URL = '/resume'
 export const coreStack =
   'TypeScript, React, Next.js, React Native, Node.js, GraphQL, tRPC, PostgreSQL, Redis, Stripe, AWS'
 
-/** Proof strip at the top of the home page. Only real, sourced figures. */
+/**
+ * Proof strip at the top of the home page. Only real, sourced figures.
+ * Years of experience are added on the page from `yearsOfExperience()`, so they stay calculated.
+ */
 export const proof: { value: string; label: string }[] = [
-  { value: '77%', label: 'less latency on critical endpoints at APA' },
+  { value: '77%', label: 'Up to 77% less latency on critical endpoints at APA' },
   { value: '200k+', label: 'players on the platform I work on' },
-  { value: '4 yrs', label: 'keeping a nonprofit’s donation platform running in production' },
 ]
+export const experienceLabel = 'as a professional software engineer, since Feb 2021'
 
 /** APA highlights. Segments with `b` render bold (metrics only). */
 export const apaHighlights: { t: string; b?: boolean }[][] = [

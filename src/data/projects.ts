@@ -35,6 +35,8 @@ export interface Project {
   built: string
   /** Cropped close-up for the home page: one real detail of the product, not the whole page. */
   thumb?: { src: string; pos: string; zoom: number; caption: string }
+  /** Close-up of the case-study hero on phones. Defaults to `thumb` when it shows the same image. */
+  heroCrop?: { pos: string; zoom: number }
   /** Typographic stand-in for projects with no screenshots. */
   tile?: { from: string; to: string; label: string }
   /** How the system works, set as type in place of a hero screenshot. */
@@ -61,8 +63,8 @@ export const projects: Project[] = [
     built: 'Escrow payments on Stripe Connect · PostGIS map search · Redis pub/sub messaging',
     thumb: {
       src: '/images/projects/huntnhook/02-search-map.png',
-      pos: '50% 50%',
-      zoom: 1,
+      pos: '93% 75%',
+      zoom: 1.7,
       caption: 'Map search, with each trip pinned at its price',
     },
     role: 'Co-founder / Lead Engineer',
@@ -128,6 +130,7 @@ export const projects: Project[] = [
       zoom: 1.45,
       caption: 'Live availability, with spots left per session',
     },
+    heroCrop: { pos: '38% 15%', zoom: 2 },
     role: 'Contract, full-stack',
     year: '2025',
     liveUrl: 'https://app.rafasauna.com/booking',
@@ -181,10 +184,10 @@ export const projects: Project[] = [
     short: 'Donation platform with a live event feed',
     built: 'Live donation counter over Ably · wallet-first Stripe checkout · 20+ city campaigns',
     thumb: {
-      src: '/images/projects/ur-give/ur-3.png',
-      pos: '43% 30%',
-      zoom: 1.15,
-      caption: 'The counter shown on screen at events',
+      src: '/images/projects/ur-give/ur-1.png',
+      pos: '50% 39%',
+      zoom: 2.2,
+      caption: 'A campaign page, with its progress toward the goal',
     },
     role: 'Lead Developer',
     year: '2022–2026',
@@ -263,7 +266,6 @@ export const projects: Project[] = [
         text: 'The sync reads the pipeline data and creates the matching invoice records, which is exactly the job staff were doing by hand.',
       },
     ],
-    results: [{ value: '0', label: 'manual data entries a day, down from 20+' }],
     stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Puppeteer', 'AWS Lambda'],
     images: [],
   },

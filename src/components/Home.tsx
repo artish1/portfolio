@@ -4,6 +4,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type CSSProperties,
   type MouseEvent,
   type RefObject,
@@ -16,6 +17,7 @@ import {
   RESUME_URL,
   apaHighlights,
   coreStack,
+  experienceLabel,
   otherRoles,
   proof,
 } from '@/data/experience'
@@ -137,12 +139,19 @@ export default function Home({ active, nav, dark, onTheme, copy, onCopyEmail, te
               </p>
             </div>
             <ul aria-label='At a glance' className='proof'>
-              {proof.map((f) => (
+              {proof.map((f, i) => (
                 <li key={f.value} className='proof-item'>
-                  <span className='display proof-value'>{f.value}</span>
+                  <span className='display proof-value'>{i === 0 ? <CountUp value={f.value} /> : f.value}</span>
+                  {i === 0 && <CutBar percent={parseFloat(f.value)} />}
                   <span className='proof-label'>{f.label}</span>
                 </li>
               ))}
+              <li className='proof-item'>
+                <span className='display proof-value' suppressHydrationWarning>
+                  {years}+ yrs
+                </span>
+                <span className='proof-label'>{experienceLabel}</span>
+              </li>
             </ul>
           </section>
 
@@ -382,12 +391,7 @@ function WorkList({ onOpenProject }: { onOpenProject: OpenProject }) {
                   >
                     {p.title}
                   </span>
-                  {p.liveUrl && (
-                    <span className='tag-live'>
-                      <span aria-hidden='true' />
-                      Live
-                    </span>
-                  )}
+                  {p.liveUrl && <LiveTag slug={p.slug} />}
                 </span>
                 <span id={`ws-${p.slug}`} className='work-short'>
                   {p.short}
@@ -423,7 +427,7 @@ function WorkList({ onOpenProject }: { onOpenProject: OpenProject }) {
                           →
                         </span>
                         <span className='sr-only'> to </span>
-                        {p.tile.to}
+                        <CountDown from={p.tile.from} to={p.tile.to} />
                       </span>
                       <span className='work-tile-label'>{p.tile.label}</span>
                     </span>
@@ -436,5 +440,167 @@ function WorkList({ onOpenProject }: { onOpenProject: OpenProject }) {
         )
       })}
     </ol>
+  )
+}
+
+// One-shot motion plays once per visit, not every time Home remounts after a case study.
+let cutPlayed = false
+let countPlayed = false
+const pinged = new Set<string>()
+const noSubscribe = () => () => {}
+const prefersReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/** The lead figure counts up as the bar beneath it is cut (pure CSS, runs from first paint). */
+function CountUp({ value }: { value: string }) {
+  const [play] = useState(() => !cutPlayed)
+  const m = value.match(/^(\d+)(.*)$/)
+  if (!m) return <>{value}</>
+  return (
+    <>
+      <span data-play={play ? '' : undefined} style={{ '--n': m[1] } as CSSProperties} className='proof-count'>
+        {m[1]}
+      </span>
+      {m[2]}
+    </>
+  )
+}
+
+/** The lead figure drawn once: the full "before" bar shrinks to what's left after the cut. */
+function CutBar({ percent }: { percent: number }) {
+  const [play] = useState(() => !cutPlayed)
+  useEffect(() => {
+    cutPlayed = true
+  }, [])
+  if (!(percent > 0 && percent < 100)) return null
+  return (
+    <span aria-hidden='true' className='proof-bar'>
+      <span
+        data-play={play ? '' : undefined}
+        style={{ '--after': (100 - percent) / 100 } as CSSProperties}
+        className='proof-bar-fill'
+      />
+    </span>
+  )
+}
+
+/**
+ * Counts `from` down to `to` the first time it scrolls into view. The real value stays in the page for
+ * screen readers, and shows everywhere the count isn't running, so a capture never reads "20+ → 20".
+ */
+export function CountDown({ from, to }: { from: string; to: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  // False while hydrating server HTML (already painted), true when mounted on the client.
+  const clientMount = useRef(
+    useSyncExternalStore(
+      noSubscribe,
+      () => true,
+      () => false,
+    ),
+  ).current
+  const [n, setN] = useState<number | null>(null)
+  const start = parseInt(from, 10)
+  const end = parseInt(to, 10)
+
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el || countPlayed || !(start > end) || prefersReduced() || typeof IntersectionObserver === 'undefined') return
+    const target = el.closest<HTMLElement>('[data-thumb]') || el
+    const r = target.getBoundingClientRect()
+    const onScreen = r.top < window.innerHeight && r.bottom > 0
+    // Already on screen as server-rendered "0": don't flip it back to 20.
+    if (!clientMount && onScreen) return
+    let raf = 0
+    const run = () => {
+      near.disconnect()
+      io.disconnect()
+      setN(start)
+      const t0 = performance.now()
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - t0) / 700)
+        const eased = 1 - Math.pow(1 - t, 3)
+        setN(t < 1 ? Math.round(start - (start - end) * eased) : null)
+        if (t < 1) raf = requestAnimationFrame(tick)
+        else countPlayed = true
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    // Arm at 20 just below the fold, so the count starts from 20 rather than jumping from 0 on screen.
+    // Anywhere else (passed by, never reached, captured) it reads the real "0".
+    const near = new IntersectionObserver(([e]) => setN(e.isIntersecting ? start : null), {
+      rootMargin: '0px 0px 240px 0px',
+    })
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && run(), { threshold: 0.35 })
+    if (onScreen) run()
+    else {
+      near.observe(target)
+      io.observe(target)
+    }
+    return () => {
+      near.disconnect()
+      io.disconnect()
+      cancelAnimationFrame(raf)
+      setN(null)
+    }
+  }, [clientMount, start, end])
+
+  return (
+    <span ref={ref} className='tick'>
+      <span style={n === null ? undefined : { opacity: 0 }}>{to}</span>
+      {n !== null && (
+        <span aria-hidden='true' className='tick-run'>
+          {n}
+        </span>
+      )}
+    </span>
+  )
+}
+
+/** "Live" tag whose dot sends out a single ring when the row first shows, and again on hover. */
+function LiveTag({ slug }: { slug: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const ring = ref.current
+    const row = ring?.closest<HTMLElement>('a[data-row]')
+    if (!ring || !row || prefersReduced()) return
+    const ping = () =>
+      ring.animate(
+        [
+          { transform: 'scale(1)', opacity: 0.5 },
+          { transform: 'scale(2.4)', opacity: 0 },
+        ],
+        { duration: 600, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+      )
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const io =
+      typeof IntersectionObserver === 'undefined' || pinged.has(slug)
+        ? null
+        : new IntersectionObserver(
+            ([e]) => {
+              if (!e.isIntersecting) return
+              io?.disconnect()
+              pinged.add(slug)
+              timer = setTimeout(ping, 150)
+            },
+            { threshold: 0.6 },
+          )
+    io?.observe(row)
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const onEnter = () => fine.matches && ping()
+    row.addEventListener('mouseenter', onEnter)
+    return () => {
+      io?.disconnect()
+      clearTimeout(timer)
+      row.removeEventListener('mouseenter', onEnter)
+    }
+  }, [slug])
+
+  return (
+    <span className='tag-live'>
+      <span aria-hidden='true' className='live-dot'>
+        <span ref={ref} className='live-ring' />
+      </span>
+      Live
+    </span>
   )
 }

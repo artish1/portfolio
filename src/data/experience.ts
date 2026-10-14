@@ -33,27 +33,24 @@ export const GITHUB_URL = 'https://github.com/artish1'
 export const LINKEDIN_URL = 'https://linkedin.com/in/mark-artishuk'
 export const RESUME_URL = '/resume'
 
-export const skills: { label: string; items: string }[] = [
-  { label: 'Languages', items: 'TypeScript, JavaScript, Java, C#, VB.NET, SQL, Rust' },
-  { label: 'Frontend', items: 'React, Next.js, React Native, Expo, Tailwind, Three.js, Framer Motion' },
-  { label: 'Backend', items: 'Node.js, Express, GraphQL, tRPC, REST APIs, Prisma, BullMQ' },
-  { label: 'Databases', items: 'PostgreSQL, SQL Server, MongoDB, Redis, Elasticsearch' },
-  {
-    label: 'Systems & architecture',
-    items:
-      'System design, Distributed systems, Event-driven architecture, Real-time systems, Caching strategies, Query optimization, Payment systems',
-  },
-  { label: 'Cloud & delivery', items: 'AWS, Cloudflare, serverless, Docker, Kubernetes, Terraform, CI/CD pipelines, Vercel, PM2' },
+/** The short stack line on the home page. The full list lives on the resume. */
+export const coreStack =
+  'TypeScript, React, Next.js, React Native, Node.js, GraphQL, tRPC, PostgreSQL, Redis, Stripe, AWS'
+
+/** Proof strip at the top of the home page. Only real, sourced figures. */
+export const proof: { value: string; label: string }[] = [
+  { value: '77%', label: 'less latency on critical endpoints at APA' },
+  { value: '200k+', label: 'players on the platform I work on' },
+  { value: '4 yrs', label: 'keeping a nonprofit’s donation platform running in production' },
 ]
 
 /** APA highlights. Segments with `b` render bold (metrics only). */
 export const apaHighlights: { t: string; b?: boolean }[][] = [
   [
-    { t: 'Cut latency on critical endpoints by ' },
+    { t: 'Tuned queries, added indexes and introduced caching on critical endpoints, cutting their latency by ' },
     { t: 'up to 77%', b: true },
-    { t: ' and improved overall response times by ' },
+    { t: ' and overall response times by ' },
     { t: 'about 20%', b: true },
-    { t: ' with query tuning, indexing and caching' },
   ],
   [{ t: 'Make architecture decisions across the frontend and backend for our highest-traffic apps' }],
   [{ t: 'Restructured components on the most-used screens to cut unnecessary re-renders' }],
@@ -64,34 +61,8 @@ export const apaHighlights: { t: string; b?: boolean }[][] = [
   ],
 ]
 
-export const otherRoles: {
-  role: string
-  company: string
-  period: string
-  summary: string
-  href: string
-  linkLabel: string
-  arrow: '→' | '↓'
-  arrowDir: 'r' | 'd'
-}[] = [
-  {
-    role: 'Co-founder / Lead Engineer',
-    company: 'HuntNHook',
-    period: '2025–present',
-    summary: 'Architected and shipped a two-sided marketplace for guided outdoor trips, end to end.',
-    href: '/work/huntnhook',
-    linkLabel: 'See project',
-    arrow: '→',
-    arrowDir: 'r',
-  },
-  {
-    role: 'Independent contract work',
-    company: 'Rafa Sauna, United Revival, a construction firm',
-    period: '2022–2026',
-    summary: 'Built three production systems for two small businesses and a nonprofit.',
-    href: '#work',
-    linkLabel: 'See projects',
-    arrow: '↓',
-    arrowDir: 'd',
-  },
+/** The rest of the timeline. The projects themselves are covered in Selected work. */
+export const otherRoles: { role: string; company: string; period: string }[] = [
+  { role: 'Co-founder / Lead Engineer', company: 'HuntNHook', period: '2025–present' },
+  { role: 'Contract work', company: 'Rafa Sauna, United Revival, a construction firm', period: '2022–2026' },
 ]

@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Instrument_Sans } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Sans } from 'next/font/google'
+import { CAREER_START } from '@/data/experience'
 import './global.css'
 
-const serif = Cormorant_Garamond({
-  weight: '600',
+const display = Bricolage_Grotesque({
   subsets: ['latin'],
+  axes: ['opsz', 'wdth'],
   display: 'swap',
-  variable: '--font-serif',
-  fallback: ['serif'],
-  adjustFontFallback: false,
+  variable: '--font-display',
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 const sans = Instrument_Sans({
@@ -25,8 +25,7 @@ const TITLE = 'Mark Artishuk | Software Engineer'
 export const metadata: Metadata = {
   metadataBase: new URL('https://markartishuk.com'),
   title: TITLE,
-  description:
-    'Software engineer in Sacramento, open to remote. Six years building full-stack products, including payments, geospatial search and real-time systems.',
+  description: `Software engineer in Sacramento, open to remote. Building full-stack products since ${CAREER_START.getFullYear()}, including payments, geospatial search and real-time systems.`,
   authors: [{ name: 'Mark Artishuk' }],
   openGraph: {
     title: TITLE,
@@ -51,11 +50,13 @@ const jsonLd = {
 }
 
 // Applied before first paint so the stored / system theme never flashes.
-const themeScript = `(function(){var d=true;try{var s=localStorage.getItem('ma-theme-b');d=s?s==='dark':matchMedia('(prefers-color-scheme: dark)').matches}catch(e){}if(d)document.body.classList.add('dark')})()`
+// The stored choice and the system preference are read separately, so a storage error
+// still falls back to the system preference (and to light if neither is available).
+const themeScript = `(function(){var s=null,d=false;try{s=localStorage.getItem('ma-theme-b')}catch(e){}if(s==='dark'||s==='light')d=s==='dark';else try{d=matchMedia('(prefers-color-scheme: dark)').matches}catch(e){}if(d)document.body.classList.add('dark')})()`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' className={`${serif.variable} ${sans.variable}`}>
+    <html lang='en' className={`${display.variable} ${sans.variable}`}>
       <body suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

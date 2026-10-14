@@ -3,10 +3,10 @@
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
-import { EMAIL, tenure as computeTenure } from '@/data/experience'
-import { projectHref, projectIndex, projects } from '@/data/projects'
-import { decodeHero, warmGallery, warmHero, whenIdle } from './images'
-import Home from './Home'
+import { EMAIL, tenure as computeTenure, yearsOfExperience } from '@/data/experience'
+import { placeScreens, projectHref, projectIndex, projects } from '@/data/projects'
+import { decodeHero, screenRows, warmDecision, warmHero, warmScreen, whenIdle } from './images'
+import Home, { SCROLL_RESTORED, type CopyState } from './Home'
 import ProjectView from './ProjectView'
 import Lightbox from './Lightbox'
 
@@ -14,12 +14,19 @@ type VT = { finished: Promise<void>; updateCallbackDone: Promise<void> }
 type Zoom = { pi: number; ii: number }
 
 const HOME_TITLE = 'Mark Artishuk | Software Engineer'
-const NAV = ['about', 'experience', 'work', 'contact'] as const
+const NAV = ['about', 'work', 'experience', 'contact'] as const
 
 const slugFromPath = (path: string | null) => {
   const m = (path || '').match(/^\/work\/([\w-]+)\/?$/)
   return m && projectIndex(m[1]) >= 0 ? m[1] : null
 }
+const copyText = (text: string): Promise<boolean> =>
+  navigator.clipboard?.writeText
+    ? navigator.clipboard.writeText(text).then(
+        () => true,
+        () => false,
+      )
+    : Promise.resolve(false)
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const startVT = (cb: () => void | Promise<void>): VT | null => {
   const d = document as Document & { startViewTransition?: (cb: () => void | Promise<void>) => VT }
@@ -30,6 +37,16 @@ const clearTempNames = () =>
     el.style.removeProperty('view-transition-name')
     el.style.removeProperty('view-transition-class')
   })
+// A title or screenshot that has scrolled out of view shouldn't fly in from off-screen;
+// it fades with its page instead.
+const parkOffscreen = () => {
+  const h = window.innerHeight
+  document.querySelectorAll<HTMLElement>('.vt-morph').forEach((el) => {
+    const r = el.getBoundingClientRect()
+    if (r.bottom <= 0 || r.top >= h) el.setAttribute('data-vt-off', '')
+  })
+}
+const unpark = () => document.querySelectorAll('[data-vt-off]').forEach((el) => el.removeAttribute('data-vt-off'))
 
 export default function Site({ children }: { children?: ReactNode }) {
   const pathname = usePathname()
@@ -39,9 +56,10 @@ export default function Site({ children }: { children?: ReactNode }) {
   const [zoom, setZoom] = useState<Zoom | null>(null)
   const [zoomDir, setZoomDir] = useState(0)
   const [zoomClosing, setZoomClosing] = useState(false)
-  const [copied, setCopied] = useState(false)
+  const [copy, setCopy] = useState<CopyState>('idle')
   const [linkCopied, setLinkCopied] = useState(false)
   const [tenure, setTenure] = useState(() => computeTenure())
+  const [years, setYears] = useState(() => yearsOfExperience())
 
   const routeRef = useRef(route)
   const darkRef = useRef(dark)
@@ -114,6 +132,7 @@ export default function Site({ children }: { children?: ReactNode }) {
         flushSync(() => setRoute(next))
         routeRef.current = next
         clearTempNames()
+        unpark()
         let y = 0
         if (!next) {
           const w = document.getElementById('work')
@@ -121,7 +140,11 @@ export default function Site({ children }: { children?: ReactNode }) {
           listY.current = null
         }
         window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior })
-        if (!next) flushSync(() => setActive(computeActive()))
+        parkOffscreen()
+        if (!next) {
+          flushSync(() => setActive(computeActive()))
+          window.dispatchEvent(new Event(SCROLL_RESTORED))
+        }
         document.title = p ? p.title + ' | Mark Artishuk' : HOME_TITLE
         requestAnimationFrame(updateProgress)
       }
@@ -132,6 +155,8 @@ export default function Site({ children }: { children?: ReactNode }) {
       const go = () => {
         const root = document.documentElement
         root.classList.add(dir)
+        unpark()
+        parkOffscreen()
         const t = startVT(update)
         if (t) {
           t.updateCallbackDone.then(focus, focus)
@@ -172,6 +197,18 @@ export default function Site({ children }: { children?: ReactNode }) {
       later('back', () => window.location.href === from && toWork(), 180)
     } else toWork()
   }, [navigate])
+
+  const goHome = useCallback(
+    (e: MouseEvent<HTMLAnchorElement>) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+      e.preventDefault()
+      depth.current = 0
+      listY.current = 0
+      window.history.pushState(null, '', '/')
+      navigate(null)
+    },
+    [navigate],
+  )
 
   // ─── Theme ─────────────────────────────────────────────────────────────
   const setTheme = useCallback((d: boolean, e: MouseEvent<HTMLButtonElement>) => {
@@ -249,16 +286,39 @@ export default function Site({ children }: { children?: ReactNode }) {
   }, [!!zoom]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ─── Copy feedback ─────────────────────────────────────────────────────
-  const copyEmail = useCallback(() => {
-    navigator.clipboard?.writeText(EMAIL).catch(() => {})
-    setCopied(true)
-    later('copy', () => setCopied(false), 1600)
+  // Only confirm a copy once the clipboard write has actually succeeded. If the browser
+  // blocks it, select the address on the page instead and say how to copy it.
+  const copyEmail = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    const text = e.currentTarget.parentElement?.querySelector<HTMLElement>('[data-email]')
+    copyText(EMAIL).then((ok) => {
+      if (ok) {
+        setCopy('copied')
+        later('copy', () => setCopy('idle'), 1600)
+        return
+      }
+      const sel = window.getSelection()
+      if (text && sel) {
+        const range = document.createRange()
+        range.selectNodeContents(text)
+        sel.removeAllRanges()
+        sel.addRange(range)
+      }
+      setCopy('selected')
+      later('copy', () => setCopy('idle'), 5000)
+    })
   }, [])
   const copyLink = useCallback(() => {
     const slug = routeRef.current
-    navigator.clipboard?.writeText(window.location.origin + (slug ? projectHref(slug) : '/')).catch(() => {})
-    setLinkCopied(true)
-    later('link', () => setLinkCopied(false), 1800)
+    const url = window.location.origin + (slug ? projectHref(slug) : '/')
+    copyText(url).then((ok) => {
+      if (!ok) {
+        if (navigator.share) navigator.share({ url }).catch(() => {})
+        else window.prompt('Copy this link:', url)
+        return
+      }
+      setLinkCopied(true)
+      later('link', () => setLinkCopied(false), 1800)
+    })
   }, [])
 
   // ─── Image warm-up ─────────────────────────────────────────────────────
@@ -275,7 +335,13 @@ export default function Site({ children }: { children?: ReactNode }) {
             (chain, p) => chain.then(() => (p.images[0] ? warmHero(p.images[0].src) : undefined)),
             Promise.resolve(),
           )
-          .then(() => order.forEach((p) => p.images.slice(1).forEach((im) => warmGallery(im.src))))
+          .then(() =>
+            order.forEach((p) => {
+              const { beside, rest } = placeScreens(p)
+              beside.forEach(({ im }) => warmDecision(im.src))
+              screenRows(rest).forEach((row) => row.forEach(({ im }) => warmScreen(im.src, row.length === 1)))
+            }),
+          )
       }),
     [],
   )
@@ -284,6 +350,7 @@ export default function Site({ children }: { children?: ReactNode }) {
   useEffect(() => {
     setDark(document.body.classList.contains('dark'))
     setTenure(computeTenure())
+    setYears(yearsOfExperience())
     try {
       window.history.scrollRestoration = 'manual'
     } catch {
@@ -293,7 +360,7 @@ export default function Site({ children }: { children?: ReactNode }) {
     const w = window as Window & { __maHello?: boolean }
     if (!w.__maHello) {
       w.__maHello = true
-      console.log('%cMark Artishuk', "font:600 28px 'Cormorant Garamond',Georgia,serif;color:#C8A47E")
+      console.log('%cMark Artishuk', "font:800 28px 'Bricolage Grotesque',system-ui,sans-serif;color:#E2572B")
       console.log(
         '%cLooking at the source? Same thing I would do.\nI built this site myself, no templates.\nIf you want to talk shop: markyshuk@gmail.com',
         'font:13px system-ui;color:#9a8f86;line-height:1.6',
@@ -388,7 +455,14 @@ export default function Site({ children }: { children?: ReactNode }) {
   }, [navigate, goBack, closeZoom, stepZoom, computeActive, updateProgress])
 
   const pi = projectIndex(route)
-  const status = copied ? 'Email address copied to clipboard' : linkCopied ? 'Link to this project copied' : ''
+  const status =
+    copy === 'copied'
+      ? 'Email address copied to clipboard'
+      : copy === 'selected'
+        ? 'Could not copy automatically. The email address is selected; press Command C or Control C to copy it.'
+        : linkCopied
+          ? 'Link to this project copied'
+          : ''
 
   return (
     <div className='screen'>
@@ -398,13 +472,6 @@ export default function Site({ children }: { children?: ReactNode }) {
       <a href={pi >= 0 ? '#pv-title' : '#about'} className='skip'>
         Skip to content
       </a>
-      <div data-print-hide='1' aria-hidden='true' className='ambient'>
-        <div className='orb orb-1' />
-        <div className='orb orb-2' />
-        <div className='orb orb-3' />
-        <div className='orb orb-4' />
-      </div>
-      <div data-print-hide='1' className='noise' />
 
       {pi < 0 ? (
         <Home
@@ -412,15 +479,21 @@ export default function Site({ children }: { children?: ReactNode }) {
           nav={NAV}
           dark={dark}
           onTheme={setTheme}
-          copied={copied}
+          copy={copy}
           onCopyEmail={copyEmail}
           tenure={tenure}
+          years={years}
           onOpenProject={openProject}
         />
       ) : (
         <ProjectView
           pi={pi}
           onBack={goBack}
+          onHome={goHome}
+          dark={dark}
+          onTheme={setTheme}
+          copy={copy}
+          onCopyEmail={copyEmail}
           onOpenProject={openProject}
           linkCopied={linkCopied}
           onCopyLink={copyLink}

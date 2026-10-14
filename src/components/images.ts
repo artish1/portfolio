@@ -1,8 +1,13 @@
 import { getImageProps } from 'next/image'
 
-export const HERO_SIZES = '(max-width: 1119.98px) calc(100vw - 48px), 1072px'
-export const GALLERY_SIZES = '(max-width: 899.98px) calc(100vw - 48px), 392px'
-export const THUMB_SIZES = '(max-width: 899.98px) 96px, 168px'
+export const HERO_SIZES = '(max-width: 1199.98px) calc(100vw - 48px), 1152px'
+// Screens run full width when there's an odd one out, otherwise two to a row.
+export const SCREEN_WIDE_SIZES = HERO_SIZES
+export const SCREEN_SIZES = '(max-width: 899.98px) calc(100vw - 48px), 720px'
+// A screen set beside the decision it shows.
+export const DECISION_SIZES = '(max-width: 899.98px) calc(100vw - 48px), 520px'
+// Thumbnails are zoomed-in crops (up to ~1.9×), so they need more pixels than their box.
+export const THUMB_SIZES = '(max-width: 899.98px) 180vw, 1100px'
 export const LIGHTBOX_SIZES = '(max-width: 1431.98px) calc(100vw - 32px), 1400px'
 export const SHOT_QUALITY = 85
 
@@ -31,7 +36,18 @@ function warm(src: string, sizes: string, quality?: number): Promise<void> {
 }
 
 export const warmHero = (src: string) => warm(src, HERO_SIZES, SHOT_QUALITY)
-export const warmGallery = (src: string) => warm(src, GALLERY_SIZES, SHOT_QUALITY)
+export const warmScreen = (src: string, wide: boolean) =>
+  warm(src, wide ? SCREEN_WIDE_SIZES : SCREEN_SIZES, SHOT_QUALITY)
+export const warmDecision = (src: string) => warm(src, DECISION_SIZES, SHOT_QUALITY)
+
+/** Group a project's extra screens into rows: a lone first screen when the count is odd, then pairs. */
+export function screenRows<T>(items: T[]): T[][] {
+  const rows: T[][] = []
+  let i = 0
+  if (items.length % 2 === 1) rows.push([items[i++]])
+  for (; i < items.length; i += 2) rows.push(items.slice(i, i + 2))
+  return rows
+}
 export const warmLightbox = (src: string) => warm(src, LIGHTBOX_SIZES, SHOT_QUALITY)
 
 /** Decode the hero before a transition, so a morph never lands on a blank frame. */

@@ -1,200 +1,154 @@
 import Image from 'next/image'
-import { useEffect, useRef, useState, type MouseEvent } from 'react'
-import { EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL, apaHighlights, otherRoles, skills } from '@/data/experience'
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+  type RefObject,
+} from 'react'
+import { flushSync } from 'react-dom'
+import {
+  EMAIL,
+  GITHUB_URL,
+  LINKEDIN_URL,
+  RESUME_URL,
+  apaHighlights,
+  coreStack,
+  otherRoles,
+  proof,
+} from '@/data/experience'
 import { projectHref, projects } from '@/data/projects'
 import { ArrowRight, Check, Copy } from './icons'
 import { THUMB_SIZES, warmHero } from './images'
 import ThemeControl, { type SetTheme } from './ThemeControl'
 
 type OpenProject = (e: MouseEvent<HTMLAnchorElement>, slug: string) => void
+export type CopyState = 'idle' | 'copied' | 'selected'
 
-const LABELS: Record<string, string> = { about: 'About', experience: 'Experience', work: 'Work', contact: 'Contact' }
+const LABELS: Record<string, string> = { about: 'About', work: 'Work', experience: 'Experience', contact: 'Contact' }
 const NAME = 'Mark Artishuk'
+/** Fired by Site once the home page's scroll position has been restored. */
+export const SCROLL_RESTORED = 'ma:scroll-restored'
 
 interface Props {
   active: string
   nav: readonly string[]
   dark: boolean
   onTheme: SetTheme
-  copied: boolean
-  onCopyEmail: () => void
+  copy: CopyState
+  onCopyEmail: (e: MouseEvent<HTMLButtonElement>) => void
   tenure: string
+  years: number
   onOpenProject: OpenProject
 }
 
-export default function Home({ active, nav, dark, onTheme, copied, onCopyEmail, tenure, onOpenProject }: Props) {
-  const activeIndex = Math.max(0, nav.indexOf(active))
+export default function Home({ active, nav, dark, onTheme, copy, onCopyEmail, tenure, years, onOpenProject }: Props) {
+  const nameRef = useRef<HTMLHeadingElement>(null)
+  const [nameOut, setNameOut] = useState(false)
+  const [nameInstant, setNameInstant] = useState(false)
+
+  // The bar only shows the name once the big one on the page has scrolled away.
+  useEffect(() => {
+    const el = nameRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const io = new IntersectionObserver(([e]) => setNameOut(!e.isIntersecting && e.boundingClientRect.top < 0), {
+      rootMargin: '-100px 0px 0px 0px',
+    })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  // Coming back from a case study jumps straight to the work list. Settle the bar before the
+  // page is shown, without the expand animation, instead of waiting for the observer.
+  useLayoutEffect(() => {
+    const sync = () => {
+      const el = nameRef.current
+      if (!el) return
+      const out = el.getBoundingClientRect().bottom <= 100
+      flushSync(() => {
+        setNameInstant(true)
+        setNameOut(out)
+      })
+      requestAnimationFrame(() => setNameInstant(false))
+    }
+    window.addEventListener(SCROLL_RESTORED, sync)
+    return () => window.removeEventListener(SCROLL_RESTORED, sync)
+  }, [])
 
   return (
     <>
-      <header data-print-hide='1' data-page='1' className='bar m-header'>
-        <div className='m-header-row'>
-          <a href='#top' className='serif m-name'>
+      <header data-print-hide='1' data-page='1' className='bar site-bar'>
+        <div className='site-bar-row'>
+          <a
+            href='#top'
+            data-show={nameOut ? '' : undefined}
+            data-instant={nameInstant ? '' : undefined}
+            aria-hidden={nameOut ? undefined : 'true'}
+            tabIndex={nameOut ? undefined : -1}
+            className='display site-name'
+          >
             {NAME}
           </a>
-          <a href={RESUME_URL} className='m-resume'>
-            Resume
-          </a>
-          <a href={`mailto:${EMAIL}`} data-press='1' className='pill-fill m-email'>
-            Email
-          </a>
-        </div>
-        <nav aria-label='Sections' className='m-nav'>
-          {nav.map((id) => (
-            <a
-              key={id}
-              href={'#' + id}
-              aria-current={active === id ? 'true' : 'false'}
-              data-press='1'
-              className='m-pill'
-            >
-              {LABELS[id]}
-            </a>
-          ))}
-        </nav>
-      </header>
-
-      <div id='top' data-page='1' className='home'>
-        <aside data-rail='1' className='rail'>
-          <div>
-            <RailName />
-            <p className='rail-role'>Software Engineer</p>
-            <p className='rail-loc'>Sacramento, CA · Open to remote</p>
-            <p className='rail-tag'>I build full-stack web products, from the database to the UI.</p>
-          </div>
-          <nav aria-label='Sections' className='rail-nav wide-only'>
-            <span aria-hidden='true' className='rail-dot' style={{ transform: `translateY(${activeIndex * 38}px)` }} />
+          <nav aria-label='Sections' className='site-nav'>
             {nav.map((id) => (
-              <a key={id} href={'#' + id} aria-current={active === id ? 'true' : 'false'} className='rail-link'>
-                <span />
+              <a
+                key={id}
+                href={'#' + id}
+                aria-current={active === id ? 'true' : undefined}
+                data-press='1'
+                className='site-link'
+              >
                 {LABELS[id]}
               </a>
             ))}
           </nav>
-          <div data-print-hide='1' className='rail-contact wide-only'>
-            <div className='rail-email-row'>
-              <a href={`mailto:${EMAIL}`} data-ul='1' className='rail-email'>
+          <div className='site-actions'>
+            <a href={RESUME_URL} className='site-resume'>
+              Resume
+            </a>
+            <a href={`mailto:${EMAIL}`} data-press='1' className='btn-fill site-email'>
+              <span className='site-email-short'>Email</span>
+              <span data-email='1' className='site-email-full'>
                 {EMAIL}
-              </a>
-              <button
-                onClick={onCopyEmail}
-                aria-label='Copy email address'
-                title={copied ? 'Copied' : 'Copy address'}
-                data-copied={copied ? '' : undefined}
-                className='copy-btn'
-              >
-                {copied ? <Check /> : <Copy />}
-              </button>
-              {copied && (
-                <span aria-hidden='true' className='copy-tip'>
-                  Copied
-                </span>
-              )}
-            </div>
-            <div className='rail-links'>
-              <a href={RESUME_URL} data-ul='1'>
-                Resume
-              </a>
-              <a href={GITHUB_URL} target='_blank' rel='noopener' aria-label='GitHub (opens in new tab)' data-ul='1'>
-                GitHub{' '}
-                <span data-ext='1' aria-hidden='true'>
-                  ↗
-                </span>
-              </a>
-              <a
-                href={LINKEDIN_URL}
-                target='_blank'
-                rel='noopener'
-                aria-label='LinkedIn (opens in new tab)'
-                data-ul='1'
-              >
-                LinkedIn{' '}
-                <span data-ext='1' aria-hidden='true'>
-                  ↗
-                </span>
-              </a>
-            </div>
+              </span>
+            </a>
+            <CopyButton copy={copy} onCopy={onCopyEmail} />
           </div>
-          <div data-print-hide='1' className='wide-only'>
-            <ThemeControl dark={dark} onTheme={onTheme} className='theme-rail' />
-          </div>
-        </aside>
+        </div>
+      </header>
 
+      <div id='top' data-page='1' className='home'>
         <main className='main'>
-          <section id='about' data-spy='about' className='about'>
-            <h2 className='sr-only'>About</h2>
-            <p className='lead'>
-              I&apos;ve been writing software for six years. At the{' '}
-              <strong>American Poolplayers Association</strong> I work across the stack on a platform with{' '}
-              <strong>200,000+ players</strong>. Outside of work I&apos;m a co-founder of{' '}
-              <a href={projectHref('huntnhook')} onClick={(e) => onOpenProject(e, 'huntnhook')} data-ul='1'>
-                <strong>HuntNHook</strong>
-              </a>
-              , a marketplace for guided outdoor trips, where I lead engineering. A lot of my time goes into performance
-              and into keeping code easy for the next person to work in.
-            </p>
-            <dl data-skills='1' className='skills'>
-              {skills.map((s) => (
-                <div key={s.label} data-skillgrp='1' className='skill'>
-                  <span data-rule='1' aria-hidden='true' className='skill-rule' />
-                  <dt>{s.label}</dt>
-                  <dd>{s.items}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-
-          <section id='experience' data-spy='experience'>
-            <h2 className='serif h2'>Experience</h2>
-            <div className='job'>
-              <div className='job-head'>
-                <h3>
-                  Software Engineer <span>· American Poolplayers Association</span>
-                </h3>
-                <span className='job-tenure' suppressHydrationWarning>
-                  Since Feb 2021 · {tenure}
-                </span>
-              </div>
-              <p className='job-summary'>
-                Core platform features for 200,000+ active players across league play, tournament management and
-                internal operations. Full-time.
+          <section id='about' data-spy='about' className='hero'>
+            <div className='hero-intro'>
+              <p className='hero-eyebrow'>Software Engineer · Sacramento, CA · Open to remote</p>
+              <HeroName nameRef={nameRef} />
+              <p className='lead'>
+                I&apos;ve been writing software professionally for <span suppressHydrationWarning>{years}</span> years.
+                At the <strong>American Poolplayers Association</strong> I work across the stack on a platform with{' '}
+                <strong>200,000+ players</strong>. I&apos;m also a co-founder of{' '}
+                <a href={projectHref('huntnhook')} onClick={(e) => onOpenProject(e, 'huntnhook')} data-ul='1'>
+                  <strong>HuntNHook</strong>
+                </a>
+                , where I lead engineering. Most of my time goes into performance and into keeping code easy for the
+                next person to work in.
               </p>
-              <ul className='job-bullets'>
-                {apaHighlights.map((parts, i) => (
-                  <li key={i}>
-                    <span />
-                    <span>{parts.map((seg, j) => (seg.b ? <strong key={j}>{seg.t}</strong> : seg.t))}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
-            {otherRoles.map((r) => {
-              const slug = r.href.startsWith('/work/') ? r.href.slice(6) : null
-              return (
-                <div key={r.company} className='role'>
-                  <div className='job-head'>
-                    <h3>
-                      {r.role} <span>· {r.company}</span>
-                    </h3>
-                    <span className='role-period'>{r.period}</span>
-                  </div>
-                  <p>
-                    {r.summary}{' '}
-                    <a href={r.href} onClick={slug ? (e) => onOpenProject(e, slug) : undefined} data-ul='1'>
-                      {r.linkLabel}{' '}
-                      <span data-go={r.arrowDir} aria-hidden='true'>
-                        {r.arrow}
-                      </span>
-                    </a>
-                  </p>
-                </div>
-              )
-            })}
+            <ul aria-label='At a glance' className='proof'>
+              {proof.map((f) => (
+                <li key={f.value} className='proof-item'>
+                  <span className='display proof-value'>{f.value}</span>
+                  <span className='proof-label'>{f.label}</span>
+                </li>
+              ))}
+            </ul>
           </section>
 
           <section id='work' data-spy='work' className='work'>
-            <div>
-              <h2 className='serif h2'>Selected work</h2>
+            <div className='section-head'>
+              <h2 className='display h2'>Selected work</h2>
               <p className='note'>
                 Most of these codebases are private. I&apos;m happy to walk through any of them on a call.
               </p>
@@ -202,15 +156,70 @@ export default function Home({ active, nav, dark, onTheme, copied, onCopyEmail, 
             <WorkList onOpenProject={onOpenProject} />
           </section>
 
-          <section id='contact' data-spy='contact'>
-            <h2 className='serif contact-h'>Hiring? Let&apos;s talk.</h2>
+          <section id='experience' data-spy='experience' className='experience'>
+            <h2 className='display h2'>Experience</h2>
+            <ol className='timeline'>
+              <li className='tl-item'>
+                <span className='tl-period' suppressHydrationWarning>
+                  Feb 2021–now
+                  <span className='tl-tenure'>{tenure}</span>
+                </span>
+                <div className='tl-body'>
+                  <h3>
+                    Software Engineer <span>· American Poolplayers Association</span>
+                  </h3>
+                  <p className='tl-summary'>
+                    Full-time. Core platform features across league play, tournament management and internal operations.
+                  </p>
+                  <ul className='tl-bullets'>
+                    {apaHighlights.map((parts, i) => (
+                      <li key={i}>{parts.map((seg, j) => (seg.b ? <strong key={j}>{seg.t}</strong> : seg.t))}</li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+              {otherRoles.map((r) => (
+                <li key={r.company} className='tl-item'>
+                  <span className='tl-period'>{r.period}</span>
+                  <div className='tl-body'>
+                    <h3>
+                      {r.role} <span>· {r.company}</span>
+                    </h3>
+                  </div>
+                </li>
+              ))}
+              <li className='tl-item'>
+                <span className='tl-period'>Day to day</span>
+                <div className='tl-body'>
+                  <p className='tl-summary'>
+                    {coreStack}.{' '}
+                    <a href={RESUME_URL} data-ul='1' className='tl-more'>
+                      Full list on the resume{' '}
+                      <span data-go='r' aria-hidden='true'>
+                        →
+                      </span>
+                    </a>
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </section>
+
+          <section id='contact' data-spy='contact' className='contact'>
+            <h2 className='display contact-h'>Hiring, or need something built?</h2>
             <p className='contact-p'>
-              I&apos;m open to new opportunities, remote or on-site in the Sacramento area. Email is the best way to
-              reach me, and I usually reply within a day.
+              I&apos;m open to full-time roles, remote or on-site in the Sacramento area, and to contract work for small
+              teams. Email is the best way to reach me, and I usually reply within a day.
             </p>
             <div className='contact-btns'>
-              <a href={`mailto:${EMAIL}`} data-press='1' className='pill-fill'>
-                {EMAIL}
+              <span className='contact-email'>
+                <a href={`mailto:${EMAIL}`} data-press='1' className='btn-fill'>
+                  <span data-email='1'>{EMAIL}</span>
+                </a>
+                <CopyButton copy={copy} onCopy={onCopyEmail} tip />
+              </span>
+              <a href={RESUME_URL} data-press='1' className='btn-line'>
+                Resume
               </a>
               <a
                 href={LINKEDIN_URL}
@@ -218,7 +227,7 @@ export default function Home({ active, nav, dark, onTheme, copied, onCopyEmail, 
                 rel='noopener'
                 aria-label='LinkedIn (opens in new tab)'
                 data-press='1'
-                className='pill-line'
+                className='btn-line'
               >
                 LinkedIn
               </a>
@@ -228,14 +237,14 @@ export default function Home({ active, nav, dark, onTheme, copied, onCopyEmail, 
                 rel='noopener'
                 aria-label='GitHub (opens in new tab)'
                 data-press='1'
-                className='pill-line'
+                className='btn-line'
               >
                 GitHub
               </a>
             </div>
             <div className='foot'>
-              <p>Mark Artishuk · Sacramento, CA · 2026</p>
-              <span data-print-hide='1' className='foot-theme'>
+              <p suppressHydrationWarning>Mark Artishuk · Sacramento, CA · {new Date().getFullYear()}</p>
+              <span data-print-hide='1'>
                 <ThemeControl dark={dark} onTheme={onTheme} />
               </span>
             </div>
@@ -246,7 +255,36 @@ export default function Home({ active, nav, dark, onTheme, copied, onCopyEmail, 
   )
 }
 
-function RailName() {
+export function CopyButton({
+  copy,
+  onCopy,
+  tip = false,
+}: {
+  copy: CopyState
+  onCopy: (e: MouseEvent<HTMLButtonElement>) => void
+  tip?: boolean
+}) {
+  return (
+    <>
+      <button
+        onClick={onCopy}
+        aria-label='Copy email address'
+        title={copy === 'copied' ? 'Copied' : 'Copy address'}
+        data-copied={copy === 'copied' ? '' : undefined}
+        className='copy-btn'
+      >
+        {copy === 'copied' ? <Check /> : <Copy />}
+      </button>
+      {tip && copy !== 'idle' && (
+        <span aria-hidden='true' className='copy-tip'>
+          {copy === 'copied' ? 'Copied' : 'Selected. Press ⌘C or Ctrl+C'}
+        </span>
+      )}
+    </>
+  )
+}
+
+function HeroName({ nameRef }: { nameRef: RefObject<HTMLHeadingElement | null> }) {
   const [wave, setWave] = useState(0)
   const [hint, setHint] = useState(false)
   const [hintOut, setHintOut] = useState(false)
@@ -263,6 +301,8 @@ function RailName() {
   )
 
   const onClick = () => {
+    // Don't animate away a selection the visitor is making.
+    if (window.getSelection()?.toString()) return
     const n = ++clicks.current
     setWave((w) => w + 1)
     if (n >= 3) {
@@ -282,8 +322,8 @@ function RailName() {
   }
 
   return (
-    <>
-      <h1 aria-label={NAME} onClick={onClick} className='serif rail-name'>
+    <div className='hero-name-wrap'>
+      <h1 ref={nameRef} aria-label={NAME} onClick={onClick} className='display hero-name'>
         {wave === 0
           ? NAME
           : NAME.split('').map((c, i) => (
@@ -298,7 +338,7 @@ function RailName() {
       </h1>
       {hint && (
         <p
-          className='rail-hint'
+          className='hero-hint'
           style={{
             animation: hintOut
               ? 'hintOut .45s cubic-bezier(.22,1,.36,1) forwards'
@@ -311,96 +351,90 @@ function RailName() {
           </a>
         </p>
       )}
-    </>
+    </div>
   )
 }
 
 function WorkList({ onOpenProject }: { onOpenProject: OpenProject }) {
-  const listRef = useRef<HTMLDivElement>(null)
-  const hlRef = useRef<HTMLSpanElement>(null)
-  const on = useRef(false)
-
-  const hlTo = (el: HTMLElement) => {
-    const list = listRef.current
-    const hl = hlRef.current
-    if (!list || !hl) return
-    const lr = list.getBoundingClientRect()
-    const r = el.getBoundingClientRect()
-    const y = r.top - lr.top
-    const h = r.height
-    if (!on.current) {
-      hl.style.transition = 'none'
-      hl.style.transform = 'translateY(' + y + 'px) scale(.985)'
-      hl.style.height = h + 'px'
-      void hl.offsetHeight
-      hl.style.transition =
-        'transform .45s cubic-bezier(.22,1,.36,1), height .45s cubic-bezier(.22,1,.36,1), opacity .25s ease'
-      hl.style.opacity = '1'
-      hl.style.transform = 'translateY(' + y + 'px) scale(1)'
-      on.current = true
-    } else {
-      hl.style.transform = 'translateY(' + y + 'px) scale(1)'
-      hl.style.height = h + 'px'
-    }
-  }
-  const hlHide = () => {
-    const hl = hlRef.current
-    if (hl) {
-      hl.style.opacity = '0'
-      hl.style.transform = hl.style.transform.replace('scale(1)', 'scale(.985)')
-    }
-    on.current = false
-  }
-
   return (
-    <div ref={listRef} data-worklist='1' onMouseLeave={hlHide} className='worklist'>
-      <span ref={hlRef} data-hl='1' aria-hidden='true' className='worklist-hl' />
+    <ol className='worklist'>
       {projects.map((p) => {
-        const thumb = p.images[0]?.src
+        const hero = p.images[0]?.src
+        const warm = () => hero && warmHero(hero)
         return (
-          <div key={p.slug} className='work-item'>
+          <li key={p.slug} className='work-item'>
             <a
               href={projectHref(p.slug)}
               data-row={p.slug}
+              aria-labelledby={`wt-${p.slug}`}
+              aria-describedby={`ws-${p.slug}`}
               onClick={(e) => onOpenProject(e, p.slug)}
-              onMouseEnter={(e) => {
-                hlTo(e.currentTarget)
-                if (thumb) warmHero(thumb)
-              }}
-              onFocus={(e) => {
-                hlTo(e.currentTarget)
-                if (thumb) warmHero(thumb)
-              }}
-              onBlur={(e) => {
-                if (!listRef.current?.contains(e.relatedTarget as Node)) hlHide()
-              }}
+              onMouseEnter={warm}
+              onFocus={warm}
               className='work-row'
             >
-              <span data-thumb='1' className='work-thumb vt-morph' style={{ viewTransitionName: 'shot-' + p.slug }}>
-                {thumb ? (
-                  <span data-thumb-img='1' className='shot work-thumb-img'>
-                    <Image src={thumb} alt='' fill sizes={THUMB_SIZES} loading='eager' />
-                  </span>
-                ) : (
-                  <span className='work-internal'>Internal</span>
-                )}
-              </span>
               <span className='work-text'>
-                <span className='serif work-title vt-morph' style={{ viewTransitionName: 'title-' + p.slug }}>
-                  {p.title}
+                <span className='work-title-row'>
+                  <span
+                    id={`wt-${p.slug}`}
+                    className='display work-title vt-morph'
+                    style={{ viewTransitionName: 'title-' + p.slug }}
+                  >
+                    {p.title}
+                  </span>
+                  {p.liveUrl && (
+                    <span className='tag-live'>
+                      <span aria-hidden='true' />
+                      Live
+                    </span>
+                  )}
                 </span>
-                <span className='work-short'>{p.short}</span>
+                <span id={`ws-${p.slug}`} className='work-short'>
+                  {p.short}
+                </span>
+                <span className='work-built'>{p.built}</span>
                 <span className='work-meta'>
                   {p.role} · {p.year}
                 </span>
+                <span aria-hidden='true' className='work-go'>
+                  Read the case study
+                  <ArrowRight />
+                </span>
               </span>
-              <span data-arrow='1' aria-hidden='true' className='circle work-arrow'>
-                <ArrowRight />
+              <span className='work-figure'>
+                <span
+                  data-thumb='1'
+                  className={'work-thumb vt-morph' + (p.thumb ? '' : ' vt-tile')}
+                  style={{ viewTransitionName: 'shot-' + p.slug }}
+                >
+                  {p.thumb ? (
+                    <span
+                      data-thumb-img='1'
+                      className='shot work-thumb-img'
+                      style={{ '--pos': p.thumb.pos, '--zoom': p.thumb.zoom } as CSSProperties}
+                    >
+                      <Image src={p.thumb.src} alt='' fill sizes={THUMB_SIZES} />
+                    </span>
+                  ) : p.tile ? (
+                    <span className='work-tile'>
+                      <span className='display work-tile-fig'>
+                        {p.tile.from}
+                        <span aria-hidden='true' className='work-tile-arrow'>
+                          →
+                        </span>
+                        <span className='sr-only'> to </span>
+                        {p.tile.to}
+                      </span>
+                      <span className='work-tile-label'>{p.tile.label}</span>
+                    </span>
+                  ) : null}
+                </span>
+                <span className='work-caption'>{p.thumb ? p.thumb.caption : 'Internal tool, no screenshots'}</span>
               </span>
             </a>
-          </div>
+          </li>
         )
       })}
-    </div>
+    </ol>
   )
 }
